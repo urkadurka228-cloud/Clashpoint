@@ -1,483 +1,1244 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Укрытие и Атака - Мобильная Игра</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Clashpoint - Warmup</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            touch-action: manipulation;
             -webkit-user-select: none;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: none;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            background: #000;
+            color: #fff;
+            font-family: 'Arial Black', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #000 100%);
+        }
+
+        /* МЕНЮ */
+        #gameMenu {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #000;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            padding: 10px;
+            z-index: 100;
         }
-        
-        .game-container {
+
+        .site-title {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 42px;
+            font-weight: 900;
+            color: #ff4655;
+            text-shadow: 0 0 20px rgba(255, 70, 85, 0.7);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            padding: 10px 30px;
+            border: 3px solid #ff4655;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .gameBtn {
+            width: 85%;
+            max-width: 320px;
+            padding: 22px;
+            margin: 8px;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 4px solid #333;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
             text-align: center;
-            max-width: 100%;
+            letter-spacing: 1.5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
-        
-        h1 {
-            color: #fff;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            font-size: 24px;
+
+        .gameBtn:hover {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            transform: scale(1.03);
+            border-color: #ff4655;
+            box-shadow: 0 0 25px rgba(255, 70, 85, 0.3);
         }
-        
-        .game-info {
-            display: flex;
-            justify-content: space-between;
-            background: rgba(0, 0, 0, 0.7);
+
+        .gameBtn.red {
+            border-color: #ff4655;
+            color: #ff4655;
+            box-shadow: 0 0 15px rgba(255, 70, 85, 0.2);
+        }
+
+        .gameBtn.blue {
+            border-color: #4655ff;
+            color: #4655ff;
+            box-shadow: 0 0 15px rgba(70, 85, 255, 0.2);
+        }
+
+        .gameBtn.green {
+            border-color: #55ff46;
+            color: #55ff46;
+            box-shadow: 0 0 15px rgba(85, 255, 70, 0.2);
+        }
+
+        .gameBtn.yellow {
+            border-color: #ffd846;
+            color: #ffd846;
+            box-shadow: 0 0 15px rgba(255, 216, 70, 0.2);
+        }
+
+        /* ОБЩИЕ СТИЛИ ДЛЯ ИГР */
+        .gameContainer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: none;
+            overflow: hidden;
+        }
+
+        .backBtn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: #ff4655;
+            border-radius: 50%;
             color: white;
-            padding: 10px 20px;
-            border-radius: 10px 10px 0 0;
-            font-size: 18px;
-            margin-bottom: -2px;
+            border: 3px solid white;
+            font-size: 28px;
+            z-index: 1000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(255, 70, 85, 0.7);
         }
-        
-        canvas {
-            display: block;
-            background: #87CEEB;
-            border: 3px solid #333;
-            border-radius: 0 0 10px 10px;
-            max-width: 100%;
-            height: auto;
+
+        .stats {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid #ff4655;
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff4655;
+            min-width: 160px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 70, 85, 0.3);
         }
-        
-        .controls-info {
-            color: #fff;
-            margin-top: 15px;
-            font-size: 16px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
+
+        .gameTitle {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 32px;
+            color: #ff4655;
+            text-shadow: 0 0 10px rgba(255, 70, 85, 0.5);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 25px;
             border-radius: 10px;
+            border: 2px solid #ff4655;
+            z-index: 10;
         }
-        
-        .instructions {
-            color: #ddd;
-            margin-top: 10px;
-            font-size: 14px;
-            line-height: 1.4;
+
+        /* МИНИ-ИГРА 1: ТРЕНИРОВКА ПРИЦЕЛА */
+        #aimTrainer {
+            background: #0a0a0a;
         }
-        
-        @media (max-height: 700px) {
-            h1 { font-size: 20px; margin-bottom: 5px; }
-            .game-info { font-size: 16px; padding: 8px 15px; }
-            .controls-info { font-size: 14px; }
-            .instructions { font-size: 12px; }
+
+        .target {
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle, #ff4655 45%, #b5303a 100%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: crosshair;
+            border: 4px solid white;
+            box-shadow: 0 0 25px rgba(255, 70, 85, 0.8);
+            transition: transform 0.15s;
+        }
+
+        .target.hit {
+            background: radial-gradient(circle, #55ff46 45%, #2E7D32 100%);
+            border-color: #55ff46;
+            box-shadow: 0 0 25px rgba(85, 255, 70, 0.8);
+        }
+
+        /* МИНИ-ИГРА 2: ТЕСТ РЕАКЦИИ */
+        #reactionTest {
+            background: #0a0a0a;
+        }
+
+        .reactionArea {
+            position: absolute;
+            width: 85%;
+            height: 250px;
+            background: #1a1a1a;
+            border: 5px solid #333;
+            border-radius: 25px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #888;
+            transition: all 0.25s;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .reactionArea.active {
+            background: #ff4655;
+            border-color: #fff;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(255, 70, 85, 0.6);
+        }
+
+        .reactionResult {
+            position: absolute;
+            top: 35%;
+            width: 100%;
+            text-align: center;
+            font-size: 38px;
+            color: #ffd846;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 216, 70, 0.5);
+        }
+
+        /* МИНИ-ИГРА 3: ТРЕКИНГ */
+        #tracking {
+            background: #0a0a0a;
+        }
+
+        .trackingCircle {
+            position: absolute;
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle, #4655ff 50%, #303ab5 100%);
+            border-radius: 50%;
+            cursor: crosshair;
+            border: 3px solid white;
+            box-shadow: 0 0 20px rgba(70, 85, 255, 0.6);
+            transition: all 0.3s;
+        }
+
+        .trackingCursor {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border: 3px solid #55ff46;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 15px rgba(85, 255, 70, 0.6);
+            background: rgba(85, 255, 70, 0.2);
+        }
+
+        /* МИНИ-ИГРА 4: ФЛИК-ШОТ */
+        #flickShot {
+            background: #0a0a0a;
+        }
+
+        .flickTarget {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #1a1a1a 45%, #000 100%);
+            border: 5px solid #ff4655;
+            border-radius: 15px;
+            transform: translate(-50%, -50%) rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #ff4655;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .flickTarget span {
+            transform: rotate(-45deg);
+        }
+
+        .flickTarget.active {
+            background: radial-gradient(circle, #ff4655 45%, #b5303a 100%);
+            border-color: white;
+            color: white;
+            box-shadow: 0 0 30px rgba(255, 70, 85, 0.8);
+            cursor: crosshair;
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+
+        .crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .crosshair::before,
+        .crosshair::after {
+            content: '';
+            position: absolute;
+            background: #55ff46;
+            box-shadow: 0 0 5px #55ff46;
+        }
+
+        .crosshair::before {
+            width: 40px;
+            height: 3px;
+            top: 18.5px;
+            left: 0;
+        }
+
+        .crosshair::after {
+            width: 3px;
+            height: 40px;
+            top: 0;
+            left: 18.5px;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 64px;
+            color: #ff4655;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 70, 85, 0.8);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px 40px;
+            border-radius: 20px;
+            border: 4px solid #ff4655;
+        }
+
+        /* МИНИ-ИГРА 5: ПАТТЕРНЫ */
+        #patternGame {
+            background: #0a0a0a;
+        }
+
+        .patternGrid {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .patternCell {
+            width: 100px;
+            height: 100px;
+            background: #1a1a1a;
+            border: 3px solid #333;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .patternCell.active {
+            background: #ffd846;
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(255, 216, 70, 0.7);
+        }
+
+        /* МИНИ-ИГРА 6: ТАП-РАШ */
+        #tapRush {
+            background: #0a0a0a;
+        }
+
+        .tapCircle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ff4655 50%, #b5303a 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 4px solid white;
+            box-shadow: 0 0 25px rgba(255, 70, 85, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* МИНИ-ИГРА 7: ДВОЙНОЙ КЛИК */
+        #doubleClick {
+            background: #0a0a0a;
+        }
+
+        .doubleArea {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #1a1a1a, #0a0a0a);
+            border: 5px solid #4655ff;
+            border-radius: 25px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4655ff;
+            font-size: 26px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 0 30px rgba(70, 85, 255, 0.3);
+        }
+
+        .doubleArea.active {
+            background: #4655ff;
+            color: white;
+            box-shadow: 0 0 50px rgba(70, 85, 255, 0.7);
         }
     </style>
 </head>
 <body>
-    <div class="game-container">
-        <h1>🎯 Укрытие и Атака 🎯</h1>
-        <div class="game-info">
-            <div>❤️ Здоровье: <span id="health">100%</span></div>
-            <div>⭐ Очки: <span id="score">0</span></div>
+    <!-- МЕНЮ -->
+    <div id="gameMenu">
+        <div class="site-title">CLASHPOINT</div>
+        <div class="gameBtn red" onclick="startGame('aimTrainer')">ТРЕНИРОВКА ПРИЦЕЛА</div>
+        <div class="gameBtn blue" onclick="startGame('reactionTest')">РЕАКЦИЯ</div>
+        <div class="gameBtn green" onclick="startGame('tracking')">ТРЕКИНГ</div>
+        <div class="gameBtn yellow" onclick="startGame('flickShot')">ФЛИК-ШОТ</div>
+        <div class="gameBtn red" onclick="startGame('patternGame')">ПАТТЕРНЫ</div>
+        <div class="gameBtn blue" onclick="startGame('tapRush')">ТАП-РАШ</div>
+        <div class="gameBtn green" onclick="startGame('doubleClick')">ДВОЙНОЙ КЛИК</div>
+    </div>
+
+    <!-- МИНИ-ИГРА 1: ТРЕНИРОВКА ПРИЦЕЛА -->
+    <div id="aimTrainer" class="gameContainer">
+        <button class="backBtn" onclick="backToMenu()">←</button>
+        <div class="gameTitle">ТРЕНИРОВКА ПРИЦЕЛА</div>
+        <div class="stats">
+            <div id="aimScore">0</div>
+            <div style="font-size:16px;color:#aaa;">ВРЕМЯ: <span id="aimTime">30</span></div>
         </div>
-        <canvas id="gameCanvas" width="400" height="600">
-            Ваш браузер не поддерживает HTML5 Canvas
-        </canvas>
-        <div class="controls-info">
-            🎮 Управление: Кнопки ниже | 🎯 Стреляй только когда виден!
+        <div id="aimTargets"></div>
+    </div>
+
+    <!-- МИНИ-ИГРА 2: ТЕСТ РЕАКЦИИ -->
+    <div id="reactionTest" class="gameContainer">
+        <button class="backBtn" onclick="backToMenu()">←</button>
+        <div class="gameTitle">ТЕСТ РЕАКЦИИ</div>
+        <div class="stats">
+            <div style="font-size:18px;">ЛУЧШИЙ:</div>
+            <div id="bestReaction">0 ms</div>
         </div>
-        <div class="instructions">
-            Спрячься за укрытием → Высовывайся → Стреляй → Прячься!
+        <div class="reactionArea" onclick="reactionClick()">
+            ЖДИ СИГНАЛ...
         </div>
+        <div class="reactionResult" id="reactionResult">-</div>
+    </div>
+
+    <!-- МИНИ-ИГРА 3: ТРЕКИНГ -->
+    <div id="tracking" class="gameContainer">
+        <button class="backBtn" onclick="backToMenu()">←</button>
+        <div class="gameTitle">ТРЕКИНГ ЦЕЛИ</div>
+        <div class="stats">
+            <div id="trackingScore">0</div>
+            <div style="font-size:16px;color:#aaa;">ВРЕМЯ: <span id="trackingTime">20</span></div>
+        </div>
+        <div class="trackingCursor"></div>
+        <div id="trackingArea"></div>
+    </div>
+
+    <!-- МИНИ-ИГРА 4: ФЛИК-ШОТ -->
+    <div id="flickShot" class="gameContainer">
+        <button class="backBtn" onclick="backToMenu()">←</button>
+        <div class="gameTitle">ФЛИК-ШОТ</div>
+        <div class="stats">
+            <div id="flickScore">0</div>
+            <div style="font-size:16px;color:#aaa;">ВРЕМЯ: <span id="flickTime">15</span></div>
+        </div>
+        <div class="crosshair"></div>
+        <div id="flickTargets"></div>
+        <div class="countdown" id="countdown">3</div>
+    </div>
+
+    <!-- МИНИ-ИГРА 5: ПАТТЕРНЫ -->
+    <div id="patternGame" class="gameContainer">
+        <button class="backBtn" onclick="backToMenu()">←</button>
+        <div class="gameTitle">ПАТТЕРНЫ</div>
+        <div class="stats">
+            <div id="patternScore">0</div>
+            <div style="font-size:16px;color:#aaa;">УРОВЕНЬ: <span id="patternLevel">1</span></div>
+        </div>
+        <div class="patternGrid" id="patternGrid"></div>
+        <div class="countdown" id="patternCountdown">ГОТОВЬСЯ</div>
+    </div>
+
+    <!-- МИНИ-ИГРА 6: ТАП-РАШ -->
+    <div id="tapRush" class="gameContainer">
+        <button class="backBtn" onclick="backToMenu()">←</button>
+        <div class="gameTitle">ТАП-РАШ</div>
+        <div class="stats">
+            <div id="tapScore">0</div>
+            <div style="font-size:16px;color:#aaa;">ВРЕМЯ: <span id="tapTime">10</span></div>
+        </div>
+        <div id="tapArea"></div>
+    </div>
+
+    <!-- МИНИ-ИГРА 7: ДВОЙНОЙ КЛИК -->
+    <div id="doubleClick" class="gameContainer">
+        <button class="backBtn" onclick="backToMenu()">←</button>
+        <div class="gameTitle">ДВОЙНОЙ КЛИК</div>
+        <div class="stats">
+            <div id="doubleScore">0</div>
+            <div style="font-size:16px;color:#aaa;">ПОПЫТКИ: <span id="doubleAttempts">10</span></div>
+        </div>
+        <div class="doubleArea" onclick="doubleClick()">
+            КЛИКАЙ ДВАЖДЫ БЫСТРО
+        </div>
+        <div class="reactionResult" id="doubleResult"></div>
     </div>
 
     <script>
-        // === НАСТРОЙКИ ИГРЫ ===
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const healthDisplay = document.getElementById('health');
-        const scoreDisplay = document.getElementById('score');
-        
-        // Автоподстройка размера под телефон
-        function resizeCanvas() {
-            const maxWidth = Math.min(400, window.innerWidth - 40);
-            const aspectRatio = 400 / 600;
-            canvas.width = maxWidth;
-            canvas.height = maxWidth / aspectRatio;
+        let currentGame = null;
+        let gameActive = false;
+
+        function startGame(gameId) {
+            document.getElementById('gameMenu').style.display = 'none';
+            const game = document.getElementById(gameId);
+            game.style.display = 'block';
+            currentGame = gameId;
+            gameActive = true;
             
-            // Обновляем размеры кнопок
-            updateButtonPositions();
-        }
-        
-        // Игровые объекты
-        let player = { 
-            x: 0, y: 0, w: 30, h: 40, 
-            health: 100, visible: false 
-        };
-        
-        let cover = { 
-            x: 0, y: 0, w: 60, h: 70 
-        };
-        
-        let enemy = { 
-            x: 0, y: 0, w: 30, h: 40, 
-            shotReady: true, moveTimer: 0 
-        };
-        
-        let bullets = [];
-        let enemyBullets = [];
-        let score = 0;
-        let gameOver = false;
-        
-        // Сенсорные кнопки (позиции обновятся после ресайза)
-        let btnLeft = { x: 0, y: 0, w: 0, h: 0, pressed: false };
-        let btnRight = { x: 0, y: 0, w: 0, h: 0, pressed: false };
-        let btnShoot = { x: 0, y: 0, w: 0, h: 0, pressed: false };
-        
-        function updateButtonPositions() {
-            const btnSize = canvas.width * 0.15;
-            const margin = canvas.width * 0.05;
+            // Сброс всех таймеров при переключении игр
+            clearAllTimers();
             
-            btnLeft.w = btnLeft.h = btnRight.w = btnRight.h = btnShoot.w = btnShoot.h = btnSize;
-            btnLeft.x = margin;
-            btnLeft.y = canvas.height - btnSize - margin;
-            btnRight.x = btnLeft.x + btnSize + margin;
-            btnRight.y = btnLeft.y;
-            btnShoot.x = canvas.width - btnSize - margin;
-            btnShoot.y = btnLeft.y;
-            
-            // Обновляем позиции игровых объектов
-            player.w = canvas.width * 0.075;
-            player.h = canvas.width * 0.1;
-            player.x = canvas.width * 0.15;
-            player.y = canvas.height * 0.5;
-            
-            cover.w = canvas.width * 0.15;
-            cover.h = canvas.width * 0.175;
-            cover.x = canvas.width * 0.1;
-            cover.y = canvas.height * 0.47;
-            
-            enemy.w = canvas.width * 0.075;
-            enemy.h = canvas.width * 0.1;
-            enemy.x = canvas.width * 0.7;
-            enemy.y = canvas.height * 0.5;
-        }
-        
-        // === СЕНСОРНОЕ УПРАВЛЕНИЕ ===
-        function setupTouchControls() {
-            canvas.addEventListener('touchstart', handleTouch);
-            canvas.addEventListener('touchmove', handleTouch);
-            canvas.addEventListener('touchend', handleTouchEnd);
-            
-            // Для тестирования на ПК
-            canvas.addEventListener('mousedown', handleMouse);
-            canvas.addEventListener('mousemove', handleMouse);
-            canvas.addEventListener('mouseup', handleTouchEnd);
-        }
-        
-        function handleTouch(e) {
-            e.preventDefault();
-            const touches = e.type === 'mousedown' || e.type === 'mousemove' 
-                ? [{ clientX: e.clientX, clientY: e.clientY }] 
-                : e.touches;
-            
-            // Сбрасываем все кнопки
-            btnLeft.pressed = btnRight.pressed = btnShoot.pressed = false;
-            
-            for (let i = 0; i < touches.length; i++) {
-                const touch = touches[i];
-                const rect = canvas.getBoundingClientRect();
-                const scaleX = canvas.width / rect.width;
-                const scaleY = canvas.height / rect.height;
-                const x = (touch.clientX - rect.left) * scaleX;
-                const y = (touch.clientY - rect.top) * scaleY;
-                
-                checkButtonPress(x, y, true);
+            switch(gameId) {
+                case 'aimTrainer':
+                    startAimTrainer();
+                    break;
+                case 'reactionTest':
+                    startReactionTest();
+                    break;
+                case 'tracking':
+                    startTracking();
+                    break;
+                case 'flickShot':
+                    startFlickShot();
+                    break;
+                case 'patternGame':
+                    startPatternGame();
+                    break;
+                case 'tapRush':
+                    startTapRush();
+                    break;
+                case 'doubleClick':
+                    startDoubleClick();
+                    break;
             }
         }
-        
-        function handleMouse(e) {
-            handleTouch(e);
+
+        function backToMenu() {
+            if (currentGame) {
+                document.getElementById(currentGame).style.display = 'none';
+                gameActive = false;
+                clearAllTimers();
+                currentGame = null;
+            }
+            document.getElementById('gameMenu').style.display = 'flex';
         }
-        
-        function handleTouchEnd(e) {
-            e.preventDefault();
-            btnLeft.pressed = btnRight.pressed = btnShoot.pressed = false;
+
+        function clearAllTimers() {
+            // Очистка всех возможных таймеров
+            for(let i = 1; i <= 9999; i++) {
+                window.clearInterval(i);
+                window.clearTimeout(i);
+            }
         }
-        
-        function checkButtonPress(x, y, pressed) {
-            const checkButton = (btn) => {
-                return x > btn.x && x < btn.x + btn.w &&
-                       y > btn.y && y < btn.y + btn.h;
+
+        // ============================================
+        // МИНИ-ИГРА 1: ТРЕНИРОВКА ПРИЦЕЛА (улучшено)
+        // ============================================
+        let aimScore = 0;
+        let aimTime = 30;
+        let aimTimer;
+
+        function startAimTrainer() {
+            aimScore = 0;
+            aimTime = 30;
+            updateAimDisplay();
+            clearInterval(aimTimer);
+            createAimTargets();
+            aimTimer = setInterval(updateAimTime, 1000);
+        }
+
+        function createAimTargets() {
+            const container = document.getElementById('aimTargets');
+            container.innerHTML = '';
+            
+            for(let i = 0; i < 6; i++) {
+                createAimTarget();
+            }
+        }
+
+        function createAimTarget() {
+            const container = document.getElementById('aimTargets');
+            const target = document.createElement('div');
+            target.className = 'target';
+            target.onclick = function(e) {
+                e.stopPropagation();
+                hitAimTarget(this);
             };
             
-            if (checkButton(btnLeft)) btnLeft.pressed = pressed;
-            if (checkButton(btnRight)) btnRight.pressed = pressed;
-            if (checkButton(btnShoot)) btnShoot.pressed = pressed;
+            const x = 60 + Math.random() * (window.innerWidth - 120);
+            const y = 120 + Math.random() * (window.innerHeight - 200);
+            
+            target.style.left = `${x}px`;
+            target.style.top = `${y}px`;
+            
+            container.appendChild(target);
         }
-        
-        // === ИГРОВАЯ ЛОГИКА ===
-        function updateGame() {
-            if (gameOver) return;
+
+        function hitAimTarget(target) {
+            if (!gameActive || aimTime <= 0) return;
             
-            // Движение игрока
-            const moveSpeed = canvas.width * 0.01;
-            if (btnLeft.pressed && player.x > 0) player.x -= moveSpeed;
-            if (btnRight.pressed && player.x < canvas.width - player.w) player.x += moveSpeed;
+            target.classList.add('hit');
+            aimScore += 2;
+            updateAimDisplay();
             
-            // Проверка укрытия
-            player.visible = !(player.x > cover.x && 
-                             player.x + player.w < cover.x + cover.w &&
-                             player.y > cover.y);
+            setTimeout(() => {
+                target.remove();
+                createAimTarget();
+            }, 150);
+        }
+
+        function updateAimTime() {
+            if (aimTime > 0) {
+                aimTime--;
+                document.getElementById('aimTime').textContent = aimTime;
+            } else {
+                clearInterval(aimTimer);
+            }
+        }
+
+        function updateAimDisplay() {
+            document.getElementById('aimScore').textContent = aimScore;
+        }
+
+        // ============================================
+        // МИНИ-ИГРА 2: ТЕСТ РЕАКЦИИ (улучшено)
+        // ============================================
+        let reactionStartTime;
+        let reactionTimeout;
+        let bestReaction = 0;
+
+        function startReactionTest() {
+            const area = document.querySelector('.reactionArea');
+            area.textContent = 'ЖДИ СИГНАЛ...';
+            area.style.background = '#1a1a1a';
+            area.style.borderColor = '#333';
+            area.classList.remove('active');
+            document.getElementById('reactionResult').textContent = '-';
             
-            // Стрельба игрока
-            if (btnShoot.pressed && player.visible && bullets.length < 5) {
-                bullets.push({ 
-                    x: player.x + player.w/2, 
-                    y: player.y + player.h/2, 
-                    speed: canvas.width * 0.02,
-                    radius: canvas.width * 0.012
-                });
-                btnShoot.pressed = false;
+            const delay = 1500 + Math.random() * 3500;
+            reactionTimeout = setTimeout(() => {
+                area.textContent = 'КЛИКАЙ!';
+                area.style.background = '#ff4655';
+                area.style.borderColor = '#fff';
+                area.classList.add('active');
+                reactionStartTime = Date.now();
+            }, delay);
+        }
+
+        function reactionClick() {
+            const area = document.querySelector('.reactionArea');
+            if (!area.classList.contains('active')) return;
+            
+            clearTimeout(reactionTimeout);
+            const reactionTime = Date.now() - reactionStartTime;
+            
+            document.getElementById('reactionResult').textContent = reactionTime + ' ms';
+            area.classList.remove('active');
+            
+            if (reactionTime < bestReaction || bestReaction === 0) {
+                bestReaction = reactionTime;
+                document.getElementById('bestReaction').textContent = bestReaction + ' ms';
             }
             
-            // Движение врага
-            enemy.moveTimer++;
-            if (enemy.moveTimer > 120) {
-                enemy.x = canvas.width * 0.6 + Math.random() * canvas.width * 0.3;
-                enemy.moveTimer = 0;
-            }
+            setTimeout(startReactionTest, 1200);
+        }
+
+        // ============================================
+        // МИНИ-ИГРА 3: ТРЕКИНГ (улучшено)
+        // ============================================
+        let trackingScore = 0;
+        let trackingTime = 20;
+        let trackingTimer;
+        let circleMoveInterval;
+
+        function startTracking() {
+            trackingScore = 0;
+            trackingTime = 20;
+            updateTrackingDisplay();
+            clearInterval(trackingTimer);
+            clearInterval(circleMoveInterval);
             
-            // Стрельба врага
-            if (player.visible && enemy.shotReady) {
-                enemyBullets.push({ 
-                    x: enemy.x, 
-                    y: enemy.y + enemy.h/2, 
-                    speed: canvas.width * 0.015,
-                    radius: canvas.width * 0.01
-                });
-                enemy.shotReady = false;
-                setTimeout(() => enemy.shotReady = true, 1500);
-            }
+            createTrackingCircle();
+            startCircleMovement();
+            startTrackingTimer();
             
-            // Обновление пуль игрока
-            for (let i = bullets.length - 1; i >= 0; i--) {
-                bullets[i].x += bullets[i].speed;
+            document.addEventListener('mousemove', updateTrackingCursor);
+            document.addEventListener('touchmove', updateTrackingCursor);
+        }
+
+        function createTrackingCircle() {
+            const area = document.getElementById('trackingArea');
+            area.innerHTML = '';
+            
+            const circle = document.createElement('div');
+            circle.className = 'trackingCircle';
+            circle.id = 'trackCircle';
+            
+            const x = 100 + Math.random() * (window.innerWidth - 200);
+            const y = 150 + Math.random() * (window.innerHeight - 250);
+            
+            circle.style.left = `${x}px`;
+            circle.style.top = `${y}px`;
+            
+            area.appendChild(circle);
+        }
+
+        function startCircleMovement() {
+            circleMoveInterval = setInterval(() => {
+                if (!gameActive || trackingTime <= 0) return;
                 
-                // Попадание во врага
-                if (bullets[i].x > enemy.x && bullets[i].x < enemy.x + enemy.w &&
-                    bullets[i].y > enemy.y && bullets[i].y < enemy.y + enemy.h) {
-                    bullets.splice(i, 1);
-                    score += 10;
-                    scoreDisplay.textContent = score;
-                    enemy.x = canvas.width * 0.6 + Math.random() * canvas.width * 0.3;
-                }
-                else if (bullets[i].x > canvas.width) {
-                    bullets.splice(i, 1);
-                }
+                const circle = document.getElementById('trackCircle');
+                if (!circle) return;
+                
+                const currentX = parseFloat(circle.style.left) || 200;
+                const currentY = parseFloat(circle.style.top) || 200;
+                
+                const speed = 5;
+                const angle = Math.random() * Math.PI * 2;
+                const newX = currentX + Math.cos(angle) * speed;
+                const newY = currentY + Math.sin(angle) * speed;
+                
+                // Проверка границ
+                const boundedX = Math.max(50, Math.min(window.innerWidth - 50, newX));
+                const boundedY = Math.max(150, Math.min(window.innerHeight - 50, newY));
+                
+                circle.style.left = `${boundedX}px`;
+                circle.style.top = `${boundedY}px`;
+                
+                checkTrackingCollision();
+            }, 50);
+        }
+
+        function updateTrackingCursor(e) {
+            const cursor = document.querySelector('.trackingCursor');
+            if (!cursor) return;
+            
+            let x, y;
+            
+            if (e.type === 'touchmove') {
+                e.preventDefault();
+                x = e.touches[0].clientX;
+                y = e.touches[0].clientY;
+            } else {
+                x = e.clientX;
+                y = e.clientY;
             }
             
-            // Обновление пуль врага
-            for (let i = enemyBullets.length - 1; i >= 0; i--) {
-                enemyBullets[i].x -= enemyBullets[i].speed;
+            cursor.style.left = `${x}px`;
+            cursor.style.top = `${y}px`;
+        }
+
+        function checkTrackingCollision() {
+            const circle = document.getElementById('trackCircle');
+            const cursor = document.querySelector('.trackingCursor');
+            
+            if (!circle || !cursor) return;
+            
+            const circleRect = circle.getBoundingClientRect();
+            const cursorRect = cursor.getBoundingClientRect();
+            
+            const distance = Math.sqrt(
+                Math.pow(circleRect.left + circleRect.width/2 - (cursorRect.left + cursorRect.width/2), 2) +
+                Math.pow(circleRect.top + circleRect.height/2 - (cursorRect.top + cursorRect.height/2), 2)
+            );
+            
+            if (distance < 40) {
+                trackingScore += 3;
+                updateTrackingDisplay();
+                createTrackingCircle();
+            }
+        }
+
+        function startTrackingTimer() {
+            trackingTimer = setInterval(() => {
+                if (trackingTime > 0) {
+                    trackingTime--;
+                    document.getElementById('trackingTime').textContent = trackingTime;
+                } else {
+                    clearInterval(trackingTimer);
+                    clearInterval(circleMoveInterval);
+                    document.removeEventListener('mousemove', updateTrackingCursor);
+                    document.removeEventListener('touchmove', updateTrackingCursor);
+                }
+            }, 1000);
+        }
+
+        function updateTrackingDisplay() {
+            document.getElementById('trackingScore').textContent = trackingScore;
+        }
+
+        // ============================================
+        // МИНИ-ИГРА 4: ФЛИК-ШОТ (улучшено)
+        // ============================================
+        let flickScore = 0;
+        let flickTime = 15;
+        let flickTimer;
+        let countdownValue = 3;
+        let countdownInterval;
+
+        function startFlickShot() {
+            flickScore = 0;
+            flickTime = 15;
+            countdownValue = 3;
+            
+            document.getElementById('flickScore').textContent = flickScore;
+            document.getElementById('flickTime').textContent = flickTime;
+            
+            document.getElementById('countdown').style.display = 'block';
+            document.getElementById('countdown').textContent = countdownValue;
+            
+            clearInterval(countdownInterval);
+            clearInterval(flickTimer);
+            
+            countdownInterval = setInterval(() => {
+                countdownValue--;
+                document.getElementById('countdown').textContent = countdownValue;
                 
-                // Попадание в игрока
-                if (enemyBullets[i].x > player.x && enemyBullets[i].x < player.x + player.w &&
-                    enemyBullets[i].y > player.y && enemyBullets[i].y < player.y + player.h &&
-                    player.visible) {
-                    enemyBullets.splice(i, 1);
-                    player.health -= 5;
-                    healthDisplay.textContent = player.health + '%';
+                if (countdownValue <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('countdown').style.display = 'none';
+                    startFlickGame();
+                }
+            }, 1000);
+        }
+
+        function startFlickGame() {
+            createFlickTarget();
+            flickTimer = setInterval(() => {
+                if (flickTime > 0) {
+                    flickTime--;
+                    document.getElementById('flickTime').textContent = flickTime;
+                } else {
+                    clearInterval(flickTimer);
+                    document.getElementById('flickTargets').innerHTML = '';
+                }
+            }, 1000);
+        }
+
+        function createFlickTarget() {
+            const container = document.getElementById('flickTargets');
+            container.innerHTML = '';
+            
+            const target = document.createElement('div');
+            target.className = 'flickTarget';
+            target.innerHTML = '<span>✓</span>';
+            
+            const side = Math.floor(Math.random() * 4);
+            let x, y;
+            
+            switch(side) {
+                case 0: // верх
+                    x = 80 + Math.random() * (window.innerWidth - 160);
+                    y = 100;
+                    break;
+                case 1: // право
+                    x = window.innerWidth - 80;
+                    y = 150 + Math.random() * (window.innerHeight - 300);
+                    break;
+                case 2: // низ
+                    x = 80 + Math.random() * (window.innerWidth - 160);
+                    y = window.innerHeight - 120;
+                    break;
+                case 3: // лево
+                    x = 80;
+                    y = 150 + Math.random() * (window.innerHeight - 300);
+                    break;
+            }
+            
+            target.style.left = `${x}px`;
+            target.style.top = `${y}px`;
+            
+            setTimeout(() => {
+                target.classList.add('active');
+                target.onclick = function() {
+                    if (!gameActive || flickTime <= 0) return;
                     
-                    if (player.health <= 0) {
-                        player.health = 0;
-                        gameOver = true;
-                        setTimeout(showGameOverScreen, 100);
-                    }
+                    flickScore += 5;
+                    document.getElementById('flickScore').textContent = flickScore;
+                    target.style.opacity = '0';
+                    target.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                    
+                    setTimeout(() => {
+                        createFlickTarget();
+                    }, 200);
+                };
+            }, 100);
+            
+            container.appendChild(target);
+        }
+
+        // ============================================
+        // МИНИ-ИГРА 5: ПАТТЕРНЫ (новая)
+        // ============================================
+        let patternScore = 0;
+        let patternLevel = 1;
+        let patternSequence = [];
+        let playerPattern = [];
+        let patternTimeout;
+
+        function startPatternGame() {
+            patternScore = 0;
+            patternLevel = 1;
+            updatePatternDisplay();
+            
+            createPatternGrid();
+            document.getElementById('patternCountdown').style.display = 'block';
+            document.getElementById('patternCountdown').textContent = 'ГОТОВЬСЯ';
+            
+            setTimeout(() => {
+                document.getElementById('patternCountdown').style.display = 'none';
+                startPatternRound();
+            }, 1500);
+        }
+
+        function createPatternGrid() {
+            const grid = document.getElementById('patternGrid');
+            grid.innerHTML = '';
+            
+            for(let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'patternCell';
+                cell.dataset.index = i;
+                cell.onclick = () => patternCellClick(i);
+                grid.appendChild(cell);
+            }
+        }
+
+        function startPatternRound() {
+            playerPattern = [];
+            patternSequence = [];
+            
+            // Создаем последовательность
+            for(let i = 0; i < patternLevel + 2; i++) {
+                patternSequence.push(Math.floor(Math.random() * 9));
+            }
+            
+            // Показываем последовательность
+            showPatternSequence();
+        }
+
+        function showPatternSequence() {
+            let index = 0;
+            
+            function showNext() {
+                if (index >= patternSequence.length) {
+                    setTimeout(() => {
+                        clearPatternCells();
+                        gameActive = true;
+                    }, 500);
+                    return;
                 }
-                else if (enemyBullets[i].x < 0) {
-                    enemyBullets.splice(i, 1);
+                
+                const cellIndex = patternSequence[index];
+                const cells = document.querySelectorAll('.patternCell');
+                const cell = cells[cellIndex];
+                
+                cell.classList.add('active');
+                
+                setTimeout(() => {
+                    cell.classList.remove('active');
+                    index++;
+                    setTimeout(showNext, 300);
+                }, 500);
+            }
+            
+            showNext();
+        }
+
+        function patternCellClick(index) {
+            if (!gameActive) return;
+            
+            playerPattern.push(index);
+            const cells = document.querySelectorAll('.patternCell');
+            cells[index].classList.add('active');
+            
+            setTimeout(() => {
+                cells[index].classList.remove('active');
+            }, 200);
+            
+            checkPattern();
+        }
+
+        function checkPattern() {
+            for(let i = 0; i < playerPattern.length; i++) {
+                if (playerPattern[i] !== patternSequence[i]) {
+                    patternGameOver();
+                    return;
                 }
             }
-        }
-        
-        // === ОТРИСОВКА ===
-        function draw() {
-            // Фон
-            ctx.fillStyle = '#87CEEB';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Облака на фоне
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-            for (let i = 0; i < 3; i++) {
-                const cloudX = (Date.now() * 0.01 + i * 100) % (canvas.width + 200) - 100;
-                const cloudY = 50 + i * 40;
-                drawCloud(cloudX, cloudY, canvas.width * 0.1);
-            }
-            
-            // Земля
-            ctx.fillStyle = '#8BC34A';
-            ctx.fillRect(0, canvas.height * 0.6, canvas.width, canvas.height * 0.4);
-            
-            // Укрытие
-            ctx.fillStyle = '#8B4513';
-            ctx.fillRect(cover.x, cover.y, cover.w, cover.h);
-            
-            // Текстура укрытия
-            ctx.fillStyle = '#A0522D';
-            for (let i = 0; i < 3; i++) {
-                ctx.fillRect(cover.x + 5, cover.y + 5 + i * 20, cover.w - 10, 10);
-            }
-            
-            // Игрок
-            ctx.fillStyle = player.visible ? '#FF4444' : '#44FF44';
-            ctx.fillRect(player.x, player.y, player.w, player.h);
-            
-            // Глаз игрока
-            ctx.fillStyle = '#000';
-            ctx.fillRect(player.x + player.w - 8, player.y + 10, 5, 5);
-            
-            // Враг
-            ctx.fillStyle = '#8844FF';
-            ctx.fillRect(enemy.x, enemy.y, enemy.w, enemy.h);
-            
-            // Глаз врага
-            ctx.fillStyle = '#000';
-            ctx.fillRect(enemy.x + 5, enemy.y + 10, 5, 5);
-            
-            // Пули игрока
-            ctx.fillStyle = '#FFFF00';
-            for (let b of bullets) {
-                ctx.beginPath();
-                ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            
-            // Пули врага
-            ctx.fillStyle = '#FF8800';
-            for (let b of enemyBullets) {
-                ctx.beginPath();
-                ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            
-            // Сенсорные кнопки
-            drawButton(btnLeft, "←", "#4CAF50");
-            drawButton(btnRight, "→", "#2196F3");
-            drawButton(btnShoot, "⚡", btnShoot.pressed ? "#FF5722" : "#FFC107");
-            
-            // Статус видимости
-            ctx.fillStyle = player.visible ? '#FF4444' : '#44FF44';
-            ctx.font = `bold ${canvas.width * 0.04}px Arial`;
-            const statusText = player.visible ? 'ВИДЕН ВРАГУ!' : 'В БЕЗОПАСНОСТИ';
-            const textWidth = ctx.measureText(statusText).width;
-            ctx.fillText(statusText, (canvas.width - textWidth) / 2, canvas.height * 0.15);
-        }
-        
-        function drawButton(btn, text, color) {
-            // Тень
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-            ctx.fillRect(btn.x + 3, btn.y + 3, btn.w, btn.h);
-            
-            // Кнопка
-            ctx.fillStyle = btn.pressed ? '#333' : color;
-            ctx.beginPath();
-            ctx.roundRect(btn.x, btn.y, btn.w, btn.h, 15);
-            ctx.fill();
-            
-            // Текст кнопки
-            ctx.fillStyle = 'white';
-            ctx.font = `bold ${btn.w * 0.5}px Arial`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(text, btn.x + btn.w/2, btn.y + btn.h/2);
-        }
-        
-        function drawCloud(x, y, size) {
-            ctx.beginPath();
-            ctx.arc(x, y, size, 0, Math.PI * 2);
-            ctx.arc(x + size * 0.8, y - size * 0.3, size * 0.7, 0, Math.PI * 2);
-            ctx.arc(x + size * 1.5, y, size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-        
-        function showGameOverScreen() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#FF4444';
-            ctx.font = `bold ${canvas.width * 0.08}px Arial`;
-            ctx.textAlign = 'center';
-            ctx.fillText('ИГРА ОКОНЧЕНА', canvas.width/2, canvas.height/2 - 40);
-            
-            ctx.fillStyle = '#FFFF00';
-            ctx.font = `bold ${canvas.width * 0.06}px Arial`;
-            ctx.fillText(`Очки: ${score}`, canvas.width/2, canvas.height/2 + 10);
-            
-            ctx.fillStyle = '#FFFFFF';
-            ctx.font = `${canvas.width * 0.04}px Arial`;
-            ctx.fillText('Коснитесь для перезапуска', canvas.width/2, canvas.height/2 + 60);
-            
-            canvas.addEventListener('touchstart', restartGame, { once: true });
-            canvas.addEventListener('mousedown', restartGame, { once: true });
-        }
-        
-        function restartGame() {
-            player.health = 100;
-            healthDisplay.textContent = '100%';
-            score = 0;
-            scoreDisplay.textContent = '0';
-            bullets = [];
-            enemyBullets = [];
-            enemy.shotReady = true;
-            enemy.moveTimer = 0;
-            gameOver = false;
-            
-            // Сброс позиций
-            updateButtonPositions();
-            player.x = canvas.width * 0.15;
-            enemy.x = canvas.width * 0.7;
-        }
-        
-        // Игровой цикл
-        function gameLoop() {
-            updateGame();
-            draw();
-            requestAnimationFrame(gameLoop);
-        }
-        
-        // Инициализация
-        window.addEventListener('load', () => {
-            resizeCanvas();
-            setupTouchControls();
-            gameLoop();
-        });
-        
-        window.addEventListener('resize', resizeCanvas);
-        
-        // Добавляем метод roundRect для старых браузеров
-        if (!CanvasRenderingContext2D.prototype.roundRect) {
-            CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
-                if (w < 2 * r) r = w / 2;
-                if (h < 2 * r) r = h / 2;
-                this.beginPath();
-                this.moveTo(x + r, y);
-                this.arcTo(x + w, y, x + w, y + h, r);
-                this.arcTo(x + w, y + h, x, y + h, r);
-                this.arcTo(x, y + h, x, y, r);
-                this.arcTo(x, y, x + w, y, r);
-                this.closePath();
-                return this;
+            if (playerPattern.length === patternSequence.length) {
+                patternScore += patternLevel * 10;
+                patternLevel++;
+                updatePatternDisplay();
+                
+                setTimeout(() => {
+                    startPatternRound();
+                }, 800);
             }
         }
+
+        function patternGameOver() {
+            gameActive = false;
+            alert(`ПАТТЕРНЫ\nСЧЕТ: ${patternScore}\nУРОВЕНЬ: ${patternLevel}`);
+            startPatternGame();
+        }
+
+        function clearPatternCells() {
+            const cells = document.querySelectorAll('.patternCell');
+            cells.forEach(cell => cell.classList.remove('active'));
+        }
+
+        function updatePatternDisplay() {
+            document.getElementById('patternScore').textContent = patternScore;
+            document.getElementById('patternLevel').textContent = patternLevel;
+        }
+
+        // ============================================
+        // МИНИ-ИГРА 6: ТАП-РАШ (новая)
+        // ============================================
+        let tapScore = 0;
+        let tapTime = 10;
+        let tapTimer;
+
+        function startTapRush() {
+            tapScore = 0;
+            tapTime = 10;
+            updateTapDisplay();
+            clearInterval(tapTimer);
+            
+            createTapCircles();
+            tapTimer = setInterval(() => {
+                if (tapTime > 0) {
+                    tapTime--;
+                    document.getElementById('tapTime').textContent = tapTime;
+                } else {
+                    clearInterval(tapTimer);
+                    document.getElementById('tapArea').innerHTML = '';
+                }
+            }, 1000);
+        }
+
+        function createTapCircles() {
+            const area = document.getElementById('tapArea');
+            area.innerHTML = '';
+            
+            for(let i = 0; i < 3; i++) {
+                createTapCircle();
+            }
+        }
+
+        function createTapCircle() {
+            const area = document.getElementById('tapArea');
+            const circle = document.createElement('div');
+            circle.className = 'tapCircle';
+            circle.textContent = '+1';
+            
+            const x = 80 + Math.random() * (window.innerWidth - 160);
+            const y = 150 + Math.random() * (window.innerHeight - 250);
+            
+            circle.style.left = `${x}px`;
+            circle.style.top = `${y}px`;
+            
+            circle.onclick = function() {
+                if (!gameActive || tapTime <= 0) return;
+                
+                tapScore++;
+                updateTapDisplay();
+                this.remove();
+                createTapCircle();
+                
+                // Добавляем эффект
+                this.style.transform = 'scale(1.3)';
+                this.style.opacity = '0';
+            };
+            
+            area.appendChild(circle);
+        }
+
+        function updateTapDisplay() {
+            document.getElementById('tapScore').textContent = tapScore;
+        }
+
+        // ============================================
+        // МИНИ-ИГРА 7: ДВОЙНОЙ КЛИК (новая)
+        // ============================================
+        let doubleScore = 0;
+        let doubleAttempts = 10;
+        let lastClickTime = 0;
+        let doubleTimeout;
+
+        function startDoubleClick() {
+            doubleScore = 0;
+            doubleAttempts = 10;
+            updateDoubleDisplay();
+            
+            const area = document.querySelector('.doubleArea');
+            area.textContent = 'КЛИКАЙ ДВАЖДЫ БЫСТРО';
+            area.style.background = 'linear-gradient(45deg, #1a1a1a, #0a0a0a)';
+            area.style.borderColor = '#4655ff';
+            area.classList.remove('active');
+            
+            document.getElementById('doubleResult').textContent = '';
+            gameActive = true;
+        }
+
+        function doubleClick() {
+            if (!gameActive || doubleAttempts <= 0) return;
+            
+            const currentTime = Date.now();
+            const timeDiff = currentTime - lastClickTime;
+            lastClickTime = currentTime;
+            
+            if (timeDiff < 300 && timeDiff > 50) {
+                // Успешный двойной клик
+                doubleScore += 10;
+                doubleAttempts--;
+                
+                const area = document.querySelector('.doubleArea');
+                area.classList.add('active');
+                area.textContent = 'УСПЕХ!';
+                
+                document.getElementById('doubleResult').textContent = `${timeDiff} ms`;
+                document.getElementById('doubleResult').style.color = '#55ff46';
+                
+                setTimeout(() => {
+                    area.classList.remove('active');
+                    area.textContent = 'КЛИКАЙ ДВАЖДЫ БЫСТРО';
+                }, 300);
+                
+            } else if (timeDiff < 50) {
+                // Слишком быстро
+                return;
+            } else {
+                // Ошибка
+                doubleAttempts--;
+                document.getElementById('doubleResult').textContent = 'МЕДЛЕННО';
+                document.getElementById('doubleResult').style.color = '#ff4655';
+            }
+            
+            updateDoubleDisplay();
+            
+            if (doubleAttempts <= 0) {
+                gameActive = false;
+                setTimeout(() => {
+                    alert(`ДВОЙНОЙ КЛИК\nСЧЕТ: ${doubleScore}`);
+                    startDoubleClick();
+                }, 500);
+            }
+        }
+
+        function updateDoubleDisplay() {
+            document.getElementById('doubleScore').textContent = doubleScore;
+            document.getElementById('doubleAttempts').textContent = doubleAttempts;
+        }
+
+        // Запрет контекстного меню и зума
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('gesturestart', e => e.preventDefault());
+        document.addEventListener('gesturechange', e => e.preventDefault());
+        document.addEventListener('gestureend', e => e.preventDefault());
+        
+        // Предотвращение скролла на тач-устройствах
+        document.addEventListener('touchmove', function(e) {
+            if (currentGame && gameActive) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
+```
+
+Что было добавлено и улучшено:
+
+1. Название сайта - "CLASHPOINT" вверху меню
+
+2. 7 мини-игр:
+
+1. ТРЕНИРОВКА ПРИЦЕЛА - клики по целям
+2. РЕАКЦИЯ - тест скорости реакции
+3. ТРЕКИНГ - слежение за движущейся целью
+4. ФЛИК-ШОТ - быстрые выстрелы
+5. ПАТТЕРНЫ (новая) - запоминание и повторение последовательности
+6. ТАП-РАШ (новая) - быстрое нажатие на появляющиеся круги
+7. ДВОЙНОЙ КЛИК (новая) - тренировка двойного клика
+
+3. Улучшенный дизайн:
+
+· Кнопки с разными цветами
+· Более крутые стили для игр
+· Улучшенная анимация
+· Проработанные интерфейсы
+
+4. Улучшенные механики:
+
+· Все игры теперь строго на телефоне
+· Запрещён скролл и зум
+· Оптимизировано управление
+· Более плавная анимация
+
+5. Новые фичи:
+
+· Счётчики и таймеры
+· Система подсчёта очков
+· Разные уровни сложности
+· Индикаторы успеха/ошибки
+
+Все 7 игр готовы к использованию! Просто откройте файл на телефоне.

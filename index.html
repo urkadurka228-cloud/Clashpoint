@@ -1,1285 +1,483 @@
-3
-
-Вот полный код сайта с 3 играми, который готов к использованию. Просто скопируйте весь код ниже в файл index.html и откройте его на телефоне:
-
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>3 Мобильные игры | Играйте бесплатно</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Укрытие и Атака - Мобильная Игра</title>
     <style>
-        /* ОСНОВНЫЕ СТИЛИ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            -webkit-user-select: none;
             user-select: none;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding: 0;
-        }
-        
-        /* КОНТЕЙНЕР */
-        .container {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            padding: 10px;
         }
         
-        /* ШАПКА */
-        .header {
+        .game-container {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            max-width: 100%;
         }
         
-        .title {
-            font-size: 2rem;
-            color: #4cc9f0;
+        h1 {
+            color: #fff;
             margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
-        }
-        
-        .subtitle {
-            color: #aaa;
-            font-size: 1rem;
-        }
-        
-        /* СПИСОК ИГР */
-        .games-list {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            flex: 1;
-            margin-bottom: 30px;
-        }
-        
-        /* КАРТОЧКА ИГРЫ */
-        .game-card {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(76, 201, 240, 0.3);
-        }
-        
-        .game-preview {
-            height: 180px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .game-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .game-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(45deg, #ff416c, #ff4b2b);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-size: 24px;
         }
         
         .game-info {
-            padding: 20px;
-        }
-        
-        .game-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
             display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .game-description {
-            color: #ccc;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-        
-        .game-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .feature {
-            background: rgba(76, 201, 240, 0.1);
-            color: #4cc9f0;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .play-btn {
-            width: 100%;
-            background: linear-gradient(45deg, #4cc9f0, #4361ee);
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 15px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s;
+            padding: 10px 20px;
+            border-radius: 10px 10px 0 0;
+            font-size: 18px;
+            margin-bottom: -2px;
         }
         
-        .play-btn:hover {
-            background: linear-gradient(45deg, #4361ee, #3a0ca3);
-            transform: translateY(-2px);
+        canvas {
+            display: block;
+            background: #87CEEB;
+            border: 3px solid #333;
+            border-radius: 0 0 10px 10px;
+            max-width: 100%;
+            height: auto;
         }
         
-        /* ПОДВАЛ */
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #888;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .controls-info {
+            color: #fff;
+            margin-top: 15px;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
         }
         
-        /* ЭКРАН ИГРЫ */
-        .game-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a1a;
-            z-index: 1000;
-            display: none;
-            flex-direction: column;
+        .instructions {
+            color: #ddd;
+            margin-top: 10px;
+            font-size: 14px;
+            line-height: 1.4;
         }
         
-        .game-screen.active {
-            display: flex;
-        }
-        
-        .game-header {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.8);
-            border-bottom: 1px solid #333;
-        }
-        
-        .back-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            margin-right: 15px;
-        }
-        
-        .game-name {
-            font-size: 1.2rem;
-            color: #4cc9f0;
-        }
-        
-        .game-iframe {
-            flex: 1;
-            border: none;
-            width: 100%;
-            height: 100%;
-        }
-        
-        /* АДАПТИВ */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .title {
-                font-size: 1.8rem;
-            }
-            
-            .game-preview {
-                height: 150px;
-            }
-            
-            .game-info {
-                padding: 15px;
-            }
-            
-            .game-title {
-                font-size: 1.3rem;
-            }
+        @media (max-height: 700px) {
+            h1 { font-size: 20px; margin-bottom: 5px; }
+            .game-info { font-size: 16px; padding: 8px 15px; }
+            .controls-info { font-size: 14px; }
+            .instructions { font-size: 12px; }
         }
     </style>
 </head>
 <body>
-    <!-- ГЛАВНЫЙ ЭКРАН -->
-    <div class="container" id="mainScreen">
-        <div class="header">
-            <h1 class="title">🎮 3 Мобильные Игры</h1>
-            <p class="subtitle">Играйте бесплатно прямо в браузере!</p>
+    <div class="game-container">
+        <h1>🎯 Укрытие и Атака 🎯</h1>
+        <div class="game-info">
+            <div>❤️ Здоровье: <span id="health">100%</span></div>
+            <div>⭐ Очки: <span id="score">0</span></div>
         </div>
-        
-        <div class="games-list">
-            <!-- ИГРА 1 -->
-            <div class="game-card">
-                <div class="game-preview" style="background: linear-gradient(135deg, #3b7d42 0%, #2e6333 100%);">
-                    <div class="game-badge">КЛИКЕР</div>
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; font-size: 60px;">
-                        ⛏️
-                    </div>
-                </div>
-                <div class="game-info">
-                    <h2 class="game-title">Minecraft Clicker</h2>
-                    <p class="game-description">
-                        Разрушайте блоки, собирайте ресурсы и улучшайте свои инструменты!
-                    </p>
-                    <div class="game-features">
-                        <span class="feature">⛏️ 35 блоков</span>
-                        <span class="feature">💰 Магазин</span>
-                        <span class="feature">📈 Прокачка</span>
-                    </div>
-                    <button class="play-btn" onclick="openGame('minecraft')">
-                        <i class="fas fa-play"></i> Играть
-                    </button>
-                </div>
-            </div>
-            
-            <!-- ИГРА 2 -->
-            <div class="game-card">
-                <div class="game-preview" style="background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);">
-                    <div class="game-badge">ПИТОМЕЦ</div>
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; font-size: 60px;">
-                        🐮
-                    </div>
-                </div>
-                <div class="game-info">
-                    <h2 class="game-title">Talking Dunyakha</h2>
-                    <p class="game-description">
-                        Заботьтесь о милой говорящей коровке! Кормите, играйте и ухаживайте.
-                    </p>
-                    <div class="game-features">
-                        <span class="feature">❤️ Забота</span>
-                        <span class="feature">🎮 4 мини-игры</span>
-                        <span class="feature">👶 Для детей</span>
-                    </div>
-                    <button class="play-btn" onclick="openGame('dunyakha')">
-                        <i class="fas fa-play"></i> Играть
-                    </button>
-                </div>
-            </div>
-            
-            <!-- ИГРА 3 -->
-            <div class="game-card">
-                <div class="game-preview" style="background: linear-gradient(135deg, #000428 0%, #004e92 100%);">
-                    <div class="game-badge">ЭКШН</div>
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; font-size: 60px;">
-                        🚀
-                    </div>
-                </div>
-                <div class="game-info">
-                    <h2 class="game-title">К<p class="game-description">
-                        Сражайтесь в космосе, уклоняйтесь от врагов и собирайте бонусы!
-                    </p>
-                    <div class="game-features">
-                        <span class="feature">🎯 Автонаведение</span>
-                        <span class="feature">⚡ 5 бафов</span>
-                        <span class="feature">🕹️ Джойстик</span>
-                    </div>
-                    <button class="play-btn" onclick="openGame('space')">
-                        <i class="fas fa-play"></i> Играть
-                    </button>
-                </div>
-            </div>
+        <canvas id="gameCanvas" width="400" height="600">
+            Ваш браузер не поддерживает HTML5 Canvas
+        </canvas>
+        <div class="controls-info">
+            🎮 Управление: Кнопки ниже | 🎯 Стреляй только когда виден!
         </div>
-        
-        <div class="footer">
-            <p>© 2024 Мобильные игры. Все игры работают в браузере.</p>
-            <p>Автор: Данил Фардтдинов</p>
+        <div class="instructions">
+            Спрячься за укрытием → Высовывайся → Стреляй → Прячься!
         </div>
-    </div>
-    
-    <!-- ЭКРАН МИНЕКРАФТ КЛИКЕР -->
-    <div class="game-screen" id="minecraftScreen">
-        <div class="game-header">
-            <button class="back-btn" onclick="closeGame()">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h2 class="game-name">Minecraft Clicker</h2>
-        </div>
-        <iframe class="game-iframe" id="minecraftGame"></iframe>
-    </div>
-    
-    <!-- ЭКРАН TALKING DUNYAKHA -->
-    <div class="game-screen" id="dunyakhaScreen">
-        <div class="game-header">
-            <button class="back-btn" onclick="closeGame()">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h2 class="game-name">Talking Dunyakha</h2>
-        </div>
-        <iframe class="game-iframe" id="dunyakhaGame"></iframe>
-    </div>
-    
-    <!-- ЭКРАН КОСМИЧЕСКОГО ВЫЖИВАЛЬЩИКА -->
-    <div class="game-screen" id="spaceScreen">
-        <div class="game-header">
-            <button class="back-btn" onclick="closeGame()">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h2 class="game-name">Космический Выживальщик</h2>
-        </div>
-        <iframe class="game-iframe" id="spaceGame"></iframe>
     </div>
 
     <script>
-        // КОД ИГР
-        const games = {
-            minecraft: `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Minecraft Clicker</title>
-                    <style>
-                        * { margin: 0; padding: 0; box-sizing: border-box; }
-                        body {
-                            background: #1a1a2e;
-                            color: white;
-                            font-family: Arial, sans-serif;
-                            height: 100vh;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                        }
-                        .game {
-                            width: 100%;
-                            max-width: 400px;
-                            text-align: center;
-                            padding: 20px;
-                        }
-                        .header {
-                            display: flex;
-                            justify-content: space-between;
-                            margin-bottom: 20px;
-                            background: rgba(0,0,0,0.5);
-                            padding: 10px;
-                            border-radius: 10px;
-                        }
-                        .coins {
-                            color: gold;
-                            font-size: 24px;
-                        }
-                        .block {
-                            width: 200px;
-                            height: 200px;
-                            background: #8B4513;
-                            border: 5px solid #654321;
-                            border-radius: 10px;
-                            margin: 20px auto;
-                            cursor: pointer;
-                            position: relative;
-                            overflow: hidden;
-                        }
-                        .block:active {
-                            transform: scale(0.95);
-                        }
-                        .block-pattern {
-                            width: 100%;
-                            height: 100%;
-                            background: 
-                                linear-gradient(45deg, #A0522D 25%, transparent 25%),
-                                linear-gradient(-45deg, #A0522D 25%, transparent 25%),
-                                linear-gradient(45deg, transparent 75%, #A0522D 75%),
-                                linear-gradient(-45deg, transparent 75%, #A0522D 75%);
-                            background-size: 20px 20px;
-                        }
-                        .shop {
-                            margin-top: 20px;
-                            background: rgba(0,0,0,0.5);
-                            padding: 15px;
-                            border-radius: 10px;
-                        }
-                        button {
-                            background: #4CAF50;
-                            color: white;
-                            border: none;
-                            padding: 10px 15px;
-                            margin: 5px;
-                            border-radius: 5px;
-                            cursor: pointer;
-                        }
-                        .stats {
-                            margin-top: 10px;
-                            font-size: 14px;
-                            color: #ccc;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="game">
-                        <div class="header">
-                            <div class="coins">💰 <span id="coinCount">0</span></div>
-                            <div>Уровень: <span id="level">1</span></div>
-                        </div>
-                        
-                        <div class="block" id="mineBlock">
-                            <div class="block-pattern"></div>
-                        </div>
-                        
-                        <div class="shop">
-                            <h3>Магазин</h3>
-                            <button onclick="buyUpgrade()">Улучшить кирку (+1💰) - 50💰</button>
-                            <button onclick="buyAutoClicker()">Автокликер (1/сек) - 200💰</button>
-                            <div class="stats">
-                                <p>Кликов: <span id="clicks">0</span></p>
-                                <p>Монет/клик: <span id="perClick">1</span></p>
-                                <p>Автокликеры: <span id="autoCount">0</span></p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <script>
-                        let coins = 0;
-                        let clicks = 0;
-                        let perClick = 1;
-                        let level = 1;
-                        let autoClickers = 0;
-                        
-                        const block = document.getElementById('mineBlock');
-                        const coinCount = document.getElementById('coinCount');
-                        const clicksEl = document.getElementById('clicks');
-                        const perClickEl = document.getElementById('perClick');
-                        const levelEl = document.getElementById('level');
-                        const autoCount = document.getElementById('autoCount');
-                        
-                        block.addEventListener('click', function() {
-                            clicks++;
-                            coins += perClick;
-                            updateUI();
-                            
-                            // Анимация
-                            this.style.transform = 'scale(0.95)';
-                            setTimeout(() => this.style.transform = 'scale(1)', 100);
-                            
-                            // Уровень
-                            if (clicks % 50 === 0) {
-                                level++;
-                                coins += level * 10;
-                                levelEl.textContent = level;
-                            }
-                        });
-                        
-                        function buyUpgrade() {
-                            if (coins >= 50) {
-                                coins -= 50;
-                                perClick++;
-                                updateUI();
-                            }
-                        }
-                        
-                        function buyAutoClicker() {
-                            if (coins >= 200) {
-                                coins -= 200;
-                                autoClickers++;
-                                updateUI();
-                            }
-                        }
-                        
-                        function updateUI() {
-                            coinCount.textContent = coins;
-                            clicksEl.textContent = clicks;
-                            perClickEl.textContent = perClick;
-                            autoCount.textContent = autoClickers;
-                        }
-                        
-                        // Автокликер
-                        setInterval(() => {
-                            coins += autoClickers;
-                            updateUI();
-                        }, 1000);
-                    <\/script>
-                </body>
-                </html>
-            `,
+        // === НАСТРОЙКИ ИГРЫ ===
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const healthDisplay = document.getElementById('health');
+        const scoreDisplay = document.getElementById('score');
+        
+        // Автоподстройка размера под телефон
+        function resizeCanvas() {
+            const maxWidth = Math.min(400, window.innerWidth - 40);
+            const aspectRatio = 400 / 600;
+            canvas.width = maxWidth;
+            canvas.height = maxWidth / aspectRatio;
             
-            dunyakha: `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Talking Dunyakha</title>
-                    <style>
-                        * { margin: 0; padding: 0; box-sizing: border-box; }
-                        body {
-                            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
-                            font-family: Arial, sans-serif;
-                            height: 100vh;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                        }
-                        .game {
-                            width: 100%;
-                            max-width: 400px;
-                            text-align: center;
-                            padding: 20px;
-                        }
-                        .header {
-                            background: rgba(255,255,255,0.9);
-                            padding: 15px;
-                            border-radius: 20px;
-                            margin-bottom: 20px;
-                        }
-                        .cow {
-                            font-size: 120px;
-                            margin: 20px 0;
-                            cursor: pointer;
-                            transition: transform 0.2s;
-                        }
-                        .cow:active {
-                            transform: scale(0.95);
-                        }
-                        .message {
-                            background: white;
-                            padding: 15px;
-                            border-radius: 15px;
-                            margin-bottom: 20px;
-                            min-height: 60px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-size: 18px;
-                        }
-                        .stats {
-                            display: grid;
-                            grid-template-columns: 1fr 1fr;
-                            gap: 10px;
-                            margin-bottom: 20px;
-                        }
-                        .stat {
-                            background: rgba(255,255,255,0.8);
-                            padding: 10px;
-                            border-radius: 10px;
-                        }
-                        .stat-bar {
-                            height: 10px;
-                            background: #ddd;
-                            border-radius: 5px;
-                            margin-top: 5px;
-                            overflow: hidden;
-                        }
-                        .stat-fill {
-                            height: 100%;
-                            border-radius: 5px;
-                        }
-                        .actions {
-                            display: grid;
-                            grid-template-columns: repeat(4, 1fr);
-                            gap: 10px;
-                        }
-                        .action-btn {
-                            background: #FF69B4;
-                            color: white;
-                            border: none;
-                            padding: 15px 5px;
-                            border-radius: 10px;
-                            cursor: pointer;
-                            font-size: 12px;
-                        }
-                        .action-btn:active {
-                            transform: scale(0.95);
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="game">
-                        <div class="header">
-                            <h2>🐮 Dunyakha</h2>
-                            <p>Настроение: <span id="mood">85</span>%</p>
-                        </div>
-                        
-                        <div class="cow" id="cow">🐮</div>
-                        
-                        <div class="message" id="message">Привет! Я Dunyakha!</div>
-                        
-                        <div class="stats">
-                            <div class="stat">
-                                <div>🍎 Голод</div>
-                                <div class="stat-bar">
-                                    <div class="stat-fill" id="hungerBar" style="width: 80%; background: #FF9800;"></div>
-                                </div>
-                            </div>
-                            <div class="stat">
-                                <div>⚡ Энергия</div>
-                                <div class="stat-bar">
-                                    <div class="stat-fill" id="energyBar" style="width: 90%; background: #2196F3;"></div>
-                                </div>
-                            </div>
-                            <div class="stat">
-                                <div>😊 Настроение</div>
-                                <div class="stat-bar">
-                                    <div class="stat-fill" id="happinessBar" style="width: 85%; background: #FF69B4;"></div>
-                                </div>
-                            </div>
-                            <div class="stat">
-                                <div>🛁 Чистота</div>
-                                <div class="stat-bar">
-                                    <div class="stat-fill" id="cleanBar" style="width: 95%; background: #4CAF50;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="actions">
-                            <button class="action-btn" onclick="feed()">🍎 Кормить</button>
-                            <button class="action-btn" onclick="play()">🎮 Играть</button>
-                            <button class="action-btn" onclick="wash()">🛁 Мыть</button>
-                            <button class="action-btn" onclick="sleep()">💤 Спать</button>
-                            <button class="action-btn" onclick="pet()">👋 Гладить</button>
-                            <button class="action-btn" onclick="dance()">💃 Танцевать</button>
-                            <button class="action-btn" onclick="talk()">🗣️ Говорить</button>
-                            <button class="action-btn" onclick="heal()">❤️ Лечить</button>
-                        </div>
-                    </div>
-                    
-                    <script>
-                        let hunger = 80;
-                        let energy = 90;
-                        let happiness = 85;
-                        let clean = 95;
-                        
-                        const cow = document.getElementById('cow');
-                        const message = document.getElementById('message');
-                        const moodEl = document.getElementById('mood');
-                        
-                        const phrases = [
-                            "Привет!",
-                            "Я голодная...",
-                            "Поиграй со мной!",
-                            "Мне скучно...",
-                            "Я устала...",
-                            "Ты мой лучший друг!",
-                            "Погладь меня!",
-                            "Хочу танцевать!",
-                            "Спасибо за заботу!"
-                        ];
-                        
-                        function updateUI() {
-                            document.getElementById('hungerBar').style.width = hunger + '%';
-                            document.getElementById('energyBar').style.width = energy + '%';
-                            document.getElementById('happinessBar').style.width = happiness + '%';
-                            document.getElementById('cleanBar').style.width = clean + '%';
-                            moodEl.textContent = happiness;
-                        }
-                        
-                        function showMsg(text) {
-                            message.textContent = text;
-                        }
-                        
-                        function feed() {
-                            hunger = Math.min(100, hunger + 20);
-                            happiness = Math.min(100, happiness + 5);
-                            showMsg("Вкусно! Спасибо! 🍎");
-                            updateUI();
-                        }
-                        
-                        function play() {
-                            if (energy > 10) {
-                                energy = Math.max(0, energy - 10);
-                                happiness = Math.min(100, happiness + 15);
-                                showMsg("Ура! Играем! 🎮");
-                                updateUI();
-                            }
-                        }
-                        
-                        function wash() {
-                            clean = Math.min(100, clean + 30);
-                            happiness = Math.min(100, happiness + 10);
-                            showMsg("Я чистая! 🛁");
-                            updateUI();
-                        }
-                        
-                        function sleep() {
-                            energy = Math.min(100, energy + 40);
-                            showMsg("Сплю... 💤");
-                            updateUI();
-                        }
-                        
-                        function pet() {
-                            happiness = Math.min(100, happiness + 10);
-                            cow.style.transform = 'scale(1.1)';
-                            showMsg("Муррр... 👋");
-                            updateUI();
-                            setTimeout(() => cow.style.transform = 'scale(1)', 200);
-                        }
-                        
-                        function dance() {
-                            if (energy > 20) {
-                                energy = Math.max(0, energy - 20);
-                                happiness = Math.min(100, happiness + 25);
-                                showMsg("Танцуем! 💃");
-                                updateUI();
-                            }
-                        }
-                        
-                        function talk() {
-                            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-                            showMsg(randomPhrase);
-                        }
-                        
-                        function heal() {
-                            happiness = Math.min(100, happiness + 20);
-                            showMsg("Спасибо! ❤️");
-                            updateUI();
-                        }
-                        
-                        cow.addEventListener('click', pet);
-                        
-                        // Автоуменьшение
-                        setInterval(() => {
-                            hunger = Math.max(0, hunger - 1);
-                            energy = Math.max(0, energy - 0.5);
-                            happiness = Math.max(0, happiness - 0.3);
-                            clean = Math.max(0, clean - 0.2);
-                            updateUI();
-                        }, 5000);
-                    <\/script>
-                </body>
-                </html>
-            `,
-            
-            space: `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Космический Выживальщик</title>
-                    <style>
-                        * { margin: 0; padding: 0; box-sizing: border-box; }
-                        body {
-                            background: #000;
-                            color: white;
-                            font-family: Arial, sans-serif;
-                            height: 100vh;
-                            overflow: hidden;
-                            touch-action: none;
-                        }
-                        .game {
-                            width: 100%;
-                            height: 100vh;
-                            position: relative;
-                        }
-                        .header {
-                            display: flex;
-                            justify-content: space-around;
-                            padding: 10px;
-                            background: rgba(0, 20, 40, 0.9);
-                            position: absolute;
-                            top: 0;
-                            width: 100%;
-                            z-index: 100;
-                        }
-                        .stat {
-                            text-align: center;
-                        }
-                        .stat-value {
-                            font-size: 20px;
-                            color: #00ffaa;
-                            font-weight: bold;
-                        }
-                        #gameArea {
-                            width: 100%;
-                            height: 100%;
-                            position: relative;
-                            background: #000511;
-                        }
-                        .player {
-                            position: absolute;
-                            width: 30px;
-                            height: 30px;
-                            background: #00aaff;
-                            border-radius: 50%;
-                            transform: translate(-50%, -50%);
-                        }
-                        .enemy {
-                            position: absolute;
-                            border-radius: 50%;
-                            transform: translate(-50%, -50%);
-                        }
-                        .bullet {
-                            position: absolute;
-                            width: 6px;
-                            height: 6px;
-                            background: yellow;
-                            border-radius: 50%;
-                        }
-                        .controller {
-                            position: absolute;
-                            bottom: 20px;
-                            width: 100%;
-                            display: flex;
-                            justify-content: space-around;
-                            padding: 0 20px;
-                        }
-                        .joystick-area {
-                            width: 100px;
-                            height: 100px;
-                            background: rgba(255,255,255,0.1);
-                            border-radius: 50%;
-                            position: relative;
-                            border: 2px solid #00aaff;
-                        }
-                        .joystick {
-                            width: 40px;
-                            height: 40px;
-                            background: #00aaff;
-                            border-radius: 50%;
-                            position: absolute;
-                            top: 30px;
-                            left: 30px;
-                        }
-                        .shoot-btn {
-                            width: 80px;
-                            height: 80px;
-                            background: #ff3366;
-                            border: none;
-                            border-radius: 50%;
-                            color: white;
-                            font-size: 24px;
-                        }
-                        .menu-btn {
-                            position: absolute;
-                            top: 10px;
-                            left: 10px;
-                            background: rgba(255,255,255,0.2);
-                            border: none;
-                            color: white;
-                            padding: 5px 10px;
-                            border-radius: 5px;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="game">
-                        <div class="header">
-                            <div class="stat">
-                                <div>ОЧКИ</div>
-                                <div class="stat-value" id="score">0</div>
-                            </div>
-                            <div class="stat">
-                                <div>ВРЕМЯ</div>
-                                <div class="stat-value" id="time">0</div>
-                            </div>
-                            <div class="stat">
-                                <div>ЖИЗНИ</div>
-                                <div class="stat-value" id="lives">3</div>
-                            </div>
-                        </div>
-                        
-                        <div id="gameArea"></div>
-                        
-                        <div class="controller">
-                            <div class="joystick-area" id="joystickArea">
-                                <div class="joystick" id="joystick"></div>
-                            </div>
-                            <button class="shoot-btn" id="shootBtn">🔫</button>
-                        </div>
-                        
-                        <button class="menu-btn" onclick="window.parent.closeGame()">МЕНЮ</button>
-                    </div>
-                    
-                    <script>
-                        let score = 0;
-                        let time = 0;
-                        let lives = 3;
-                        let isRunning = true;
-                        
-                        let player = {
-                            x: 0,
-                            y: 0,
-                            speed: 5
-                        };
-                        
-                        let enemies = [];
-                        let bullets = [];
-                        let joystick = { x: 0, y: 0 };
-                        
-                        const area = document.getElementById('gameArea');
-                        const scoreEl = document.getElementById('score');
-                        const timeEl = document.getElementById('time');
-                        const livesEl = document.getElementById('lives');
-                        const joystickEl = document.getElementById('joystick');
-                        
-                        // Начальная позиция игрока
-                        function init() {
-                            player.x = area.clientWidth / 2;
-                            player.y = area.clientHeight / 2;
-                            
-                            createPlayer();
-                            setupControls();
-                            gameLoop();
-                            spawnEnemies();
-                        }
-                        
-                        function createPlayer() {
-                            const playerEl = document.createElement('div');
-                            playerEl.className = 'player';
-                            playerEl.id = 'player';
-                            playerEl.style.left = player.x + 'px';
-                            playerEl.style.top = player.y + 'px';
-                            area.appendChild(playerEl);
-                        }
-                        
-                        function setupControls() {
-                            const joystickArea = document.getElementById('joystickArea');
-                            const shootBtn = document.getElementById('shootBtn');
-                            
-                            let isDragging = false;
-                            
-                            joystickArea.addEventListener('touchstart', handleStart);
-                            document.addEventListener('touchmove', handleMove);
-                            document.addEventListener('touchend', handleEnd);
-                            
-                            function handleStart(e) {
-                                e.preventDefault();
-                                isDragging = true;
-                            }
-                            
-                            function handleMove(e) {
-                                if (!isDragging) return;
-                                e.preventDefault();
-                                
-                                const rect = joystickArea.getBoundingClientRect();
-                                const centerX = rect.left + rect.width / 2;
-                                const centerY = rect.top + rect.height / 2;
-                                
-                                const touch = e.touches[0];
-                                const x = touch.clientX - centerX;
-                                const y = touch.clientY - centerY;
-                                
-                                const maxDist = 30;
-                                const dist = Math.sqrt(x*x + y*y);
-                                const angle = Math.atan2(y, x);
-                                
-                                const limitedDist = Math.min(dist, maxDist);
-                                const limitedX = Math.cos(angle) * limitedDist;
-                                const limitedY = Math.sin(angle) * limitedDist;
-                                
-                                joystickEl.style.transform = \`translate(\${limitedX}px, \${limitedY}px)\`;
-                                joystick.x = limitedX / maxDist;
-                                joystick.y = limitedY / maxDist;
-                            }
-                            
-                            function handleEnd() {
-                                isDragging = false;
-                                joystickEl.style.transform = 'translate(0, 0)';
-                                joystick.x = 0;
-                                joystick.y = 0;
-                            }
-                            
-                            shootBtn.addEventListener('touchstart', shoot);
-                        }
-                        
-                        function gameLoop() {
-                            if (!isRunning) return;
-                            
-                            // Движение игрока
-                            player.x += joystick.x * player.speed;
-                            player.y += joystick.y * player.speed;
-                            
-                            // Границы
-                            player.x = Math.max(15, Math.min(area.clientWidth - 15, player.x));
-                            player.y = Math.max(15, Math.min(area.clientHeight - 15, player.y));
-                            
-                            document.getElementById('player').style.left = player.x + 'px';
-                            document.getElementById('player').style.top = player.y + 'px';
-                            
-                            // Движение врагов
-                            moveEnemies();
-                            
-                            // Движение пуль
-                            moveBullets();
-                            
-                            // Проверка столкновений
-                            checkCollisions();
-                            
-                            // Время
-                            time++;
-                            timeEl.textContent = Math.floor(time / 60);
-                            
-                            requestAnimationFrame(gameLoop);
-                        }
-                        
-                        function spawnEnemies() {
-                            setInterval(() => {
-                                if (!isRunning) return;
-                                
-                                const enemy = {
-                                    x: Math.random() > 0.5 ? -20 : area.clientWidth + 20,
-                                    y: Math.random() * area.clientHeight,
-                                    speed: 1 + Math.random() * 2,
-                                    size: 15 + Math.random() * 15
-                                };
-                                
-                                enemies.push(enemy);
-                                
-                                const enemyEl = document.createElement('div');
-                                enemyEl.className = 'enemy';
-                                enemyEl.style.left = enemy.x + 'px';
-                                enemyEl.style.top = enemy.y + 'px';
-                                enemyEl.style.width = enemy.size + 'px';
-                                enemyEl.style.height = enemy.size + 'px';
-                                enemyEl.style.background = Math.random() > 0.5 ? '#ff5555' : '#5555ff';
-                                area.appendChild(enemyEl);
-                            }, 2000);
-                        }
-                        
-                        function moveEnemies() {
-                            enemies.forEach((enemy, index) => {
-                                // Движение к игроку
-                                const dx = player.x - enemy.x;
-                                const dy = player.y - enemy.y;
-                                const dist = Math.sqrt(dx*dx + dy*dy);
-                                
-                                if (dist > 0) {
-                                    enemy.x += (dx / dist) * enemy.speed;
-                                    enemy.y += (dy / dist) * enemy.speed;
-                                }
-                                
-                                const enemyEl = area.children[index + 1]; // +1 потому что первый элемент - игрок
-                                if (enemyEl && enemyEl.className === 'enemy') {
-                                    enemyEl.style.left = enemy.x + 'px';
-                                    enemyEl.style.top = enemy.y + 'px';
-                                }
-                            });
-                        }
-                        
-                        function shoot() {
-                            if (!isRunning) return;
-                            
-                            // Находим ближайшего врага
-                            let nearestEnemy = null;
-                            let nearestDist = Infinity;
-                            
-                            enemies.forEach(enemy => {
-                                const dx = enemy.x - player.x;
-                                const dy = enemy.y - player.y;
-                                const dist = Math.sqrt(dx*dx + dy*dy);
-                                
-                                if (dist < nearestDist) {
-                                    nearestDist = dist;
-                                    nearestEnemy = enemy;
-                                }
-                            });
-                            
-                            if (nearestEnemy) {
-                                const dx = nearestEnemy.x - player.x;
-                                const dy = nearestEnemy.y - player.y;
-                                const dist = Math.sqrt(dx*dx + dy*dy);
-                                
-                                const bullet = {
-                                    x: player.x,
-                                    y: player.y,
-                                    vx: (dx / dist) * 8,
-                                    vy: (dy / dist) * 8
-                                };
-                                
-                                bullets.push(bullet);
-                                
-                                const bulletEl = document.createElement('div');
-                                bulletEl.className = 'bullet';
-                                bulletEl.style.left = bullet.x + 'px';
-                                bulletEl.style.top = bullet.y + 'px';
-                                area.appendChild(bulletEl);
-                            }
-                        }
-                        
-                        function moveBullets() {
-                            bullets.forEach((bullet, index) => {
-                                bullet.x += bullet.vx;
-                                bullet.y += bullet.vy;
-                                
-                                const bulletEl = area.querySelectorAll('.bullet')[index];
-                                if (bulletEl) {
-                                    bulletEl.style.left = bullet.x + 'px';
-                                    bulletEl.style.top = bullet.y + 'px';
-                                }
-                                
-                                // Удаление пуль за пределами
-                                if (bullet.x < -50 || bullet.x > area.clientWidth + 50 ||
-                                    bullet.y < -50 || bullet.y > area.clientHeight + 50) {
-                                    bullets.splice(index, 1);
-                                    if (bulletEl) bulletEl.remove();
-                                }
-                            });
-                        }
-                        
-                        function checkCollisions() {
-                            // Враги с игроком
-                            enemies.forEach((enemy, eIndex) => {
-                                const dx = player.x - enemy.x;
-                                const dy = player.y - enemy.y;
-                                const dist = Math.sqrt(dx*dx + dy*dy);
-                                
-                                if (dist < (15 + enemy.size/2)) {
-                                    lives--;
-                                    livesEl.textContent = lives;
-                                    enemies.splice(eIndex, 1);
-                                    
-                                    const enemyEl = area.children[eIndex + 1];
-                                    if (enemyEl) enemyEl.remove();
-                                    
-                                    if (lives <= 0) {
-                                        gameOver();
-                                    }
-                                }
-                            });
-                            
-                            // Пули с врагами
-                            bullets.forEach((bullet, bIndex) => {
-                                enemies.forEach((enemy, eIndex) => {
-                                    const dx = bullet.x - enemy.x;
-                                    const dy = bullet.y - enemy.y;
-                                    const dist = Math.sqrt(dx*dx + dy*dy);
-                                    
-                                    if (dist < (3 + enemy.size/2)) {
-                                        // Удаляем врага
-                                        enemies.splice(eIndex, 1);
-                                        const enemyEl = area.children[eIndex + 1];
-                                        if (enemyEl) enemyEl.remove();
-                                        
-                                        // Удаляем пулю
-                                        bullets.splice(bIndex, 1);
-                                        const bulletEl = area.querySelectorAll('.bullet')[bIndex];
-                                        if (bulletEl) bulletEl.remove();
-                                        
-                                        // Очки
-                                        score += 100;
-                                        scoreEl.textContent = score;
-                                    }
-                                });
-                            });
-                        }
-                        
-                        function gameOver() {
-                            isRunning = false;
-                            alert(\`Конец игры!\\nОчки: \${score}\\nВремя: \${Math.floor(time/60)} сек\`);
-                            window.parent.closeGame();
-                        }
-                        
-                        window.onload = init;
-                    <\/script>
-                </body>
-                </html>
-            `
+            // Обновляем размеры кнопок
+            updateButtonPositions();
+        }
+        
+        // Игровые объекты
+        let player = { 
+            x: 0, y: 0, w: 30, h: 40, 
+            health: 100, visible: false 
         };
         
-        // ФУНКЦИИ УПРАВЛЕНИЯ
-        function openGame(gameType) {
-            document.getElementById('mainScreen').style.display = 'none';
-            const screen = document.getElementById(gameType + 'Screen');
-            const iframe = document.getElementById(gameType + 'Game');
+        let cover = { 
+            x: 0, y: 0, w: 60, h: 70 
+        };
+        
+        let enemy = { 
+            x: 0, y: 0, w: 30, h: 40, 
+            shotReady: true, moveTimer: 0 
+        };
+        
+        let bullets = [];
+        let enemyBullets = [];
+        let score = 0;
+        let gameOver = false;
+        
+        // Сенсорные кнопки (позиции обновятся после ресайза)
+        let btnLeft = { x: 0, y: 0, w: 0, h: 0, pressed: false };
+        let btnRight = { x: 0, y: 0, w: 0, h: 0, pressed: false };
+        let btnShoot = { x: 0, y: 0, w: 0, h: 0, pressed: false };
+        
+        function updateButtonPositions() {
+            const btnSize = canvas.width * 0.15;
+            const margin = canvas.width * 0.05;
             
-            screen.classList.add('active');
-            iframe.srcdoc = games[gameType];
+            btnLeft.w = btnLeft.h = btnRight.w = btnRight.h = btnShoot.w = btnShoot.h = btnSize;
+            btnLeft.x = margin;
+            btnLeft.y = canvas.height - btnSize - margin;
+            btnRight.x = btnLeft.x + btnSize + margin;
+            btnRight.y = btnLeft.y;
+            btnShoot.x = canvas.width - btnSize - margin;
+            btnShoot.y = btnLeft.y;
+            
+            // Обновляем позиции игровых объектов
+            player.w = canvas.width * 0.075;
+            player.h = canvas.width * 0.1;
+            player.x = canvas.width * 0.15;
+            player.y = canvas.height * 0.5;
+            
+            cover.w = canvas.width * 0.15;
+            cover.h = canvas.width * 0.175;
+            cover.x = canvas.width * 0.1;
+            cover.y = canvas.height * 0.47;
+            
+            enemy.w = canvas.width * 0.075;
+            enemy.h = canvas.width * 0.1;
+            enemy.x = canvas.width * 0.7;
+            enemy.y = canvas.height * 0.5;
         }
         
-        function closeGame() {
-            document.querySelectorAll('.game-screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            document.getElementById('mainScreen').style.display = 'flex';
+        // === СЕНСОРНОЕ УПРАВЛЕНИЕ ===
+        function setupTouchControls() {
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', handleTouchEnd);
+            
+            // Для тестирования на ПК
+            canvas.addEventListener('mousedown', handleMouse);
+            canvas.addEventListener('mousemove', handleMouse);
+            canvas.addEventListener('mouseup', handleTouchEnd);
         }
         
-        // Предотвращение масштабирования на мобильных
-        document.addEventListener('touchstart', function(e) {
-            if (e.touches.length > 1) {
-                e.preventDefault();
+        function handleTouch(e) {
+            e.preventDefault();
+            const touches = e.type === 'mousedown' || e.type === 'mousemove' 
+                ? [{ clientX: e.clientX, clientY: e.clientY }] 
+                : e.touches;
+            
+            // Сбрасываем все кнопки
+            btnLeft.pressed = btnRight.pressed = btnShoot.pressed = false;
+            
+            for (let i = 0; i < touches.length; i++) {
+                const touch = touches[i];
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const x = (touch.clientX - rect.left) * scaleX;
+                const y = (touch.clientY - rect.top) * scaleY;
+                
+                checkButtonPress(x, y, true);
             }
-        }, { passive: false });
+        }
         
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(e) {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                e.preventDefault();
+        function handleMouse(e) {
+            handleTouch(e);
+        }
+        
+        function handleTouchEnd(e) {
+            e.preventDefault();
+            btnLeft.pressed = btnRight.pressed = btnShoot.pressed = false;
+        }
+        
+        function checkButtonPress(x, y, pressed) {
+            const checkButton = (btn) => {
+                return x > btn.x && x < btn.x + btn.w &&
+                       y > btn.y && y < btn.y + btn.h;
+            };
+            
+            if (checkButton(btnLeft)) btnLeft.pressed = pressed;
+            if (checkButton(btnRight)) btnRight.pressed = pressed;
+            if (checkButton(btnShoot)) btnShoot.pressed = pressed;
+        }
+        
+        // === ИГРОВАЯ ЛОГИКА ===
+        function updateGame() {
+            if (gameOver) return;
+            
+            // Движение игрока
+            const moveSpeed = canvas.width * 0.01;
+            if (btnLeft.pressed && player.x > 0) player.x -= moveSpeed;
+            if (btnRight.pressed && player.x < canvas.width - player.w) player.x += moveSpeed;
+            
+            // Проверка укрытия
+            player.visible = !(player.x > cover.x && 
+                             player.x + player.w < cover.x + cover.w &&
+                             player.y > cover.y);
+            
+            // Стрельба игрока
+            if (btnShoot.pressed && player.visible && bullets.length < 5) {
+                bullets.push({ 
+                    x: player.x + player.w/2, 
+                    y: player.y + player.h/2, 
+                    speed: canvas.width * 0.02,
+                    radius: canvas.width * 0.012
+                });
+                btnShoot.pressed = false;
             }
-            lastTouchEnd = now;
-        }, { passive: false });
+            
+            // Движение врага
+            enemy.moveTimer++;
+            if (enemy.moveTimer > 120) {
+                enemy.x = canvas.width * 0.6 + Math.random() * canvas.width * 0.3;
+                enemy.moveTimer = 0;
+            }
+            
+            // Стрельба врага
+            if (player.visible && enemy.shotReady) {
+                enemyBullets.push({ 
+                    x: enemy.x, 
+                    y: enemy.y + enemy.h/2, 
+                    speed: canvas.width * 0.015,
+                    radius: canvas.width * 0.01
+                });
+                enemy.shotReady = false;
+                setTimeout(() => enemy.shotReady = true, 1500);
+            }
+            
+            // Обновление пуль игрока
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                bullets[i].x += bullets[i].speed;
+                
+                // Попадание во врага
+                if (bullets[i].x > enemy.x && bullets[i].x < enemy.x + enemy.w &&
+                    bullets[i].y > enemy.y && bullets[i].y < enemy.y + enemy.h) {
+                    bullets.splice(i, 1);
+                    score += 10;
+                    scoreDisplay.textContent = score;
+                    enemy.x = canvas.width * 0.6 + Math.random() * canvas.width * 0.3;
+                }
+                else if (bullets[i].x > canvas.width) {
+                    bullets.splice(i, 1);
+                }
+            }
+            
+            // Обновление пуль врага
+            for (let i = enemyBullets.length - 1; i >= 0; i--) {
+                enemyBullets[i].x -= enemyBullets[i].speed;
+                
+                // Попадание в игрока
+                if (enemyBullets[i].x > player.x && enemyBullets[i].x < player.x + player.w &&
+                    enemyBullets[i].y > player.y && enemyBullets[i].y < player.y + player.h &&
+                    player.visible) {
+                    enemyBullets.splice(i, 1);
+                    player.health -= 5;
+                    healthDisplay.textContent = player.health + '%';
+                    
+                    if (player.health <= 0) {
+                        player.health = 0;
+                        gameOver = true;
+                        setTimeout(showGameOverScreen, 100);
+                    }
+                }
+                else if (enemyBullets[i].x < 0) {
+                    enemyBullets.splice(i, 1);
+                }
+            }
+        }
+        
+        // === ОТРИСОВКА ===
+        function draw() {
+            // Фон
+            ctx.fillStyle = '#87CEEB';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Облака на фоне
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            for (let i = 0; i < 3; i++) {
+                const cloudX = (Date.now() * 0.01 + i * 100) % (canvas.width + 200) - 100;
+                const cloudY = 50 + i * 40;
+                drawCloud(cloudX, cloudY, canvas.width * 0.1);
+            }
+            
+            // Земля
+            ctx.fillStyle = '#8BC34A';
+            ctx.fillRect(0, canvas.height * 0.6, canvas.width, canvas.height * 0.4);
+            
+            // Укрытие
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(cover.x, cover.y, cover.w, cover.h);
+            
+            // Текстура укрытия
+            ctx.fillStyle = '#A0522D';
+            for (let i = 0; i < 3; i++) {
+                ctx.fillRect(cover.x + 5, cover.y + 5 + i * 20, cover.w - 10, 10);
+            }
+            
+            // Игрок
+            ctx.fillStyle = player.visible ? '#FF4444' : '#44FF44';
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+            
+            // Глаз игрока
+            ctx.fillStyle = '#000';
+            ctx.fillRect(player.x + player.w - 8, player.y + 10, 5, 5);
+            
+            // Враг
+            ctx.fillStyle = '#8844FF';
+            ctx.fillRect(enemy.x, enemy.y, enemy.w, enemy.h);
+            
+            // Глаз врага
+            ctx.fillStyle = '#000';
+            ctx.fillRect(enemy.x + 5, enemy.y + 10, 5, 5);
+            
+            // Пули игрока
+            ctx.fillStyle = '#FFFF00';
+            for (let b of bullets) {
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Пули врага
+            ctx.fillStyle = '#FF8800';
+            for (let b of enemyBullets) {
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Сенсорные кнопки
+            drawButton(btnLeft, "←", "#4CAF50");
+            drawButton(btnRight, "→", "#2196F3");
+            drawButton(btnShoot, "⚡", btnShoot.pressed ? "#FF5722" : "#FFC107");
+            
+            // Статус видимости
+            ctx.fillStyle = player.visible ? '#FF4444' : '#44FF44';
+            ctx.font = `bold ${canvas.width * 0.04}px Arial`;
+            const statusText = player.visible ? 'ВИДЕН ВРАГУ!' : 'В БЕЗОПАСНОСТИ';
+            const textWidth = ctx.measureText(statusText).width;
+            ctx.fillText(statusText, (canvas.width - textWidth) / 2, canvas.height * 0.15);
+        }
+        
+        function drawButton(btn, text, color) {
+            // Тень
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.fillRect(btn.x + 3, btn.y + 3, btn.w, btn.h);
+            
+            // Кнопка
+            ctx.fillStyle = btn.pressed ? '#333' : color;
+            ctx.beginPath();
+            ctx.roundRect(btn.x, btn.y, btn.w, btn.h, 15);
+            ctx.fill();
+            
+            // Текст кнопки
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${btn.w * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, btn.x + btn.w/2, btn.y + btn.h/2);
+        }
+        
+        function drawCloud(x, y, size) {
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.arc(x + size * 0.8, y - size * 0.3, size * 0.7, 0, Math.PI * 2);
+            ctx.arc(x + size * 1.5, y, size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        function showGameOverScreen() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#FF4444';
+            ctx.font = `bold ${canvas.width * 0.08}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.fillText('ИГРА ОКОНЧЕНА', canvas.width/2, canvas.height/2 - 40);
+            
+            ctx.fillStyle = '#FFFF00';
+            ctx.font = `bold ${canvas.width * 0.06}px Arial`;
+            ctx.fillText(`Очки: ${score}`, canvas.width/2, canvas.height/2 + 10);
+            
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = `${canvas.width * 0.04}px Arial`;
+            ctx.fillText('Коснитесь для перезапуска', canvas.width/2, canvas.height/2 + 60);
+            
+            canvas.addEventListener('touchstart', restartGame, { once: true });
+            canvas.addEventListener('mousedown', restartGame, { once: true });
+        }
+        
+        function restartGame() {
+            player.health = 100;
+            healthDisplay.textContent = '100%';
+            score = 0;
+            scoreDisplay.textContent = '0';
+            bullets = [];
+            enemyBullets = [];
+            enemy.shotReady = true;
+            enemy.moveTimer = 0;
+            gameOver = false;
+            
+            // Сброс позиций
+            updateButtonPositions();
+            player.x = canvas.width * 0.15;
+            enemy.x = canvas.width * 0.7;
+        }
+        
+        // Игровой цикл
+        function gameLoop() {
+            updateGame();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // Инициализация
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            setupTouchControls();
+            gameLoop();
+        });
+        
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Добавляем метод roundRect для старых браузеров
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                if (w < 2 * r) r = w / 2;
+                if (h < 2 * r) r = h / 2;
+                this.beginPath();
+                this.moveTo(x + r, y);
+                this.arcTo(x + w, y, x + w, y + h, r);
+                this.arcTo(x + w, y + h, x, y + h, r);
+                this.arcTo(x, y + h, x, y, r);
+                this.arcTo(x, y, x + w, y, r);
+                this.closePath();
+                return this;
+            }
+        }
     </script>
 </body>
 </html>
-```
-
-Как использовать:
-
-1. Скопируйте весь код выше
-2. Вставьте в текстовый редактор (Блокнот, VS Code и т.д.)
-3. Сохраните файл как index.html
-4. Откройте файл на телефоне через браузер
-5. Выбирайте любую игру и играйте!
-
-Особенности сайта:
-
-✅ 3 полноценные игры в одном файле
-✅ Работает на любом телефоне без интернета
-✅ Удобное меню с красивыми карточками
-✅ Интуитивное управление (тапы, свайпы)
-✅ Автоматическое сохранение прогресса в игре
-✅ Красивый адаптивный дизайн
-✅ Ничего не нужно устанавливать
-
-Игры:
-
-1. Minecraft Clicker - кликер с улучшениями и магазином
-2. Talking Dunyakha - питомец-коровка с системой ухода
-3. Космический Выживальщик - аркада с джойстиком и автонаведением
-
-Просто откройте файл на телефоне и играйте!

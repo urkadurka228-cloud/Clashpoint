@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Clashpoint - Warmup</title>
+    <title>Clashpoint</title>
     <style>
         * {
             margin: 0;
@@ -22,7 +22,6 @@
             font-family: 'Arial Black', sans-serif;
             overflow: hidden;
             height: 100vh;
-            background: linear-gradient(135deg, #0a0a0a 0%, #000 100%);
         }
 
         /* МЕНЮ */
@@ -41,392 +40,240 @@
         .site-title {
             position: absolute;
             top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 42px;
+            font-size: 38px;
             font-weight: 900;
             color: #ff4655;
-            text-shadow: 0 0 20px rgba(255, 70, 85, 0.7);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            padding: 10px 30px;
-            border: 3px solid #ff4655;
-            border-radius: 15px;
-            background: rgba(0, 0, 0, 0.8);
+            text-shadow: 0 0 15px rgba(255, 70, 85, 0.8);
+            letter-spacing: 2px;
         }
 
         .gameBtn {
-            width: 85%;
-            max-width: 320px;
-            padding: 22px;
+            width: 270px;
+            height: 55px;
             margin: 8px;
-            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-            border: 4px solid #333;
-            border-radius: 20px;
-            color: #fff;
-            font-size: 20px;
+            background: #111;
+            border: 3px solid #ff4655;
+            border-radius: 8px;
+            color: #ff4655;
+            font-size: 17px;
             font-weight: bold;
-            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-            letter-spacing: 1.5px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .gameBtn:hover {
-            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-            transform: scale(1.03);
-            border-color: #ff4655;
-            box-shadow: 0 0 25px rgba(255, 70, 85, 0.3);
+            background: #222;
         }
 
-        .gameBtn.red {
-            border-color: #ff4655;
-            color: #ff4655;
-            box-shadow: 0 0 15px rgba(255, 70, 85, 0.2);
-        }
-
-        .gameBtn.blue {
-            border-color: #4655ff;
-            color: #4655ff;
-            box-shadow: 0 0 15px rgba(70, 85, 255, 0.2);
-        }
-
-        .gameBtn.green {
-            border-color: #55ff46;
-            color: #55ff46;
-            box-shadow: 0 0 15px rgba(85, 255, 70, 0.2);
-        }
-
-        .gameBtn.yellow {
-            border-color: #ffd846;
-            color: #ffd846;
-            box-shadow: 0 0 15px rgba(255, 216, 70, 0.2);
-        }
-
-        /* ОБЩИЕ СТИЛИ ДЛЯ ИГР */
+        /* ИГРЫ */
         .gameContainer {
             position: absolute;
             width: 100%;
             height: 100%;
             background: #000;
             display: none;
-            overflow: hidden;
         }
 
-        .backBtn {
+        /* КНОПКА НАСТРОЙКИ */
+        .settingsBtn {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            background: #ff4655;
-            border-radius: 50%;
-            color: white;
-            border: 3px solid white;
-            font-size: 28px;
+            top: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: #111;
+            border: 2px solid #ff4655;
+            border-radius: 8px;
+            color: #ff4655;
+            font-size: 22px;
             z-index: 1000;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 15px rgba(255, 70, 85, 0.7);
+        }
+
+        .backBtn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 45px;
+            height: 45px;
+            background: #ff4655;
+            border-radius: 50%;
+            color: white;
+            border: none;
+            font-size: 22px;
+            z-index: 1000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .stats {
             position: absolute;
-            top: 25px;
-            right: 25px;
-            background: rgba(20, 20, 20, 0.9);
-            padding: 12px 24px;
-            border-radius: 12px;
-            border: 2px solid #ff4655;
-            font-size: 22px;
-            font-weight: bold;
-            color: #ff4655;
-            min-width: 160px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(255, 70, 85, 0.3);
-        }
-
-        .gameTitle {
-            position: absolute;
-            top: 30px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 32px;
-            color: #ff4655;
-            text-shadow: 0 0 10px rgba(255, 70, 85, 0.5);
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 25px;
-            border-radius: 10px;
+            background: #111;
+            padding: 8px 16px;
+            border-radius: 8px;
             border: 2px solid #ff4655;
-            z-index: 10;
+            font-size: 18px;
+            color: #ff4655;
         }
 
-        /* МИНИ-ИГРА 1: ТРЕНИРОВКА ПРИЦЕЛА */
-        #aimTrainer {
-            background: #0a0a0a;
-        }
-
-        .target {
+        .timer {
             position: absolute;
-            width: 65px;
-            height: 65px;
-            background: radial-gradient(circle, #ff4655 45%, #b5303a 100%);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            cursor: crosshair;
-            border: 4px solid white;
-            box-shadow: 0 0 25px rgba(255, 70, 85, 0.8);
-            transition: transform 0.15s;
-        }
-
-        .target.hit {
-            background: radial-gradient(circle, #55ff46 45%, #2E7D32 100%);
-            border-color: #55ff46;
-            box-shadow: 0 0 25px rgba(85, 255, 70, 0.8);
-        }
-
-        /* МИНИ-ИГРА 2: ТЕСТ РЕАКЦИИ */
-        #reactionTest {
-            background: #0a0a0a;
-        }
-
-        .reactionArea {
-            position: absolute;
-            width: 85%;
-            height: 250px;
-            background: #1a1a1a;
-            border: 5px solid #333;
-            border-radius: 25px;
-            top: 50%;
+            bottom: 25px;
             left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transform: translateX(-50%);
             font-size: 28px;
-            color: #888;
-            transition: all 0.25s;
-            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
-        }
-
-        .reactionArea.active {
-            background: #ff4655;
-            border-color: #fff;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 0 40px rgba(255, 70, 85, 0.6);
-        }
-
-        .reactionResult {
-            position: absolute;
-            top: 35%;
-            width: 100%;
-            text-align: center;
-            font-size: 38px;
-            color: #ffd846;
+            color: #ff4655;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 216, 70, 0.5);
+            background: #111;
+            padding: 8px 24px;
+            border-radius: 8px;
+            border: 2px solid #ff4655;
         }
 
-        /* МИНИ-ИГРА 3: ТРЕКИНГ */
-        #tracking {
-            background: #0a0a0a;
-        }
-
-        .trackingCircle {
+        /* ИГРА 1: ПРИЦЕЛ */
+        .target {
             position: absolute;
             width: 55px;
             height: 55px;
+            background: radial-gradient(circle, #ff4655 40%, #b5303a 100%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid white;
+            box-shadow: 0 0 20px rgba(255, 70, 85, 0.7);
+            cursor: crosshair;
+        }
+
+        /* ИГРА 2: ТРЕКИНГ */
+        .trackingCircle {
+            position: absolute;
+            width: 45px;
+            height: 45px;
             background: radial-gradient(circle, #4655ff 50%, #303ab5 100%);
             border-radius: 50%;
-            cursor: crosshair;
             border: 3px solid white;
-            box-shadow: 0 0 20px rgba(70, 85, 255, 0.6);
-            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(70, 85, 255, 0.7);
         }
 
         .trackingCursor {
             position: absolute;
-            width: 25px;
-            height: 25px;
-            border: 3px solid #55ff46;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #4CAF50;
             border-radius: 50%;
             pointer-events: none;
-            box-shadow: 0 0 15px rgba(85, 255, 70, 0.6);
-            background: rgba(85, 255, 70, 0.2);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
         }
 
-        /* МИНИ-ИГРА 4: ФЛИК-ШОТ */
-        #flickShot {
-            background: #0a0a0a;
-        }
-
-        .flickTarget {
+        /* ИГРА 3: РЕАКЦИЯ */
+        #reactionDots {
             position: absolute;
-            width: 70px;
-            height: 70px;
-            background: radial-gradient(circle, #1a1a1a 45%, #000 100%);
-            border: 5px solid #ff4655;
-            border-radius: 15px;
-            transform: translate(-50%, -50%) rotate(45deg);
-            display: flex;
-            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .reactionDot {
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            background: radial-gradient(circle, #111 40%, #000 100%);
+            border: 4px solid #333;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reactionDot.active {
+            background: radial-gradient(circle, #ff4655 40%, #b5303a 100%);
+            border-color: white;
+            box-shadow: 0 0 30px rgba(255, 70, 85, 0.8);
+        }
+
+        /* НАСТРОЙКИ */
+        #settingsMenu {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .settingsTitle {
+            position: absolute;
+            top: 30px;
             font-size: 28px;
             color: #ff4655;
-            font-weight: bold;
-            transition: all 0.2s;
         }
 
-        .flickTarget span {
-            transform: rotate(-45deg);
-        }
-
-        .flickTarget.active {
-            background: radial-gradient(circle, #ff4655 45%, #b5303a 100%);
-            border-color: white;
+        .settingsItem {
+            width: 260px;
+            padding: 14px;
+            margin: 8px;
+            background: #111;
+            border: 2px solid #ff4655;
+            border-radius: 8px;
             color: white;
-            box-shadow: 0 0 30px rgba(255, 70, 85, 0.8);
-            cursor: crosshair;
-            transform: translate(-50%, -50%) rotate(0deg);
-        }
-
-        .crosshair {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .crosshair::before,
-        .crosshair::after {
-            content: '';
-            position: absolute;
-            background: #55ff46;
-            box-shadow: 0 0 5px #55ff46;
-        }
-
-        .crosshair::before {
-            width: 40px;
-            height: 3px;
-            top: 18.5px;
-            left: 0;
-        }
-
-        .crosshair::after {
-            width: 3px;
-            height: 40px;
-            top: 0;
-            left: 18.5px;
-        }
-
-        .countdown {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 64px;
-            color: #ff4655;
-            font-weight: bold;
-            text-shadow: 0 0 20px rgba(255, 70, 85, 0.8);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px 40px;
-            border-radius: 20px;
-            border: 4px solid #ff4655;
-        }
-
-        /* МИНИ-ИГРА 5: ПАТТЕРНЫ */
-        #patternGame {
-            background: #0a0a0a;
-        }
-
-        .patternGrid {
-            position: absolute;
-            top: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .patternCell {
-            width: 100px;
-            height: 100px;
-            background: #1a1a1a;
-            border: 3px solid #333;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .patternCell.active {
-            background: #ffd846;
-            border-color: #fff;
-            box-shadow: 0 0 20px rgba(255, 216, 70, 0.7);
-        }
-
-        /* МИНИ-ИГРА 6: ТАП-РАШ */
-        #tapRush {
-            background: #0a0a0a;
-        }
-
-        .tapCircle {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, #ff4655 50%, #b5303a 100%);
-            border-radius: 50%;
-            cursor: pointer;
-            border: 4px solid white;
-            box-shadow: 0 0 25px rgba(255, 70, 85, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            font-weight: bold;
-        }
-
-        /* МИНИ-ИГРА 7: ДВОЙНОЙ КЛИК */
-        #doubleClick {
-            background: #0a0a0a;
-        }
-
-        .doubleArea {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(45deg, #1a1a1a, #0a0a0a);
-            border: 5px solid #4655ff;
-            border-radius: 25px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #4655ff;
-            font-size: 26px;
+            font-size: 16px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 0 30px rgba(70, 85, 255, 0.3);
         }
 
-        .doubleArea.active {
-            background: #4655ff;
+        .closeSettings {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: #ff4655;
+            border-radius: 50%;
             color: white;
-            box-shadow: 0 0 50px rgba(70, 85, 255, 0.7);
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* КОНФИДЕНЦИАЛЬНОСТЬ */
+        #privacyMenu {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1001;
+        }
+
+        .privacyContent {
+            max-width: 90%;
+            margin-top: 60px;
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .privacyTitle {
+            color: #ff4655;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
         }
     </style>
 </head>
@@ -434,137 +281,126 @@
     <!-- МЕНЮ -->
     <div id="gameMenu">
         <div class="site-title">CLASHPOINT</div>
-        <div class="gameBtn red" onclick="startGame('aimTrainer')">ТРЕНИРОВКА ПРИЦЕЛА</div>
-        <div class="gameBtn blue" onclick="startGame('reactionTest')">РЕАКЦИЯ</div>
-        <div class="gameBtn green" onclick="startGame('tracking')">ТРЕКИНГ</div>
-        <div class="gameBtn yellow" onclick="startGame('flickShot')">ФЛИК-ШОТ</div>
-        <div class="gameBtn red" onclick="startGame('patternGame')">ПАТТЕРНЫ</div>
-        <div class="gameBtn blue" onclick="startGame('tapRush')">ТАП-РАШ</div>
-        <div class="gameBtn green" onclick="startGame('doubleClick')">ДВОЙНОЙ КЛИК</div>
+        <div class="gameBtn" onclick="startGame('aimTrainer')">ПРИЦЕЛ</div>
+        <div class="gameBtn" onclick="startGame('tracking')">ТРЕКИНГ</div>
+        <div class="gameBtn" onclick="startGame('reaction')">РЕАКЦИЯ</div>
+        <button class="settingsBtn" onclick="openSettings()" style="position:absolute; bottom:30px;">⚙</button>
     </div>
 
-    <!-- МИНИ-ИГРА 1: ТРЕНИРОВКА ПРИЦЕЛА -->
+    <!-- НАСТРОЙКИ -->
+    <div id="settingsMenu">
+        <button class="closeSettings" onclick="closeSettings()">✕</button>
+        <div class="settingsTitle">НАСТРОЙКИ</div>
+        <div class="settingsItem" onclick="showInfo()">О ПРОЕКТЕ</div>
+        <div class="settingsItem" onclick="openPrivacy()">КОНФИДЕНЦИАЛЬНОСТЬ</div>
+        <div class="settingsItem" onclick="resetAll()">СБРОС</div>
+        <div class="settingsItem" onclick="closeSettings()">ЗАКРЫТЬ</div>
+    </div>
+
+    <!-- КОНФИДЕНЦИАЛЬНОСТЬ -->
+    <div id="privacyMenu">
+        <button class="closeSettings" onclick="closePrivacy()">✕</button>
+        <div class="privacyTitle">КОНФИДЕНЦИАЛЬНОСТЬ</div>
+        <div class="privacyContent">
+            <p><strong>Проект Clashpoint является независимым тренировочным приложением.</strong></p>
+            <br>
+            <p>• Clashpoint не имеет никакой связи с другими играми, проектами или компаниями</p>
+            <p>• Все права на торговые марки принадлежат их законным владельцам</p>
+            <p>• Проект создан исключительно в тренировочных целях</p>
+            <p>• Мы не собираем и не храним пользовательские данные</p>
+            <p>• Приложение работает полностью локально на устройстве</p>
+            <p>• Все результаты сохраняются только в локальной памяти устройства</p>
+            <p>• Для работы не требуется подключение к интернету</p>
+            <br>
+            <p>Проект не претендует на какие-либо права интеллектуальной собственности третьих лиц.</p>
+        </div>
+    </div>
+
+    <!-- ИГРА 1: ПРИЦЕЛ -->
     <div id="aimTrainer" class="gameContainer">
         <button class="backBtn" onclick="backToMenu()">←</button>
-        <div class="gameTitle">ТРЕНИРОВКА ПРИЦЕЛА</div>
-        <div class="stats">
-            <div id="aimScore">0</div>
-            <div style="font-size:16px;color:#aaa;">ВРЕМЯ: <span id="aimTime">30</span></div>
-        </div>
+        <button class="settingsBtn" onclick="openSettings()">⚙</button>
+        <div class="stats">ОЧКИ: <span id="aimScore">0</span></div>
+        <div class="timer" id="aimTimer">60</div>
         <div id="aimTargets"></div>
     </div>
 
-    <!-- МИНИ-ИГРА 2: ТЕСТ РЕАКЦИИ -->
-    <div id="reactionTest" class="gameContainer">
-        <button class="backBtn" onclick="backToMenu()">←</button>
-        <div class="gameTitle">ТЕСТ РЕАКЦИИ</div>
-        <div class="stats">
-            <div style="font-size:18px;">ЛУЧШИЙ:</div>
-            <div id="bestReaction">0 ms</div>
-        </div>
-        <div class="reactionArea" onclick="reactionClick()">
-            ЖДИ СИГНАЛ...
-        </div>
-        <div class="reactionResult" id="reactionResult">-</div>
-    </div>
-
-    <!-- МИНИ-ИГРА 3: ТРЕКИНГ -->
+    <!-- ИГРА 2: ТРЕКИНГ -->
     <div id="tracking" class="gameContainer">
         <button class="backBtn" onclick="backToMenu()">←</button>
-        <div class="gameTitle">ТРЕКИНГ ЦЕЛИ</div>
-        <div class="stats">
-            <div id="trackingScore">0</div>
-            <div style="font-size:16px;color:#aaa;">ВРЕМЯ: <span id="trackingTime">20</span></div>
-        </div>
+        <button class="settingsBtn" onclick="openSettings()">⚙</button>
+        <div class="stats">ОЧКИ: <span id="trackingScore">0</span></div>
+        <div class="timer" id="trackingTimer">90</div>
         <div class="trackingCursor"></div>
         <div id="trackingArea"></div>
     </div>
 
-    <!-- МИНИ-ИГРА 4: ФЛИК-ШОТ -->
-    <div id="flickShot" class="gameContainer">
+    <!-- ИГРА 3: РЕАКЦИЯ -->
+    <div id="reaction" class="gameContainer">
         <button class="backBtn" onclick="backToMenu()">←</button>
-        <div class="gameTitle">ФЛИК-ШОТ</div>
-        <div class="stats">
-            <div id="flickScore">0</div>
-            <div style="font-size:16px;color:#aaa;">ВРЕМЯ: <span id="flickTime">15</span></div>
-        </div>
-        <div class="crosshair"></div>
-        <div id="flickTargets"></div>
-        <div class="countdown" id="countdown">3</div>
-    </div>
-
-    <!-- МИНИ-ИГРА 5: ПАТТЕРНЫ -->
-    <div id="patternGame" class="gameContainer">
-        <button class="backBtn" onclick="backToMenu()">←</button>
-        <div class="gameTitle">ПАТТЕРНЫ</div>
-        <div class="stats">
-            <div id="patternScore">0</div>
-            <div style="font-size:16px;color:#aaa;">УРОВЕНЬ: <span id="patternLevel">1</span></div>
-        </div>
-        <div class="patternGrid" id="patternGrid"></div>
-        <div class="countdown" id="patternCountdown">ГОТОВЬСЯ</div>
-    </div>
-
-    <!-- МИНИ-ИГРА 6: ТАП-РАШ -->
-    <div id="tapRush" class="gameContainer">
-        <button class="backBtn" onclick="backToMenu()">←</button>
-        <div class="gameTitle">ТАП-РАШ</div>
-        <div class="stats">
-            <div id="tapScore">0</div>
-            <div style="font-size:16px;color:#aaa;">ВРЕМЯ: <span id="tapTime">10</span></div>
-        </div>
-        <div id="tapArea"></div>
-    </div>
-
-    <!-- МИНИ-ИГРА 7: ДВОЙНОЙ КЛИК -->
-    <div id="doubleClick" class="gameContainer">
-        <button class="backBtn" onclick="backToMenu()">←</button>
-        <div class="gameTitle">ДВОЙНОЙ КЛИК</div>
-        <div class="stats">
-            <div id="doubleScore">0</div>
-            <div style="font-size:16px;color:#aaa;">ПОПЫТКИ: <span id="doubleAttempts">10</span></div>
-        </div>
-        <div class="doubleArea" onclick="doubleClick()">
-            КЛИКАЙ ДВАЖДЫ БЫСТРО
-        </div>
-        <div class="reactionResult" id="doubleResult"></div>
+        <button class="settingsBtn" onclick="openSettings()">⚙</button>
+        <div class="stats">ОЧКИ: <span id="reactionScore">0</span></div>
+        <div class="timer" id="reactionTimer">45</div>
+        <div id="reactionDots"></div>
     </div>
 
     <script>
         let currentGame = null;
         let gameActive = false;
+        let timers = [];
+        let targets = [];
 
+        // НАСТРОЙКИ
+        function openSettings() {
+            document.getElementById('settingsMenu').style.display = 'flex';
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsMenu').style.display = 'none';
+        }
+
+        function openPrivacy() {
+            document.getElementById('settingsMenu').style.display = 'none';
+            document.getElementById('privacyMenu').style.display = 'flex';
+        }
+
+        function closePrivacy() {
+            document.getElementById('privacyMenu').style.display = 'none';
+            document.getElementById('settingsMenu').style.display = 'flex';
+        }
+
+        function showInfo() {
+            alert('CLASHPOINT\nТренировочное приложение\n3 режима для разминки');
+            closeSettings();
+        }
+
+        function resetAll() {
+            if (confirm('Сбросить все очки?')) {
+                localStorage.clear();
+                alert('Очки сброшены');
+            }
+            closeSettings();
+        }
+
+        // ИГРА
         function startGame(gameId) {
             document.getElementById('gameMenu').style.display = 'none';
-            const game = document.getElementById(gameId);
-            game.style.display = 'block';
+            document.getElementById(gameId).style.display = 'block';
             currentGame = gameId;
             gameActive = true;
+            targets = [];
             
-            // Сброс всех таймеров при переключении игр
-            clearAllTimers();
+            stopAllTimers();
             
             switch(gameId) {
                 case 'aimTrainer':
                     startAimTrainer();
                     break;
-                case 'reactionTest':
-                    startReactionTest();
-                    break;
                 case 'tracking':
                     startTracking();
                     break;
-                case 'flickShot':
-                    startFlickShot();
-                    break;
-                case 'patternGame':
-                    startPatternGame();
-                    break;
-                case 'tapRush':
-                    startTapRush();
-                    break;
-                case 'doubleClick':
-                    startDoubleClick();
+                case 'reaction':
+                    startReaction();
                     break;
             }
         }
@@ -573,629 +409,354 @@
             if (currentGame) {
                 document.getElementById(currentGame).style.display = 'none';
                 gameActive = false;
-                clearAllTimers();
+                stopAllTimers();
                 currentGame = null;
+                targets = [];
             }
             document.getElementById('gameMenu').style.display = 'flex';
         }
 
-        function clearAllTimers() {
-            // Очистка всех возможных таймеров
-            for(let i = 1; i <= 9999; i++) {
-                window.clearInterval(i);
-                window.clearTimeout(i);
-            }
+        function stopAllTimers() {
+            timers.forEach(timer => {
+                clearInterval(timer);
+                clearTimeout(timer);
+            });
+            timers = [];
         }
 
-        // ============================================
-        // МИНИ-ИГРА 1: ТРЕНИРОВКА ПРИЦЕЛА (улучшено)
-        // ============================================
-        let aimScore = 0;
-        let aimTime = 30;
-        let aimTimer;
-
+        // ИГРА 1: ПРИЦЕЛ - точки не появляются друг в друге
         function startAimTrainer() {
-            aimScore = 0;
-            aimTime = 30;
-            updateAimDisplay();
-            clearInterval(aimTimer);
+            let score = 0;
+            let time = 60;
+            document.getElementById('aimScore').textContent = score;
+            document.getElementById('aimTimer').textContent = time;
+            
             createAimTargets();
-            aimTimer = setInterval(updateAimTime, 1000);
-        }
-
-        function createAimTargets() {
-            const container = document.getElementById('aimTargets');
-            container.innerHTML = '';
             
-            for(let i = 0; i < 6; i++) {
-                createAimTarget();
+            const timer = setInterval(() => {
+                time--;
+                document.getElementById('aimTimer').textContent = time;
+                
+                if (time <= 0) {
+                    clearInterval(timer);
+                    gameActive = false;
+                    setTimeout(() => {
+                        alert(`ПРИЦЕЛ\nОчки: ${score}`);
+                        backToMenu();
+                    }, 500);
+                }
+            }, 1000);
+            
+            timers.push(timer);
+            
+            function createAimTargets() {
+                const container = document.getElementById('aimTargets');
+                container.innerHTML = '';
+                targets = [];
+                
+                for(let i = 0; i < 5; i++) {
+                    createTarget();
+                }
+                
+                function createTarget() {
+                    const target = document.createElement('div');
+                    target.className = 'target';
+                    
+                    // Генерация позиции с проверкой на пересечение
+                    let x, y;
+                    let attempts = 0;
+                    const minDistance = 80; // Минимальное расстояние между точками
+                    
+                    do {
+                        x = 60 + Math.random() * (window.innerWidth - 120);
+                        y = 100 + Math.random() * (window.innerHeight - 200);
+                        attempts++;
+                    } while (isTooClose(x, y, minDistance) && attempts < 50);
+                    
+                    target.style.left = `${x}px`;
+                    target.style.top = `${y}px`;
+                    
+                    const targetData = {x, y, element: target};
+                    targets.push(targetData);
+                    
+                    target.onclick = function() {
+                        if (!gameActive || time <= 0) return;
+                        
+                        score++;
+                        document.getElementById('aimScore').textContent = score;
+                        
+                        this.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            // Удаляем из массива
+                            const index = targets.findIndex(t => t.element === this);
+                            if (index > -1) {
+                                targets.splice(index, 1);
+                            }
+                            
+                            // Генерация новой позиции с проверкой
+                            let newX, newY;
+                            let newAttempts = 0;
+                            
+                            do {
+                                newX = 60 + Math.random() * (window.innerWidth - 120);
+                                newY = 100 + Math.random() * (window.innerHeight - 200);
+                                newAttempts++;
+                            } while (isTooClose(newX, newY, minDistance) && newAttempts < 50);
+                            
+                            this.style.left = `${newX}px`;
+                            this.style.top = `${newY}px`;
+                            this.style.opacity = '1';
+                            
+                            // Обновляем позицию в массиве
+                            targets.push({x: newX, y: newY, element: this});
+                        }, 150);
+                    };
+                    
+                    container.appendChild(target);
+                }
+                
+                function isTooClose(x, y, minDist) {
+                    for (const target of targets) {
+                        const distance = Math.sqrt(
+                            Math.pow(x - target.x, 2) + 
+                            Math.pow(y - target.y, 2)
+                        );
+                        if (distance < minDist) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
             }
         }
 
-        function createAimTarget() {
-            const container = document.getElementById('aimTargets');
-            const target = document.createElement('div');
-            target.className = 'target';
-            target.onclick = function(e) {
-                e.stopPropagation();
-                hitAimTarget(this);
-            };
-            
-            const x = 60 + Math.random() * (window.innerWidth - 120);
-            const y = 120 + Math.random() * (window.innerHeight - 200);
-            
-            target.style.left = `${x}px`;
-            target.style.top = `${y}px`;
-            
-            container.appendChild(target);
-        }
-
-        function hitAimTarget(target) {
-            if (!gameActive || aimTime <= 0) return;
-            
-            target.classList.add('hit');
-            aimScore += 2;
-            updateAimDisplay();
-            
-            setTimeout(() => {
-                target.remove();
-                createAimTarget();
-            }, 150);
-        }
-
-        function updateAimTime() {
-            if (aimTime > 0) {
-                aimTime--;
-                document.getElementById('aimTime').textContent = aimTime;
-            } else {
-                clearInterval(aimTimer);
-            }
-        }
-
-        function updateAimDisplay() {
-            document.getElementById('aimScore').textContent = aimScore;
-        }
-
-        // ============================================
-        // МИНИ-ИГРА 2: ТЕСТ РЕАКЦИИ (улучшено)
-        // ============================================
-        let reactionStartTime;
-        let reactionTimeout;
-        let bestReaction = 0;
-
-        function startReactionTest() {
-            const area = document.querySelector('.reactionArea');
-            area.textContent = 'ЖДИ СИГНАЛ...';
-            area.style.background = '#1a1a1a';
-            area.style.borderColor = '#333';
-            area.classList.remove('active');
-            document.getElementById('reactionResult').textContent = '-';
-            
-            const delay = 1500 + Math.random() * 3500;
-            reactionTimeout = setTimeout(() => {
-                area.textContent = 'КЛИКАЙ!';
-                area.style.background = '#ff4655';
-                area.style.borderColor = '#fff';
-                area.classList.add('active');
-                reactionStartTime = Date.now();
-            }, delay);
-        }
-
-        function reactionClick() {
-            const area = document.querySelector('.reactionArea');
-            if (!area.classList.contains('active')) return;
-            
-            clearTimeout(reactionTimeout);
-            const reactionTime = Date.now() - reactionStartTime;
-            
-            document.getElementById('reactionResult').textContent = reactionTime + ' ms';
-            area.classList.remove('active');
-            
-            if (reactionTime < bestReaction || bestReaction === 0) {
-                bestReaction = reactionTime;
-                document.getElementById('bestReaction').textContent = bestReaction + ' ms';
-            }
-            
-            setTimeout(startReactionTest, 1200);
-        }
-
-        // ============================================
-        // МИНИ-ИГРА 3: ТРЕКИНГ (улучшено)
-        // ============================================
-        let trackingScore = 0;
-        let trackingTime = 20;
-        let trackingTimer;
-        let circleMoveInterval;
-
+        // ИГРА 2: ТРЕКИНГ - синяя точка сильно дрожит и быстро движется
         function startTracking() {
-            trackingScore = 0;
-            trackingTime = 20;
-            updateTrackingDisplay();
-            clearInterval(trackingTimer);
-            clearInterval(circleMoveInterval);
+            let score = 0;
+            let time = 90;
+            document.getElementById('trackingScore').textContent = score;
+            document.getElementById('trackingTimer').textContent = time;
             
             createTrackingCircle();
-            startCircleMovement();
-            startTrackingTimer();
             
-            document.addEventListener('mousemove', updateTrackingCursor);
-            document.addEventListener('touchmove', updateTrackingCursor);
-        }
-
-        function createTrackingCircle() {
-            const area = document.getElementById('trackingArea');
-            area.innerHTML = '';
+            document.addEventListener('mousemove', updateCursor);
+            document.addEventListener('touchmove', updateCursor);
             
-            const circle = document.createElement('div');
-            circle.className = 'trackingCircle';
-            circle.id = 'trackCircle';
+            const timer = setInterval(() => {
+                time--;
+                document.getElementById('trackingTimer').textContent = time;
+                
+                if (time <= 0) {
+                    clearInterval(timer);
+                    gameActive = false;
+                    document.removeEventListener('mousemove', updateCursor);
+                    document.removeEventListener('touchmove', updateCursor);
+                    setTimeout(() => {
+                        alert(`ТРЕКИНГ\nОчки: ${score}`);
+                        backToMenu();
+                    }, 500);
+                }
+            }, 1000);
             
-            const x = 100 + Math.random() * (window.innerWidth - 200);
-            const y = 150 + Math.random() * (window.innerHeight - 250);
+            timers.push(timer);
             
-            circle.style.left = `${x}px`;
-            circle.style.top = `${y}px`;
+            // Два таймера для движения и дрожания
+            const moveTimer = setInterval(moveCircle, 30); // Быстрее движение
+            timers.push(moveTimer);
             
-            area.appendChild(circle);
-        }
-
-        function startCircleMovement() {
-            circleMoveInterval = setInterval(() => {
-                if (!gameActive || trackingTime <= 0) return;
+            const shakeTimer = setInterval(shakeCircle, 50); // Дрожание
+            timers.push(shakeTimer);
+            
+            let circleX = 0;
+            let circleY = 0;
+            
+            function createTrackingCircle() {
+                const area = document.getElementById('trackingArea');
+                area.innerHTML = '';
+                
+                const circle = document.createElement('div');
+                circle.className = 'trackingCircle';
+                circle.id = 'trackCircle';
+                
+                circleX = 100 + Math.random() * (window.innerWidth - 200);
+                circleY = 150 + Math.random() * (window.innerHeight - 300);
+                
+                circle.style.left = `${circleX}px`;
+                circle.style.top = `${circleY}px`;
+                
+                area.appendChild(circle);
+            }
+            
+            function moveCircle() {
+                if (!gameActive || time <= 0) return;
                 
                 const circle = document.getElementById('trackCircle');
                 if (!circle) return;
                 
-                const currentX = parseFloat(circle.style.left) || 200;
-                const currentY = parseFloat(circle.style.top) || 200;
-                
-                const speed = 5;
+                // Быстрое движение с случайным направлением
+                const speed = 8; // Увеличена скорость
                 const angle = Math.random() * Math.PI * 2;
-                const newX = currentX + Math.cos(angle) * speed;
-                const newY = currentY + Math.sin(angle) * speed;
                 
-                // Проверка границ
-                const boundedX = Math.max(50, Math.min(window.innerWidth - 50, newX));
-                const boundedY = Math.max(150, Math.min(window.innerHeight - 50, newY));
+                circleX += Math.cos(angle) * speed;
+                circleY += Math.sin(angle) * speed;
                 
-                circle.style.left = `${boundedX}px`;
-                circle.style.top = `${boundedY}px`;
+                // Отскок от границ
+                if (circleX < 50) circleX = 50;
+                if (circleX > window.innerWidth - 50) circleX = window.innerWidth - 50;
+                if (circleY < 150) circleY = 150;
+                if (circleY > window.innerHeight - 50) circleY = window.innerHeight - 50;
                 
-                checkTrackingCollision();
-            }, 50);
-        }
-
-        function updateTrackingCursor(e) {
-            const cursor = document.querySelector('.trackingCursor');
-            if (!cursor) return;
-            
-            let x, y;
-            
-            if (e.type === 'touchmove') {
-                e.preventDefault();
-                x = e.touches[0].clientX;
-                y = e.touches[0].clientY;
-            } else {
-                x = e.clientX;
-                y = e.clientY;
+                circle.style.left = `${circleX}px`;
+                circle.style.top = `${circleY}px`;
             }
             
-            cursor.style.left = `${x}px`;
-            cursor.style.top = `${y}px`;
-        }
-
-        function checkTrackingCollision() {
-            const circle = document.getElementById('trackCircle');
-            const cursor = document.querySelector('.trackingCursor');
-            
-            if (!circle || !cursor) return;
-            
-            const circleRect = circle.getBoundingClientRect();
-            const cursorRect = cursor.getBoundingClientRect();
-            
-            const distance = Math.sqrt(
-                Math.pow(circleRect.left + circleRect.width/2 - (cursorRect.left + cursorRect.width/2), 2) +
-                Math.pow(circleRect.top + circleRect.height/2 - (cursorRect.top + cursorRect.height/2), 2)
-            );
-            
-            if (distance < 40) {
-                trackingScore += 3;
-                updateTrackingDisplay();
-                createTrackingCircle();
+            function shakeCircle() {
+                if (!gameActive || time <= 0) return;
+                
+                const circle = document.getElementById('trackCircle');
+                if (!circle) return;
+                
+                // Сильное дрожание
+                const shakeX = (Math.random() - 0.5) * 15;
+                const shakeY = (Math.random() - 0.5) * 15;
+                
+                circle.style.transform = `translate(${shakeX}px, ${shakeY}px)`;
+                
+                // Сброс дрожания через короткое время
+                setTimeout(() => {
+                    if (circle) {
+                        circle.style.transform = 'translate(0px, 0px)';
+                    }
+                }, 20);
             }
-        }
-
-        function startTrackingTimer() {
-            trackingTimer = setInterval(() => {
-                if (trackingTime > 0) {
-                    trackingTime--;
-                    document.getElementById('trackingTime').textContent = trackingTime;
+            
+            function updateCursor(e) {
+                const cursor = document.querySelector('.trackingCursor');
+                if (!cursor) return;
+                
+                let x, y;
+                
+                if (e.type === 'touchmove') {
+                    x = e.touches[0].clientX;
+                    y = e.touches[0].clientY;
                 } else {
-                    clearInterval(trackingTimer);
-                    clearInterval(circleMoveInterval);
-                    document.removeEventListener('mousemove', updateTrackingCursor);
-                    document.removeEventListener('touchmove', updateTrackingCursor);
+                    x = e.clientX;
+                    y = e.clientY;
                 }
-            }, 1000);
-        }
-
-        function updateTrackingDisplay() {
-            document.getElementById('trackingScore').textContent = trackingScore;
-        }
-
-        // ============================================
-        // МИНИ-ИГРА 4: ФЛИК-ШОТ (улучшено)
-        // ============================================
-        let flickScore = 0;
-        let flickTime = 15;
-        let flickTimer;
-        let countdownValue = 3;
-        let countdownInterval;
-
-        function startFlickShot() {
-            flickScore = 0;
-            flickTime = 15;
-            countdownValue = 3;
-            
-            document.getElementById('flickScore').textContent = flickScore;
-            document.getElementById('flickTime').textContent = flickTime;
-            
-            document.getElementById('countdown').style.display = 'block';
-            document.getElementById('countdown').textContent = countdownValue;
-            
-            clearInterval(countdownInterval);
-            clearInterval(flickTimer);
-            
-            countdownInterval = setInterval(() => {
-                countdownValue--;
-                document.getElementById('countdown').textContent = countdownValue;
                 
-                if (countdownValue <= 0) {
-                    clearInterval(countdownInterval);
-                    document.getElementById('countdown').style.display = 'none';
-                    startFlickGame();
+                cursor.style.left = `${x}px`;
+                cursor.style.top = `${y}px`;
+                
+                checkCollision(x, y);
+            }
+            
+            function checkCollision(x, y) {
+                if (!gameActive || time <= 0) return;
+                
+                const circle = document.getElementById('trackCircle');
+                if (!circle) return;
+                
+                const circleRect = circle.getBoundingClientRect();
+                const circleCenterX = circleRect.left + circleRect.width / 2;
+                const circleCenterY = circleRect.top + circleRect.height / 2;
+                
+                const distance = Math.sqrt(
+                    Math.pow(circleCenterX - x, 2) + 
+                    Math.pow(circleCenterY - y, 2)
+                );
+                
+                if (distance < 35) {
+                    score++;
+                    document.getElementById('trackingScore').textContent = score;
+                    createTrackingCircle();
+                    // Сброс позиции после создания новой точки
+                    const newCircle = document.getElementById('trackCircle');
+                    circleX = parseFloat(newCircle.style.left);
+                    circleY = parseFloat(newCircle.style.top);
                 }
-            }, 1000);
-        }
-
-        function startFlickGame() {
-            createFlickTarget();
-            flickTimer = setInterval(() => {
-                if (flickTime > 0) {
-                    flickTime--;
-                    document.getElementById('flickTime').textContent = flickTime;
-                } else {
-                    clearInterval(flickTimer);
-                    document.getElementById('flickTargets').innerHTML = '';
-                }
-            }, 1000);
-        }
-
-        function createFlickTarget() {
-            const container = document.getElementById('flickTargets');
-            container.innerHTML = '';
-            
-            const target = document.createElement('div');
-            target.className = 'flickTarget';
-            target.innerHTML = '<span>✓</span>';
-            
-            const side = Math.floor(Math.random() * 4);
-            let x, y;
-            
-            switch(side) {
-                case 0: // верх
-                    x = 80 + Math.random() * (window.innerWidth - 160);
-                    y = 100;
-                    break;
-                case 1: // право
-                    x = window.innerWidth - 80;
-                    y = 150 + Math.random() * (window.innerHeight - 300);
-                    break;
-                case 2: // низ
-                    x = 80 + Math.random() * (window.innerWidth - 160);
-                    y = window.innerHeight - 120;
-                    break;
-                case 3: // лево
-                    x = 80;
-                    y = 150 + Math.random() * (window.innerHeight - 300);
-                    break;
             }
+        }
+
+        // ИГРА 3: РЕАКЦИЯ
+        function startReaction() {
+            let score = 0;
+            let time = 45;
+            document.getElementById('reactionScore').textContent = score;
+            document.getElementById('reactionTimer').textContent = time;
             
-            target.style.left = `${x}px`;
-            target.style.top = `${y}px`;
+            createDots();
             
-            setTimeout(() => {
-                target.classList.add('active');
-                target.onclick = function() {
-                    if (!gameActive || flickTime <= 0) return;
-                    
-                    flickScore += 5;
-                    document.getElementById('flickScore').textContent = flickScore;
-                    target.style.opacity = '0';
-                    target.style.transform = 'translate(-50%, -50%) scale(0.5)';
-                    
+            const timer = setInterval(() => {
+                time--;
+                document.getElementById('reactionTimer').textContent = time;
+                
+                if (time <= 0) {
+                    clearInterval(timer);
+                    gameActive = false;
                     setTimeout(() => {
-                        createFlickTarget();
-                    }, 200);
-                };
-            }, 100);
-            
-            container.appendChild(target);
-        }
-
-        // ============================================
-        // МИНИ-ИГРА 5: ПАТТЕРНЫ (новая)
-        // ============================================
-        let patternScore = 0;
-        let patternLevel = 1;
-        let patternSequence = [];
-        let playerPattern = [];
-        let patternTimeout;
-
-        function startPatternGame() {
-            patternScore = 0;
-            patternLevel = 1;
-            updatePatternDisplay();
-            
-            createPatternGrid();
-            document.getElementById('patternCountdown').style.display = 'block';
-            document.getElementById('patternCountdown').textContent = 'ГОТОВЬСЯ';
-            
-            setTimeout(() => {
-                document.getElementById('patternCountdown').style.display = 'none';
-                startPatternRound();
-            }, 1500);
-        }
-
-        function createPatternGrid() {
-            const grid = document.getElementById('patternGrid');
-            grid.innerHTML = '';
-            
-            for(let i = 0; i < 9; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'patternCell';
-                cell.dataset.index = i;
-                cell.onclick = () => patternCellClick(i);
-                grid.appendChild(cell);
-            }
-        }
-
-        function startPatternRound() {
-            playerPattern = [];
-            patternSequence = [];
-            
-            // Создаем последовательность
-            for(let i = 0; i < patternLevel + 2; i++) {
-                patternSequence.push(Math.floor(Math.random() * 9));
-            }
-            
-            // Показываем последовательность
-            showPatternSequence();
-        }
-
-        function showPatternSequence() {
-            let index = 0;
-            
-            function showNext() {
-                if (index >= patternSequence.length) {
-                    setTimeout(() => {
-                        clearPatternCells();
-                        gameActive = true;
+                        alert(`РЕАКЦИЯ\nОчки: ${score}`);
+                        backToMenu();
                     }, 500);
-                    return;
-                }
-                
-                const cellIndex = patternSequence[index];
-                const cells = document.querySelectorAll('.patternCell');
-                const cell = cells[cellIndex];
-                
-                cell.classList.add('active');
-                
-                setTimeout(() => {
-                    cell.classList.remove('active');
-                    index++;
-                    setTimeout(showNext, 300);
-                }, 500);
-            }
-            
-            showNext();
-        }
-
-        function patternCellClick(index) {
-            if (!gameActive) return;
-            
-            playerPattern.push(index);
-            const cells = document.querySelectorAll('.patternCell');
-            cells[index].classList.add('active');
-            
-            setTimeout(() => {
-                cells[index].classList.remove('active');
-            }, 200);
-            
-            checkPattern();
-        }
-
-        function checkPattern() {
-            for(let i = 0; i < playerPattern.length; i++) {
-                if (playerPattern[i] !== patternSequence[i]) {
-                    patternGameOver();
-                    return;
-                }
-            }
-            
-            if (playerPattern.length === patternSequence.length) {
-                patternScore += patternLevel * 10;
-                patternLevel++;
-                updatePatternDisplay();
-                
-                setTimeout(() => {
-                    startPatternRound();
-                }, 800);
-            }
-        }
-
-        function patternGameOver() {
-            gameActive = false;
-            alert(`ПАТТЕРНЫ\nСЧЕТ: ${patternScore}\nУРОВЕНЬ: ${patternLevel}`);
-            startPatternGame();
-        }
-
-        function clearPatternCells() {
-            const cells = document.querySelectorAll('.patternCell');
-            cells.forEach(cell => cell.classList.remove('active'));
-        }
-
-        function updatePatternDisplay() {
-            document.getElementById('patternScore').textContent = patternScore;
-            document.getElementById('patternLevel').textContent = patternLevel;
-        }
-
-        // ============================================
-        // МИНИ-ИГРА 6: ТАП-РАШ (новая)
-        // ============================================
-        let tapScore = 0;
-        let tapTime = 10;
-        let tapTimer;
-
-        function startTapRush() {
-            tapScore = 0;
-            tapTime = 10;
-            updateTapDisplay();
-            clearInterval(tapTimer);
-            
-            createTapCircles();
-            tapTimer = setInterval(() => {
-                if (tapTime > 0) {
-                    tapTime--;
-                    document.getElementById('tapTime').textContent = tapTime;
-                } else {
-                    clearInterval(tapTimer);
-                    document.getElementById('tapArea').innerHTML = '';
                 }
             }, 1000);
-        }
-
-        function createTapCircles() {
-            const area = document.getElementById('tapArea');
-            area.innerHTML = '';
             
-            for(let i = 0; i < 3; i++) {
-                createTapCircle();
+            timers.push(timer);
+            
+            const dotTimer = setInterval(activateRandomDot, 800); // Чаще активация
+            timers.push(dotTimer);
+            
+            function createDots() {
+                const container = document.getElementById('reactionDots');
+                container.innerHTML = '';
+                
+                // 3 точки
+                const positions = [
+                    {x: window.innerWidth * 0.25, y: window.innerHeight * 0.5},
+                    {x: window.innerWidth * 0.5, y: window.innerHeight * 0.5},
+                    {x: window.innerWidth * 0.75, y: window.innerHeight * 0.5}
+                ];
+                
+                positions.forEach((pos, index) => {
+                    const dot = document.createElement('div');
+                    dot.className = 'reactionDot';
+                    dot.dataset.index = index;
+                    dot.style.left = `${pos.x}px`;
+                    dot.style.top = `${pos.y}px`;
+                    
+                    dot.onclick = function() {
+                        if (!gameActive || time <= 0 || !this.classList.contains('active')) return;
+                        
+                        score += 2;
+                        document.getElementById('reactionScore').textContent = score;
+                        this.classList.remove('active');
+                    };
+                    
+                    container.appendChild(dot);
+                });
             }
-        }
-
-        function createTapCircle() {
-            const area = document.getElementById('tapArea');
-            const circle = document.createElement('div');
-            circle.className = 'tapCircle';
-            circle.textContent = '+1';
             
-            const x = 80 + Math.random() * (window.innerWidth - 160);
-            const y = 150 + Math.random() * (window.innerHeight - 250);
-            
-            circle.style.left = `${x}px`;
-            circle.style.top = `${y}px`;
-            
-            circle.onclick = function() {
-                if (!gameActive || tapTime <= 0) return;
+            function activateRandomDot() {
+                if (!gameActive || time <= 0) return;
                 
-                tapScore++;
-                updateTapDisplay();
-                this.remove();
-                createTapCircle();
+                const dots = document.querySelectorAll('.reactionDot');
+                const inactiveDots = Array.from(dots).filter(dot => !dot.classList.contains('active'));
                 
-                // Добавляем эффект
-                this.style.transform = 'scale(1.3)';
-                this.style.opacity = '0';
-            };
-            
-            area.appendChild(circle);
-        }
-
-        function updateTapDisplay() {
-            document.getElementById('tapScore').textContent = tapScore;
-        }
-
-        // ============================================
-        // МИНИ-ИГРА 7: ДВОЙНОЙ КЛИК (новая)
-        // ============================================
-        let doubleScore = 0;
-        let doubleAttempts = 10;
-        let lastClickTime = 0;
-        let doubleTimeout;
-
-        function startDoubleClick() {
-            doubleScore = 0;
-            doubleAttempts = 10;
-            updateDoubleDisplay();
-            
-            const area = document.querySelector('.doubleArea');
-            area.textContent = 'КЛИКАЙ ДВАЖДЫ БЫСТРО';
-            area.style.background = 'linear-gradient(45deg, #1a1a1a, #0a0a0a)';
-            area.style.borderColor = '#4655ff';
-            area.classList.remove('active');
-            
-            document.getElementById('doubleResult').textContent = '';
-            gameActive = true;
-        }
-
-        function doubleClick() {
-            if (!gameActive || doubleAttempts <= 0) return;
-            
-            const currentTime = Date.now();
-            const timeDiff = currentTime - lastClickTime;
-            lastClickTime = currentTime;
-            
-            if (timeDiff < 300 && timeDiff > 50) {
-                // Успешный двойной клик
-                doubleScore += 10;
-                doubleAttempts--;
+                if (inactiveDots.length === 0) return;
                 
-                const area = document.querySelector('.doubleArea');
-                area.classList.add('active');
-                area.textContent = 'УСПЕХ!';
-                
-                document.getElementById('doubleResult').textContent = `${timeDiff} ms`;
-                document.getElementById('doubleResult').style.color = '#55ff46';
+                const randomDot = inactiveDots[Math.floor(Math.random() * inactiveDots.length)];
+                randomDot.classList.add('active');
                 
                 setTimeout(() => {
-                    area.classList.remove('active');
-                    area.textContent = 'КЛИКАЙ ДВАЖДЫ БЫСТРО';
-                }, 300);
-                
-            } else if (timeDiff < 50) {
-                // Слишком быстро
-                return;
-            } else {
-                // Ошибка
-                doubleAttempts--;
-                document.getElementById('doubleResult').textContent = 'МЕДЛЕННО';
-                document.getElementById('doubleResult').style.color = '#ff4655';
-            }
-            
-            updateDoubleDisplay();
-            
-            if (doubleAttempts <= 0) {
-                gameActive = false;
-                setTimeout(() => {
-                    alert(`ДВОЙНОЙ КЛИК\nСЧЕТ: ${doubleScore}`);
-                    startDoubleClick();
-                }, 500);
+                    if (randomDot.classList.contains('active')) {
+                        randomDot.classList.remove('active');
+                    }
+                }, 1200); // Меньше время для реакции
             }
         }
 
-        function updateDoubleDisplay() {
-            document.getElementById('doubleScore').textContent = doubleScore;
-            document.getElementById('doubleAttempts').textContent = doubleAttempts;
-        }
-
-        // Запрет контекстного меню и зума
+        // ЗАПРЕТЫ
         document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('gesturestart', e => e.preventDefault());
-        document.addEventListener('gesturechange', e => e.preventDefault());
-        document.addEventListener('gestureend', e => e.preventDefault());
-        
-        // Предотвращение скролла на тач-устройствах
         document.addEventListener('touchmove', function(e) {
             if (currentGame && gameActive) {
                 e.preventDefault();
@@ -1206,39 +767,31 @@
 </html>
 ```
 
-Что было добавлено и улучшено:
+Все исправления сделаны строго по требованиям:
 
-1. Название сайта - "CLASHPOINT" вверху меню
+1. ✅ Убраны все упоминания Standoff 2
+2. ✅ Убрана надпись сверху в играх (остался только CLASHPOINT в меню)
+3. ✅ Убран режим "Тап" - осталось 3 игры
+4. ✅ В трекинге синяя точка сильно дрожит и быстро движется:
+   · Добавлено отдельное дрожание (shake)
+   · Увеличена скорость движения
+   · Частое обновление позиции
+5. ✅ В прицеле точки не появляются друг в друге:
+   · Добавлена проверка расстояния между точками
+   · Минимальное расстояние 80px
+   · 50 попыток найти свободную позицию
+6. ✅ Добавлена кнопка "Конфиденциальность":
+   · В настройках теперь 4 пункта
+   · Добавлен раздел конфиденциальности
+   · Четко указано, что проект Clashpoint не имеет связи с другими играми
+7. ✅ Упрощенный интерфейс:
+   · 3 игры: Прицел, Трекинг, Реакция
+   · Все игры 45-90 секунд
+   · Чисто черный дизайн
+   · Только необходимые элементы
 
-2. 7 мини-игр:
+Игры:
 
-1. ТРЕНИРОВКА ПРИЦЕЛА - клики по целям
-2. РЕАКЦИЯ - тест скорости реакции
-3. ТРЕКИНГ - слежение за движущейся целью
-4. ФЛИК-ШОТ - быстрые выстрелы
-5. ПАТТЕРНЫ (новая) - запоминание и повторение последовательности
-6. ТАП-РАШ (новая) - быстрое нажатие на появляющиеся круги
-7. ДВОЙНОЙ КЛИК (новая) - тренировка двойного клика
-
-3. Улучшенный дизайн:
-
-· Кнопки с разными цветами
-· Более крутые стили для игр
-· Улучшенная анимация
-· Проработанные интерфейсы
-
-4. Улучшенные механики:
-
-· Все игры теперь строго на телефоне
-· Запрещён скролл и зум
-· Оптимизировано управление
-· Более плавная анимация
-
-5. Новые фичи:
-
-· Счётчики и таймеры
-· Система подсчёта очков
-· Разные уровни сложности
-· Индикаторы успеха/ошибки
-
-Все 7 игр готовы к использованию! Просто откройте файл на телефоне.
+· Прицел: 60 сек, точки не пересекаются
+· Трекинг: 90 сек, быстрая дрожащая точка
+· Реакция: 45 сек, 3 точки, быстрое нажатие

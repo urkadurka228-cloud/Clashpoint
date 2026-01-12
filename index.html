@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -13,11 +12,11 @@
             -webkit-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            touch-action: none;
+            touch-action: manipulation;
         }
 
         body {
-            background: #000;
+            background: linear-gradient(135deg, #0a0008 0%, #1a0015 50%, #2a0020 100%);
             color: #fff;
             font-family: 'Arial Black', sans-serif;
             overflow: hidden;
@@ -29,42 +28,77 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: #000;
+            background: rgba(10, 0, 8, 0.95);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 100;
+            gap: 12px;
         }
 
-        .site-title {
+        .gameTitle {
             position: absolute;
             top: 30px;
-            font-size: 38px;
-            font-weight: 900;
-            color: #ff4655;
-            text-shadow: 0 0 15px rgba(255, 70, 85, 0.8);
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #9b30ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 20, 147, 0.5);
             letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .gameBtn {
             width: 270px;
-            height: 55px;
-            margin: 8px;
-            background: #111;
-            border: 3px solid #ff4655;
-            border-radius: 8px;
-            color: #ff4655;
-            font-size: 17px;
+            height: 50px;
+            background: linear-gradient(145deg, #1a0015, #2a0020);
+            border: 3px solid;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
+        .gameBtn:nth-child(2) { border-color: #ff1493; }
+        .gameBtn:nth-child(3) { border-color: #9b30ff; }
+        .gameBtn:nth-child(4) { border-color: #00ff88; }
+        .gameBtn:nth-child(5) { border-color: #ffaa00; }
+        .gameBtn:nth-child(6) { border-color: #00e5ff; }
+
         .gameBtn:hover {
-            background: #222;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .menuSettingsBtn {
+            position: absolute;
+            bottom: 25px;
+            width: 40px;
+            height: 40px;
+            background: #1a0015;
+            border: 2px solid #ff1493;
+            border-radius: 10px;
+            color: #ff69b4;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .menuSettingsBtn:hover {
+            background: #2a0020;
+            transform: scale(1.1);
         }
 
         /* ИГРЫ */
@@ -72,27 +106,8 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: #000;
+            background: linear-gradient(135deg, #0a0008 0%, #1a0015 100%);
             display: none;
-        }
-
-        /* КНОПКА НАСТРОЙКИ */
-        .settingsBtn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 45px;
-            height: 45px;
-            background: #111;
-            border: 2px solid #ff4655;
-            border-radius: 8px;
-            color: #ff4655;
-            font-size: 22px;
-            z-index: 1000;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .backBtn {
@@ -101,7 +116,7 @@
             left: 15px;
             width: 45px;
             height: 45px;
-            background: #ff4655;
+            background: linear-gradient(145deg, #ff1493, #c71585);
             border-radius: 50%;
             color: white;
             border: none;
@@ -111,6 +126,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 3px 10px rgba(255, 20, 147, 0.3);
+        }
+
+        .backBtn:hover {
+            background: linear-gradient(145deg, #c71585, #a01070);
+            transform: scale(1.1);
+        }
+
+        .gameSettingsBtn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: #1a0015;
+            border: 2px solid #ff1493;
+            border-radius: 10px;
+            color: #ff69b4;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .gameSettingsBtn:hover {
+            background: #2a0020;
         }
 
         .stats {
@@ -118,12 +162,27 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: #111;
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 2px solid #ff4655;
+            background: rgba(26, 0, 21, 0.8);
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 2px solid;
             font-size: 18px;
-            color: #ff4655;
+            color: white;
+            display: flex;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #aimTrainer .stats { border-color: #ff1493; }
+        #tracking .stats { border-color: #9b30ff; }
+        #reaction .stats { border-color: #00ff88; }
+        #trajectory .stats { border-color: #ffaa00; }
+        #gymnastics .stats { border-color: #00e5ff; }
+
+        .highScore {
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
         .timer {
@@ -132,71 +191,242 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 28px;
-            color: #ff4655;
+            color: white;
             font-weight: bold;
-            background: #111;
-            padding: 8px 24px;
-            border-radius: 8px;
-            border: 2px solid #ff4655;
+            background: rgba(26, 0, 21, 0.8);
+            padding: 12px 28px;
+            border-radius: 12px;
+            border: 2px solid;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
+
+        #aimTrainer .timer { border-color: #ff1493; }
+        #tracking .timer { border-color: #9b30ff; }
+        #reaction .timer { border-color: #00ff88; }
+        #trajectory .timer { border-color: #ffaa00; }
+        #gymnastics .timer { border-color: #00e5ff; }
 
         /* ИГРА 1: ПРИЦЕЛ */
         .target {
             position: absolute;
             width: 55px;
             height: 55px;
-            background: radial-gradient(circle, #ff4655 40%, #b5303a 100%);
+            background: radial-gradient(circle, #ff1493 40%, #c71585 100%);
             border-radius: 50%;
-            transform: translate(-50%, -50%);
-            border: 3px solid white;
-            box-shadow: 0 0 20px rgba(255, 70, 85, 0.7);
+            border: 3px solid #ffb6c1;
+            box-shadow: 0 0 25px rgba(255, 20, 147, 0.8);
             cursor: crosshair;
+            transition: all 0.2s;
+        }
+
+        .target:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 35px rgba(255, 20, 147, 1);
         }
 
         /* ИГРА 2: ТРЕКИНГ */
         .trackingCircle {
             position: absolute;
-            width: 45px;
-            height: 45px;
-            background: radial-gradient(circle, #4655ff 50%, #303ab5 100%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #9b30ff 50%, #7a20cc 100%);
             border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 20px rgba(70, 85, 255, 0.7);
+            border: 3px solid #d8b3ff;
+            box-shadow: 0 0 25px rgba(155, 48, 255, 0.8);
+            transition: left 0.1s, top 0.1s;
         }
 
         .trackingCursor {
             position: absolute;
-            width: 18px;
-            height: 18px;
-            border: 2px solid #4CAF50;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00ff88;
             border-radius: 50%;
             pointer-events: none;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.7);
+            background: rgba(0, 255, 136, 0.2);
+            z-index: 10;
         }
 
         /* ИГРА 3: РЕАКЦИЯ */
-        #reactionDots {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
         .reactionDot {
             position: absolute;
             width: 75px;
             height: 75px;
-            background: radial-gradient(circle, #111 40%, #000 100%);
-            border: 4px solid #333;
+            background: radial-gradient(circle, #1a0015 40%, #0a0008 100%);
+            border: 4px solid #00ff88;
             border-radius: 50%;
-            transform: translate(-50%, -50%);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            transform: translate(-50%, -50%);
         }
 
         .reactionDot.active {
-            background: radial-gradient(circle, #ff4655 40%, #b5303a 100%);
-            border-color: white;
-            box-shadow: 0 0 30px rgba(255, 70, 85, 0.8);
+            background: radial-gradient(circle, #00ff88 40%, #00cc66 100%);
+            border-color: #b3ffd8;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.9);
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        .reactionDot:hover:not(.active) {
+            border-color: #00cc66;
+        }
+
+        /* ИГРА 4: ТРАЕКТОРИЯ */
+        .trajectoryCircle {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #ffaa00 40%, #cc8800 100%);
+            border-radius: 50%;
+            border: 3px solid #ffd699;
+            box-shadow: 0 0 30px rgba(255, 170, 0, 0.8);
+            cursor: pointer;
+            z-index: 5;
+            transition: transform 0.1s;
+        }
+
+        .trajectoryCircle:hover {
+            transform: scale(1.1);
+        }
+
+        .trajectoryCursor {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border: 2px solid #00bfff;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.7);
+            background: rgba(0, 191, 255, 0.2);
+            z-index: 10;
+        }
+
+        .trajectoryLine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .trajectoryHint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 170, 0, 0.5);
+            font-size: 16px;
+            text-align: center;
+            pointer-events: none;
+            z-index: 2;
+            transition: opacity 0.5s;
+        }
+
+        /* ИГРА 5: ГИМНАСТИКА ДЛЯ ГЛАЗ */
+        .eyeTarget {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #00e5ff 40%, #00b8cc 100%);
+            border-radius: 50%;
+            border: 4px solid #b3f0ff;
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.9);
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .eyeTarget:before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #ffffff 60%, #e6f7ff 100%);
+            border-radius: 50%;
+            border: 2px solid #80e1ff;
+        }
+
+        .eyeTarget.active {
+            animation: eyeBlink 0.3s ease;
+            transform: scale(1.2);
+            box-shadow: 0 0 60px rgba(0, 229, 255, 1);
+        }
+
+        @keyframes eyeBlink {
+            0%, 100% { transform: scale(1.2); }
+            50% { transform: scale(0.9); }
+        }
+
+        .eyeInstruction {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(0, 229, 255, 0.8);
+            font-size: 16px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            z-index: 2;
+            max-width: 80%;
+        }
+
+        .eyeProgress {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 10px;
+            background: rgba(26, 0, 21, 0.5);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #00e5ff;
+        }
+
+        .eyeProgressFill {
+            height: 100%;
+            background: linear-gradient(90deg, #00e5ff, #0099cc);
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+
+        .eyeProgressText {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #00e5ff;
+            font-size: 14px;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        .breathingCircle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.2) 30%, transparent 70%);
+            border: 3px solid rgba(0, 229, 255, 0.3);
+            border-radius: 50%;
+            z-index: 1;
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.6; }
         }
 
         /* НАСТРОЙКИ */
@@ -204,32 +434,42 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(10, 0, 8, 0.98);
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         .settingsTitle {
             position: absolute;
             top: 30px;
             font-size: 28px;
-            color: #ff4655;
+            color: #ff1493;
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
         }
 
         .settingsItem {
-            width: 260px;
-            padding: 14px;
-            margin: 8px;
-            background: #111;
-            border: 2px solid #ff4655;
-            border-radius: 8px;
-            color: white;
+            width: 280px;
+            padding: 16px;
+            margin: 10px;
+            background: linear-gradient(145deg, #1a0015, #2a0020);
+            border: 2px solid #ff1493;
+            border-radius: 12px;
+            color: #ffb6c1;
             font-size: 16px;
             text-align: center;
             cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .settingsItem:hover {
+            background: linear-gradient(145deg, #2a0020, #3a0030);
+            transform: scale(1.05);
+            border-color: #ff69b4;
         }
 
         .closeSettings {
@@ -238,12 +478,19 @@
             right: 20px;
             width: 45px;
             height: 45px;
-            background: #ff4655;
+            background: linear-gradient(145deg, #ff1493, #c71585);
             border-radius: 50%;
             color: white;
             border: none;
             font-size: 22px;
             cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(255, 20, 147, 0.3);
+        }
+
+        .closeSettings:hover {
+            background: linear-gradient(145deg, #c71585, #a01070);
+            transform: scale(1.1);
         }
 
         /* КОНФИДЕНЦИАЛЬНОСТЬ */
@@ -251,40 +498,131 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(10, 0, 8, 0.98);
             display: none;
             flex-direction: column;
             align-items: center;
             padding: 20px;
             overflow-y: auto;
             z-index: 1001;
+            backdrop-filter: blur(10px);
         }
 
         .privacyContent {
             max-width: 90%;
             margin-top: 60px;
-            color: #ccc;
+            color: #d8bfd8;
             font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
             text-align: left;
+            background: rgba(26, 0, 21, 0.5);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 20, 147, 0.3);
         }
 
         .privacyTitle {
-            color: #ff4655;
+            color: #ff1493;
             font-size: 24px;
             margin-bottom: 20px;
             text-align: center;
+            text-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
+        }
+
+        /* АНИМАЦИИ */
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
+        .timer.pulse {
+            animation: pulse 1s infinite;
+        }
+
+        .target.clicked {
+            transform: scale(0.8);
+            opacity: 0.7;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 20px rgba(255, 20, 147, 0.5); }
+            25% { text-shadow: 0 0 25px rgba(155, 48, 255, 0.6); }
+            50% { text-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
+            75% { text-shadow: 0 0 25px rgba(255, 170, 0, 0.6); }
+            100% { text-shadow: 0 0 20px rgba(0, 229, 255, 0.5); }
+        }
+
+        .gameTitle {
+            animation: titleGlow 4s infinite alternate;
+        }
+
+        /* ПРОГРЕСС БАР ДЛЯ ТРАЕКТОРИИ */
+        .progressContainer {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 10px;
+            background: rgba(26, 0, 21, 0.5);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #ffaa00;
+        }
+
+        .progressBar {
+            height: 100%;
+            background: linear-gradient(90deg, #ffaa00, #ff8800);
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+
+        .progressText {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffaa00;
+            font-size: 14px;
+            text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+        }
+
+        /* СКОРОСТЬ ТРАЕКТОРИИ */
+        .speedInfo {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 170, 0, 0.8);
+            font-size: 12px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <!-- МЕНЮ -->
     <div id="gameMenu">
-        <div class="site-title">CLASHPOINT</div>
+        <div class="gameTitle">CLASHPOINT</div>
         <div class="gameBtn" onclick="startGame('aimTrainer')">ПРИЦЕЛ</div>
         <div class="gameBtn" onclick="startGame('tracking')">ТРЕКИНГ</div>
         <div class="gameBtn" onclick="startGame('reaction')">РЕАКЦИЯ</div>
-        <button class="settingsBtn" onclick="openSettings()" style="position:absolute; bottom:30px;">⚙</button>
+        <div class="gameBtn" onclick="startGame('trajectory')">ТРАЕКТОРИЯ</div>
+        <div class="gameBtn" onclick="startGame('gymnastics')">ГИМНАСТИКА</div>
+        <button class="menuSettingsBtn" onclick="openSettings()">⚙</button>
     </div>
 
     <!-- НАСТРОЙКИ -->
@@ -293,7 +631,7 @@
         <div class="settingsTitle">НАСТРОЙКИ</div>
         <div class="settingsItem" onclick="showInfo()">О ПРОЕКТЕ</div>
         <div class="settingsItem" onclick="openPrivacy()">КОНФИДЕНЦИАЛЬНОСТЬ</div>
-        <div class="settingsItem" onclick="resetAll()">СБРОС</div>
+        <div class="settingsItem" onclick="resetAll()">СБРОС РЕКОРДОВ</div>
         <div class="settingsItem" onclick="closeSettings()">ЗАКРЫТЬ</div>
     </div>
 
@@ -319,8 +657,11 @@
     <!-- ИГРА 1: ПРИЦЕЛ -->
     <div id="aimTrainer" class="gameContainer">
         <button class="backBtn" onclick="backToMenu()">←</button>
-        <button class="settingsBtn" onclick="openSettings()">⚙</button>
-        <div class="stats">ОЧКИ: <span id="aimScore">0</span></div>
+        <button class="gameSettingsBtn" onclick="openSettings()">⚙</button>
+        <div class="stats">
+            <span>ОЧКИ: <span id="aimScore">0</span></span>
+            <span class="highScore">🏆 <span id="aimHighScore">0</span></span>
+        </div>
         <div class="timer" id="aimTimer">60</div>
         <div id="aimTargets"></div>
     </div>
@@ -328,8 +669,11 @@
     <!-- ИГРА 2: ТРЕКИНГ -->
     <div id="tracking" class="gameContainer">
         <button class="backBtn" onclick="backToMenu()">←</button>
-        <button class="settingsBtn" onclick="openSettings()">⚙</button>
-        <div class="stats">ОЧКИ: <span id="trackingScore">0</span></div>
+        <button class="gameSettingsBtn" onclick="openSettings()">⚙</button>
+        <div class="stats">
+            <span>ОЧКИ: <span id="trackingScore">0</span></span>
+            <span class="highScore">🏆 <span id="trackingHighScore">0</span></span>
+        </div>
         <div class="timer" id="trackingTimer">90</div>
         <div class="trackingCursor"></div>
         <div id="trackingArea"></div>
@@ -338,17 +682,78 @@
     <!-- ИГРА 3: РЕАКЦИЯ -->
     <div id="reaction" class="gameContainer">
         <button class="backBtn" onclick="backToMenu()">←</button>
-        <button class="settingsBtn" onclick="openSettings()">⚙</button>
-        <div class="stats">ОЧКИ: <span id="reactionScore">0</span></div>
+        <button class="gameSettingsBtn" onclick="openSettings()">⚙</button>
+        <div class="stats">
+            <span>ОЧКИ: <span id="reactionScore">0</span></span>
+            <span class="highScore">🏆 <span id="reactionHighScore">0</span></span>
+        </div>
         <div class="timer" id="reactionTimer">45</div>
         <div id="reactionDots"></div>
+    </div>
+
+    <!-- ИГРА 4: ТРАЕКТОРИЯ -->
+    <div id="trajectory" class="gameContainer">
+        <button class="backBtn" onclick="backToMenu()">←</button>
+        <button class="gameSettingsBtn" onclick="openSettings()">⚙</button>
+        <div class="stats">
+            <span>ОЧКИ: <span id="trajectoryScore">0</span></span>
+            <span class="highScore">🏆 <span id="trajectoryHighScore">0</span></span>
+        </div>
+        <div class="progressContainer">
+            <div class="progressBar" id="trajectoryProgress"></div>
+        </div>
+        <div class="progressText">ПРОГРЕСС: <span id="progressPercent">0%</span></div>
+        <div class="timer" id="trajectoryTimer">60</div>
+        <div class="speedInfo" id="speedInfo"></div>
+        <div class="trajectoryCursor"></div>
+        <canvas id="trajectoryCanvas" class="trajectoryLine"></canvas>
+        <div class="trajectoryHint" id="trajectoryHint">Следи за оранжевой точкой!</div>
+        <div id="trajectoryArea"></div>
+    </div>
+
+    <!-- ИГРА 5: ГИМНАСТИКА ДЛЯ ГЛАЗ -->
+    <div id="gymnastics" class="gameContainer">
+        <button class="backBtn" onclick="backToMenu()">←</button>
+        <button class="gameSettingsBtn" onclick="openSettings()">⚙</button>
+        <div class="stats">
+            <span>УПРАЖНЕНИЯ: <span id="gymnasticsScore">0</span></span>
+            <span class="highScore">🏆 <span id="gymnasticsHighScore">0</span></span>
+        </div>
+        <div class="eyeProgress">
+            <div class="eyeProgressFill" id="eyeProgressFill"></div>
+        </div>
+        <div class="eyeProgressText">ПРОГРЕСС: <span id="eyeProgressPercent">0%</span></div>
+        <div class="timer" id="gymnasticsTimer">90</div>
+        <div class="eyeInstruction" id="eyeInstruction">Следите за голубым кругом глазами. Не двигайте головой!</div>
+        <div class="breathingCircle"></div>
+        <div id="eyeArea"></div>
     </div>
 
     <script>
         let currentGame = null;
         let gameActive = false;
         let timers = [];
-        let targets = [];
+        let animationId = null;
+
+        // ФУНКЦИИ ДЛЯ РЕКОРДОВ
+        function saveHighScore(game, score) {
+            const key = `clashpoint_high_${game}`;
+            const current = parseInt(localStorage.getItem(key) || 0);
+            if (score > current) {
+                localStorage.setItem(key, score.toString());
+                return true;
+            }
+            return false;
+        }
+
+        function getHighScore(game) {
+            return localStorage.getItem(`clashpoint_high_${game}`) || 0;
+        }
+
+        function updateHighScoreDisplay(game, elementId) {
+            const highScore = getHighScore(game);
+            document.getElementById(elementId).textContent = highScore;
+        }
 
         // НАСТРОЙКИ
         function openSettings() {
@@ -370,25 +775,33 @@
         }
 
         function showInfo() {
-            alert('CLASHPOINT\nТренировочное приложение\n3 режима для разминки');
+            alert('Clashpoint\nТренировочное приложение\n5 режимов для разминки\n\nПРИЦЕЛ - 60 сек\nТРЕКИНГ - 90 сек\nРЕАКЦИЯ - 45 сек\nТРАЕКТОРИЯ - 60 сек\nГИМНАСТИКА - 90 сек\n\nГИМНАСТИКА: Расслабляющие упражнения для глаз');
             closeSettings();
         }
 
         function resetAll() {
-            if (confirm('Сбросить все очки?')) {
-                localStorage.clear();
-                alert('Очки сброшены');
+            if (confirm('Сбросить все рекорды?')) {
+                localStorage.removeItem('clashpoint_high_aim');
+                localStorage.removeItem('clashpoint_high_tracking');
+                localStorage.removeItem('clashpoint_high_reaction');
+                localStorage.removeItem('clashpoint_high_trajectory');
+                localStorage.removeItem('clashpoint_high_gymnastics');
+                updateHighScoreDisplay('aim', 'aimHighScore');
+                updateHighScoreDisplay('tracking', 'trackingHighScore');
+                updateHighScoreDisplay('reaction', 'reactionHighScore');
+                updateHighScoreDisplay('trajectory', 'trajectoryHighScore');
+                updateHighScoreDisplay('gymnastics', 'gymnasticsHighScore');
+                alert('Рекорды сброшены!');
             }
             closeSettings();
         }
 
-        // ИГРА
+        // ОСНОВНЫЕ ФУНКЦИИ
         function startGame(gameId) {
             document.getElementById('gameMenu').style.display = 'none';
             document.getElementById(gameId).style.display = 'block';
             currentGame = gameId;
             gameActive = true;
-            targets = [];
             
             stopAllTimers();
             
@@ -402,6 +815,12 @@
                 case 'reaction':
                     startReaction();
                     break;
+                case 'trajectory':
+                    startTrajectory();
+                    break;
+                case 'gymnastics':
+                    startGymnastics();
+                    break;
             }
         }
 
@@ -410,8 +829,11 @@
                 document.getElementById(currentGame).style.display = 'none';
                 gameActive = false;
                 stopAllTimers();
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
                 currentGame = null;
-                targets = [];
             }
             document.getElementById('gameMenu').style.display = 'flex';
         }
@@ -424,24 +846,39 @@
             timers = [];
         }
 
-        // ИГРА 1: ПРИЦЕЛ - точки не появляются друг в друге
+        // ИГРА 1: ПРИЦЕЛ
         function startAimTrainer() {
             let score = 0;
             let time = 60;
+            const targets = [];
+            const minDistance = 80;
+            
             document.getElementById('aimScore').textContent = score;
             document.getElementById('aimTimer').textContent = time;
+            updateHighScoreDisplay('aim', 'aimHighScore');
             
-            createAimTargets();
+            createTargets();
             
             const timer = setInterval(() => {
                 time--;
                 document.getElementById('aimTimer').textContent = time;
                 
+                if (time <= 10) {
+                    document.getElementById('aimTimer').classList.add('pulse');
+                }
+                
                 if (time <= 0) {
                     clearInterval(timer);
                     gameActive = false;
+                    document.getElementById('aimTimer').classList.remove('pulse');
+                    
+                    const beatRecord = saveHighScore('aim', score);
                     setTimeout(() => {
-                        alert(`ПРИЦЕЛ\nОчки: ${score}`);
+                        let message = `ПРИЦЕЛ\nОчки: ${score}`;
+                        const highScore = getHighScore('aim');
+                        message += `\nРекорд: ${highScore}`;
+                        if (beatRecord) message += "\n🎉 НОВЫЙ РЕКОРД!";
+                        alert(message);
                         backToMenu();
                     }, 500);
                 }
@@ -449,10 +886,9 @@
             
             timers.push(timer);
             
-            function createAimTargets() {
+            function createTargets() {
                 const container = document.getElementById('aimTargets');
                 container.innerHTML = '';
-                targets = [];
                 
                 for(let i = 0; i < 5; i++) {
                     createTarget();
@@ -462,22 +898,19 @@
                     const target = document.createElement('div');
                     target.className = 'target';
                     
-                    // Генерация позиции с проверкой на пересечение
                     let x, y;
                     let attempts = 0;
-                    const minDistance = 80; // Минимальное расстояние между точками
                     
                     do {
                         x = 60 + Math.random() * (window.innerWidth - 120);
                         y = 100 + Math.random() * (window.innerHeight - 200);
                         attempts++;
-                    } while (isTooClose(x, y, minDistance) && attempts < 50);
+                    } while (isTooClose(x, y) && attempts < 50);
                     
                     target.style.left = `${x}px`;
                     target.style.top = `${y}px`;
                     
-                    const targetData = {x, y, element: target};
-                    targets.push(targetData);
+                    targets.push({x, y, element: target});
                     
                     target.onclick = function() {
                         if (!gameActive || time <= 0) return;
@@ -485,16 +918,12 @@
                         score++;
                         document.getElementById('aimScore').textContent = score;
                         
-                        this.style.opacity = '0';
+                        this.classList.add('clicked');
                         
                         setTimeout(() => {
-                            // Удаляем из массива
                             const index = targets.findIndex(t => t.element === this);
-                            if (index > -1) {
-                                targets.splice(index, 1);
-                            }
+                            if (index > -1) targets.splice(index, 1);
                             
-                            // Генерация новой позиции с проверкой
                             let newX, newY;
                             let newAttempts = 0;
                             
@@ -502,13 +931,12 @@
                                 newX = 60 + Math.random() * (window.innerWidth - 120);
                                 newY = 100 + Math.random() * (window.innerHeight - 200);
                                 newAttempts++;
-                            } while (isTooClose(newX, newY, minDistance) && newAttempts < 50);
+                            } while (isTooClose(newX, newY) && newAttempts < 50);
                             
                             this.style.left = `${newX}px`;
                             this.style.top = `${newY}px`;
-                            this.style.opacity = '1';
+                            this.classList.remove('clicked');
                             
-                            // Обновляем позицию в массиве
                             targets.push({x: newX, y: newY, element: this});
                         }, 150);
                     };
@@ -516,128 +944,47 @@
                     container.appendChild(target);
                 }
                 
-                function isTooClose(x, y, minDist) {
+                function isTooClose(x, y) {
                     for (const target of targets) {
-                        const distance = Math.sqrt(
-                            Math.pow(x - target.x, 2) + 
-                            Math.pow(y - target.y, 2)
-                        );
-                        if (distance < minDist) {
-                            return true;
-                        }
+                        const distance = Math.sqrt(Math.pow(x - target.x, 2) + Math.pow(y - target.y, 2));
+                        if (distance < minDistance) return true;
                     }
                     return false;
                 }
             }
         }
 
-        // ИГРА 2: ТРЕКИНГ - синяя точка сильно дрожит и быстро движется
+        // ИГРА 2: ТРЕКИНГ
         function startTracking() {
             let score = 0;
             let time = 90;
+            
             document.getElementById('trackingScore').textContent = score;
             document.getElementById('trackingTimer').textContent = time;
+            updateHighScoreDisplay('tracking', 'trackingHighScore');
             
-            createTrackingCircle();
+            const area = document.getElementById('trackingArea');
+            area.innerHTML = '';
             
-            document.addEventListener('mousemove', updateCursor);
-            document.addEventListener('touchmove', updateCursor);
+            const circle = document.createElement('div');
+            circle.className = 'trackingCircle';
+            circle.id = 'trackCircle';
             
-            const timer = setInterval(() => {
-                time--;
-                document.getElementById('trackingTimer').textContent = time;
-                
-                if (time <= 0) {
-                    clearInterval(timer);
-                    gameActive = false;
-                    document.removeEventListener('mousemove', updateCursor);
-                    document.removeEventListener('touchmove', updateCursor);
-                    setTimeout(() => {
-                        alert(`ТРЕКИНГ\nОчки: ${score}`);
-                        backToMenu();
-                    }, 500);
-                }
-            }, 1000);
+            let circleX = 100 + Math.random() * (window.innerWidth - 200);
+            let circleY = 150 + Math.random() * (window.innerHeight - 300);
             
-            timers.push(timer);
+            circle.style.left = `${circleX}px`;
+            circle.style.top = `${circleY}px`;
             
-            // Два таймера для движения и дрожания
-            const moveTimer = setInterval(moveCircle, 30); // Быстрее движение
-            timers.push(moveTimer);
+            area.appendChild(circle);
             
-            const shakeTimer = setInterval(shakeCircle, 50); // Дрожание
-            timers.push(shakeTimer);
+            const cursor = document.querySelector('.trackingCursor');
             
-            let circleX = 0;
-            let circleY = 0;
-            
-            function createTrackingCircle() {
-                const area = document.getElementById('trackingArea');
-                area.innerHTML = '';
-                
-                const circle = document.createElement('div');
-                circle.className = 'trackingCircle';
-                circle.id = 'trackCircle';
-                
-                circleX = 100 + Math.random() * (window.innerWidth - 200);
-                circleY = 150 + Math.random() * (window.innerHeight - 300);
-                
-                circle.style.left = `${circleX}px`;
-                circle.style.top = `${circleY}px`;
-                
-                area.appendChild(circle);
-            }
-            
-            function moveCircle() {
-                if (!gameActive || time <= 0) return;
-                
-                const circle = document.getElementById('trackCircle');
-                if (!circle) return;
-                
-                // Быстрое движение с случайным направлением
-                const speed = 8; // Увеличена скорость
-                const angle = Math.random() * Math.PI * 2;
-                
-                circleX += Math.cos(angle) * speed;
-                circleY += Math.sin(angle) * speed;
-                
-                // Отскок от границ
-                if (circleX < 50) circleX = 50;
-                if (circleX > window.innerWidth - 50) circleX = window.innerWidth - 50;
-                if (circleY < 150) circleY = 150;
-                if (circleY > window.innerHeight - 50) circleY = window.innerHeight - 50;
-                
-                circle.style.left = `${circleX}px`;
-                circle.style.top = `${circleY}px`;
-            }
-            
-            function shakeCircle() {
-                if (!gameActive || time <= 0) return;
-                
-                const circle = document.getElementById('trackCircle');
-                if (!circle) return;
-                
-                // Сильное дрожание
-                const shakeX = (Math.random() - 0.5) * 15;
-                const shakeY = (Math.random() - 0.5) * 15;
-                
-                circle.style.transform = `translate(${shakeX}px, ${shakeY}px)`;
-                
-                // Сброс дрожания через короткое время
-                setTimeout(() => {
-                    if (circle) {
-                        circle.style.transform = 'translate(0px, 0px)';
-                    }
-                }, 20);
-            }
-            
-            function updateCursor(e) {
-                const cursor = document.querySelector('.trackingCursor');
-                if (!cursor) return;
-                
+            function handleMove(e) {
                 let x, y;
                 
                 if (e.type === 'touchmove') {
+                    e.preventDefault();
                     x = e.touches[0].clientX;
                     y = e.touches[0].clientY;
                 } else {
@@ -651,7 +998,69 @@
                 checkCollision(x, y);
             }
             
-            function checkCollision(x, y) {
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('touchmove', handleMove, { passive: false });
+            
+            const timer = setInterval(() => {
+                time--;
+                document.getElementById('trackingTimer').textContent = time;
+                
+                if (time <= 10) {
+                    document.getElementById('trackingTimer').classList.add('pulse');
+                }
+                
+                if (time <= 0) {
+                    clearInterval(timer);
+                    gameActive = false;
+                    document.getElementById('trackingTimer').classList.remove('pulse');
+                    document.removeEventListener('mousemove', handleMove);
+                    document.removeEventListener('touchmove', handleMove);
+                    
+                    const beatRecord = saveHighScore('tracking', score);
+                    setTimeout(() => {
+                        let message = `ТРЕКИНГ\nОчки: ${score}`;
+                        const highScore = getHighScore('tracking');
+                        message += `\nРекорд: ${highScore}`;
+                        if (beatRecord) message += "\n🎉 НОВЫЙ РЕКОРД!";
+                        alert(message);
+                        backToMenu();
+                    }, 500);
+                }
+            }, 1000);
+            
+            timers.push(timer);
+            
+            function animateTracking() {
+                if (!gameActive || time <= 0) return;
+                
+                const circle = document.getElementById('trackCircle');
+                if (!circle) return;
+                
+                const moveX = (Math.random() - 0.5) * 12;
+                const moveY = (Math.random() - 0.5) * 12;
+                
+                circleX += moveX;
+                circleY += moveY;
+                
+                if (circleX < 50) circleX = 50;
+                if (circleX > window.innerWidth - 50) circleX = window.innerWidth - 50;
+                if (circleY < 100) circleY = 100;
+                if (circleY > window.innerHeight - 100) circleY = window.innerHeight - 100;
+                
+                circle.style.left = `${circleX}px`;
+                circle.style.top = `${circleY}px`;
+                
+                const shakeX = (Math.random() - 0.5) * 8;
+                const shakeY = (Math.random() - 0.5) * 8;
+                
+                circle.style.transform = `translate(${shakeX}px, ${shakeY}px)`;
+                
+                animationId = requestAnimationFrame(animateTracking);
+            }
+            
+            animateTracking();
+            
+            function checkCollision(cursorX, cursorY) {
                 if (!gameActive || time <= 0) return;
                 
                 const circle = document.getElementById('trackCircle');
@@ -662,18 +1071,19 @@
                 const circleCenterY = circleRect.top + circleRect.height / 2;
                 
                 const distance = Math.sqrt(
-                    Math.pow(circleCenterX - x, 2) + 
-                    Math.pow(circleCenterY - y, 2)
+                    Math.pow(circleCenterX - cursorX, 2) + 
+                    Math.pow(circleCenterY - cursorY, 2)
                 );
                 
-                if (distance < 35) {
+                if (distance < 40) {
                     score++;
                     document.getElementById('trackingScore').textContent = score;
-                    createTrackingCircle();
-                    // Сброс позиции после создания новой точки
-                    const newCircle = document.getElementById('trackCircle');
-                    circleX = parseFloat(newCircle.style.left);
-                    circleY = parseFloat(newCircle.style.top);
+                    
+                    circleX = 100 + Math.random() * (window.innerWidth - 200);
+                    circleY = 150 + Math.random() * (window.innerHeight - 300);
+                    
+                    circle.style.left = `${circleX}px`;
+                    circle.style.top = `${circleY}px`;
                 }
             }
         }
@@ -682,8 +1092,10 @@
         function startReaction() {
             let score = 0;
             let time = 45;
+            
             document.getElementById('reactionScore').textContent = score;
             document.getElementById('reactionTimer').textContent = time;
+            updateHighScoreDisplay('reaction', 'reactionHighScore');
             
             createDots();
             
@@ -691,11 +1103,23 @@
                 time--;
                 document.getElementById('reactionTimer').textContent = time;
                 
+                if (time <= 10) {
+                    document.getElementById('reactionTimer').classList.add('pulse');
+                }
+                
                 if (time <= 0) {
                     clearInterval(timer);
+                    clearInterval(dotTimer);
                     gameActive = false;
+                    document.getElementById('reactionTimer').classList.remove('pulse');
+                    
+                    const beatRecord = saveHighScore('reaction', score);
                     setTimeout(() => {
-                        alert(`РЕАКЦИЯ\nОчки: ${score}`);
+                        let message = `РЕАКЦИЯ\nОчки: ${score}`;
+                        const highScore = getHighScore('reaction');
+                        message += `\nРекорд: ${highScore}`;
+                        if (beatRecord) message += "\n🎉 НОВЫЙ РЕКОРД!";
+                        alert(message);
                         backToMenu();
                     }, 500);
                 }
@@ -703,40 +1127,7 @@
             
             timers.push(timer);
             
-            const dotTimer = setInterval(activateRandomDot, 800); // Чаще активация
-            timers.push(dotTimer);
-            
-            function createDots() {
-                const container = document.getElementById('reactionDots');
-                container.innerHTML = '';
-                
-                // 3 точки
-                const positions = [
-                    {x: window.innerWidth * 0.25, y: window.innerHeight * 0.5},
-                    {x: window.innerWidth * 0.5, y: window.innerHeight * 0.5},
-                    {x: window.innerWidth * 0.75, y: window.innerHeight * 0.5}
-                ];
-                
-                positions.forEach((pos, index) => {
-                    const dot = document.createElement('div');
-                    dot.className = 'reactionDot';
-                    dot.dataset.index = index;
-                    dot.style.left = `${pos.x}px`;
-                    dot.style.top = `${pos.y}px`;
-                    
-                    dot.onclick = function() {
-                        if (!gameActive || time <= 0 || !this.classList.contains('active')) return;
-                        
-                        score += 2;
-                        document.getElementById('reactionScore').textContent = score;
-                        this.classList.remove('active');
-                    };
-                    
-                    container.appendChild(dot);
-                });
-            }
-            
-            function activateRandomDot() {
+            const dotTimer = setInterval(() => {
                 if (!gameActive || time <= 0) return;
                 
                 const dots = document.querySelectorAll('.reactionDot');
@@ -751,47 +1142,745 @@
                     if (randomDot.classList.contains('active')) {
                         randomDot.classList.remove('active');
                     }
-                }, 1200); // Меньше время для реакции
+                }, 1200);
+                
+            }, 800);
+            
+            timers.push(dotTimer);
+            
+            function createDots() {
+                const container = document.getElementById('reactionDots');
+                container.innerHTML = '';
+                
+                const positions = [
+                    {x: window.innerWidth / 4, y: window.innerHeight / 2},
+                    {x: window.innerWidth / 2, y: window.innerHeight / 2},
+                    {x: window.innerWidth * 3/4, y: window.innerHeight / 2}
+                ];
+                
+                positions.forEach((pos, index) => {
+                    const dot = document.createElement('div');
+                    dot.className = 'reactionDot';
+                    dot.style.left = `${pos.x}px`;
+                    dot.style.top = `${pos.y}px`;
+                    
+                    dot.onclick = function() {
+                        if (!gameActive || time <= 0 || !this.classList.contains('active')) return;
+                        
+                        score += 2;
+                        document.getElementById('reactionScore').textContent = score;
+                        this.classList.remove('active');
+                    };
+                    
+                    container.appendChild(dot);
+                });
             }
         }
 
-        // ЗАПРЕТЫ
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('touchmove', function(e) {
-            if (currentGame && gameActive) {
-                e.preventDefault();
+        // ИГРА 4: ТРАЕКТОРИЯ
+        function startTrajectory() {
+            let score = 0;
+            let time = 60;
+            let progress = 0;
+            let totalPathLength = 0;
+            let currentPoint = 0;
+            let trajectoryPoints = [];
+            let lastCollisionTime = 0;
+            const collisionCooldown = 300;
+            let speedMultiplier = 0.8;
+            let trajectoryType = '';
+            let direction = 1;
+            
+            document.getElementById('trajectoryScore').textContent = score;
+            document.getElementById('trajectoryTimer').textContent = time;
+            updateHighScoreDisplay('trajectory', 'trajectoryHighScore');
+            document.getElementById('progressPercent').textContent = '0%';
+            document.getElementById('trajectoryProgress').style.width = '0%';
+            
+            const area = document.getElementById('trajectoryArea');
+            area.innerHTML = '';
+            
+            const circle = document.createElement('div');
+            circle.className = 'trajectoryCircle';
+            circle.id = 'trajectoryCircle';
+            
+            const startX = window.innerWidth / 2;
+            const startY = window.innerHeight / 2;
+            circle.style.left = `${startX}px`;
+            circle.style.top = `${startY}px`;
+            
+            area.appendChild(circle);
+            
+            const cursor = document.querySelector('.trajectoryCursor');
+            
+            generateTrajectory();
+            drawTrajectory();
+            updateSpeedInfo();
+            
+            function handleMove(e) {
+                let x, y;
+                
+                if (e.type === 'touchmove') {
+                    e.preventDefault();
+                    x = e.touches[0].clientX;
+                    y = e.touches[0].clientY;
+                } else {
+                    x = e.clientX;
+                    y = e.clientY;
+                }
+                
+                cursor.style.left = `${x}px`;
+                cursor.style.top = `${y}px`;
+                
+                checkTrajectoryCollision(x, y);
             }
-        }, { passive: false });
+            
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('touchmove', handleMove, { passive: false });
+            
+            const timer = setInterval(() => {
+                time--;
+                document.getElementById('trajectoryTimer').textContent = time;
+                
+                if (time <= 10) {
+                    document.getElementById('trajectoryTimer').classList.add('pulse');
+                }
+                
+                if (time <= 0) {
+                    clearInterval(timer);
+                    gameActive = false;
+                    document.getElementById('trajectoryTimer').classList.remove('pulse');
+                    document.removeEventListener('mousemove', handleMove);
+                    document.removeEventListener('touchmove', handleMove);
+                    
+                    const beatRecord = saveHighScore('trajectory', score);
+                    setTimeout(() => {
+                        let message = `ТРАЕКТОРИЯ\nОчки: ${score}\nПрогресс: ${progress.toFixed(1)}%\nТип: ${trajectoryType}`;
+                        const highScore = getHighScore('trajectory');
+                        message += `\nРекорд: ${highScore}`;
+                        if (beatRecord) message += "\n🎉 НОВЫЙ РЕКОРД!";
+                        alert(message);
+                        backToMenu();
+                    }, 500);
+                }
+            }, 1000);
+            
+            timers.push(timer);
+            
+            const changeTimer = setInterval(() => {
+                if (!gameActive || time <= 0) return;
+                
+                speedMultiplier = 0.6 + Math.random() * 1.2;
+                
+                if (Math.random() > 0.8) {
+                    direction *= -1;
+                }
+                
+                if (Math.random() > 0.95) {
+                    generateTrajectory();
+                    drawTrajectory();
+                }
+                
+                updateSpeedInfo();
+                
+            }, 5000);
+            
+            timers.push(changeTimer);
+            
+            function animateTrajectory(currentTime) {
+                if (!gameActive || time <= 0) {
+                    animationId = null;
+                    return;
+                }
+                
+                const speed = 1.5 * speedMultiplier * direction;
+                currentPoint = (currentPoint + speed) % trajectoryPoints.length;
+                if (currentPoint < 0) currentPoint = trajectoryPoints.length + currentPoint;
+                
+                const pointIndex = Math.floor(currentPoint);
+                const point = trajectoryPoints[pointIndex];
+                const circle = document.getElementById('trajectoryCircle');
+                
+                if (circle && point) {
+                    const currentX = parseFloat(circle.style.left);
+                    const currentY = parseFloat(circle.style.top);
+                    
+                    const newX = currentX + (point.x - currentX) * 0.2;
+                    const newY = currentY + (point.y - currentY) * 0.2;
+                    
+                    circle.style.left = `${newX}px`;
+                    circle.style.top = `${newY}px`;
+                    
+                    const shakeIntensity = speedMultiplier * 4;
+                    const shakeX = (Math.random() - 0.5) * shakeIntensity;
+                    const shakeY = (Math.random() - 0.5) * shakeIntensity;
+                    circle.style.transform = `translate(${shakeX}px, ${shakeY}px)`;
+                }
+                
+                animationId = requestAnimationFrame(animateTrajectory);
+            }
+            
+            animationId = requestAnimationFrame(animateTrajectory);
+            
+            function generateTrajectory() {
+                trajectoryPoints = [];
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                const maxRadius = Math.min(window.innerWidth, window.innerHeight) * 0.35;
+                
+                const types = ['circle', 'ellipse', 'square', 'infinity', 'wave', 'flower'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                trajectoryType = getTrajectoryName(type);
+                
+                const pointCount = 180;
+                
+                for (let i = 0; i < pointCount; i++) {
+                    const t = (i / pointCount) * Math.PI * 2;
+                    let x, y;
+                    
+                    switch(type) {
+                        case 'circle':
+                            x = centerX + maxRadius * Math.sin(t);
+                            y = centerY + maxRadius * Math.cos(t);
+                            break;
+                        case 'ellipse':
+                            x = centerX + maxRadius * 0.7 * Math.sin(t);
+                            y = centerY + maxRadius * 0.5 * Math.cos(t);
+                            break;
+                        case 'square':
+                            const side = Math.floor((t / (Math.PI / 2)) % 4);
+                            const modT = t % (Math.PI / 2);
+                            const radius = maxRadius * 0.6;
+                            switch(side) {
+                                case 0: x = centerX + radius * Math.sin(modT); y = centerY - radius; break;
+                                case 1: x = centerX + radius; y = centerY + radius * Math.sin(modT); break;
+                                case 2: x = centerX - radius * Math.sin(modT); y = centerY + radius; break;
+                                case 3: x = centerX - radius; y = centerY - radius * Math.sin(modT); break;
+                            }
+                            break;
+                        case 'infinity':
+                            x = centerX + maxRadius * 0.5 * Math.sin(t);
+                            y = centerY + maxRadius * 0.3 * Math.sin(2 * t);
+                            break;
+                        case 'wave':
+                            x = centerX + maxRadius * 0.5 * Math.sin(t);
+                            y = centerY + maxRadius * 0.3 * Math.sin(3 * t);
+                            break;
+                        case 'flower':
+                            const flowerRadius = maxRadius * (0.4 + 0.2 * Math.sin(t * 5));
+                            x = centerX + flowerRadius * Math.sin(t);
+                            y = centerY + flowerRadius * Math.cos(t);
+                            break;
+                    }
+                    
+                    trajectoryPoints.push({ x, y });
+                }
+                
+                totalPathLength = 0;
+                for (let i = 1; i < trajectoryPoints.length; i++) {
+                    const dx = trajectoryPoints[i].x - trajectoryPoints[i-1].x;
+                    const dy = trajectoryPoints[i].y - trajectoryPoints[i-1].y;
+                    totalPathLength += Math.sqrt(dx * dx + dy * dy);
+                }
+            }
+            
+            function getTrajectoryName(type) {
+                const names = {
+                    'circle': 'Круг', 'ellipse': 'Эллипс', 'square': 'Квадрат',
+                    'infinity': 'Бесконечность', 'wave': 'Волна', 'flower': 'Цветок'
+                };
+                return names[type] || 'Случайная';
+            }
+            
+            function drawTrajectory() {
+                const canvas = document.getElementById('trajectoryCanvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                ctx.strokeStyle = 'rgba(255, 170, 0, 0.25)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                for (let i = 0; i < trajectoryPoints.length; i++) {
+                    const point = trajectoryPoints[i];
+                    if (i === 0) {
+                        ctx.moveTo(point.x, point.y);
+                    } else {
+                        ctx.lineTo(point.x, point.y);
+                    }
+                }
+                
+                ctx.stroke();
+            }
+            
+            function updateSpeedInfo() {
+                const speedText = `Скорость: ${speedMultiplier.toFixed(1)}x | Тип: ${trajectoryType}`;
+                document.getElementById('speedInfo').textContent = speedText;
+                
+                if (speedMultiplier > 1.4) {
+                    document.getElementById('speedInfo').style.color = '#ffaa00';
+                } else if (speedMultiplier > 1.0) {
+                    document.getElementById('speedInfo').style.color = '#ffaa00';
+                } else {
+                    document.getElementById('speedInfo').style.color = '#cc8800';
+                }
+            }
+            
+            function checkTrajectoryCollision(cursorX, cursorY) {
+                if (!gameActive || time <= 0) return;
+                
+                const now = Date.now();
+                if (now - lastCollisionTime < collisionCooldown) return;
+                
+                const circle = document.getElementById('trajectoryCircle');
+                if (!circle) return;
+                
+                const circleRect = circle.getBoundingClientRect();
+                const circleCenterX = circleRect.left + circleRect.width / 2;
+                const circleCenterY = circleRect.top + circleRect.height / 2;
+                
+                const distance = Math.sqrt(
+                    Math.pow(circleCenterX - cursorX, 2) + 
+                    Math.pow(circleCenterY - cursorY, 2)
+                );
+                
+                const hitRadius = 45;
+                
+                if (distance < hitRadius) {
+                    lastCollisionTime = now;
+                    
+                    score++;
+                    document.getElementById('trajectoryScore').textContent = score;
+                    
+                    const additionalProgress = (totalPathLength / trajectoryPoints.length / totalPathLength) * 100 * 0.3;
+                    progress = Math.min(100, progress + additionalProgress);
+                    
+                    document.getElementById('progressPercent').textContent = `${progress.toFixed(1)}%`;
+                    document.getElementById('trajectoryProgress').style.width = `${progress}%`;
+                    
+                    circle.style.boxShadow = `0 0 40px rgba(255, 170, 0, 1)`;
+                    setTimeout(() => {
+                        if (circle) {
+                            circle.style.boxShadow = '0 0 30px rgba(255, 170, 0, 0.8)';
+                        }
+                    }, 200);
+                }
+            }
+            
+            setTimeout(() => {
+                document.getElementById('trajectoryHint').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('trajectoryHint').style.display = 'none';
+                }, 500);
+            }, 3000);
+        }
+
+        // ИГРА 5: ГИМНАСТИКА ДЛЯ ГЛАЗ
+        function startGymnastics() {
+            let score = 0;
+            let time = 90;
+            let progress = 0;
+            let currentExercise = 1;
+            let isResting = false;
+            let eyeTarget = null;
+            let animationStartTime = 0;
+            
+            document.getElementById('gymnasticsScore').textContent = score;
+            document.getElementById('gymnasticsTimer').textContent = time;
+            updateHighScoreDisplay('gymnastics', 'gymnasticsHighScore');
+            document.getElementById('eyeProgressPercent').textContent = '0%';
+            document.getElementById('eyeProgressFill').style.width = '0%';
+            
+            const area = document.getElementById('eyeArea');
+            area.innerHTML = '';
+            
+            // Таймер игры
+            const timer = setInterval(() => {
+                time--;
+                document.getElementById('gymnasticsTimer').textContent = time;
+                
+                if (time <= 10) {
+                    document.getElementById('gymnasticsTimer').classList.add('pulse');
+                }
+                
+                if (time <= 0) {
+                    clearInterval(timer);
+                    gameActive = false;
+                    document.getElementById('gymnasticsTimer').classList.remove('pulse');
+                    
+                    const beatRecord = saveHighScore('gymnastics', score);
+                    setTimeout(() => {
+                        let message = `ГИМНАСТИКА ДЛЯ ГЛАЗ\nВыполнено упражнений: ${score}\nПрогресс: ${progress.toFixed(1)}%`;
+                        const highScore = getHighScore('gymnastics');
+                        message += `\nРекорд: ${highScore}`;
+                        if (beatRecord) message += "\n🎉 НОВЫЙ РЕКОРД!";
+                        alert(message);
+                        backToMenu();
+                    }, 500);
+                }
+            }, 1000);
+            
+            timers.push(timer);
+            
+            // Начинаем первое упражнение
+            startNextExercise();
+            
+            function startNextExercise() {
+                if (!gameActive || time <= 0) return;
+                
+                // Увеличиваем прогресс
+                progress = Math.min(100, progress + 8);
+                document.getElementById('eyeProgressPercent').textContent = `${progress.toFixed(1)}%`;
+                document.getElementById('eyeProgressFill').style.width = `${progress}%`;
+                
+                // Удаляем предыдущую цель, если есть
+                if (eyeTarget && eyeTarget.parentNode) {
+                    eyeTarget.remove();
+                }
+                
+                // Создаем новую цель для глаз
+                eyeTarget = document.createElement('div');
+                eyeTarget.className = 'eyeTarget';
+                
+                // Выбираем тип упражнения
+                const exerciseType = currentExercise % 6;
+                let instruction = '';
+                
+                switch(exerciseType) {
+                    case 0: // Вверх-вниз
+                        eyeTarget.style.left = '50%';
+                        eyeTarget.style.top = '30%';
+                        instruction = 'Смотрите вверх, затем вниз. Повторите 3 раза.';
+                        break;
+                    case 1: // Влево-вправо
+                        eyeTarget.style.left = '20%';
+                        eyeTarget.style.top = '50%';
+                        instruction = 'Смотрите влево, затем вправо. Повторите 3 раза.';
+                        break;
+                    case 2: // По диагонали
+                        eyeTarget.style.left = '20%';
+                        eyeTarget.style.top = '30%';
+                        instruction = 'Смотрите по диагонали. Повторите 3 раза.';
+                        break;
+                    case 3: // Круги
+                        eyeTarget.style.left = '50%';
+                        eyeTarget.style.top = '50%';
+                        instruction = 'Вращайте глазами по кругу. 3 раза по часовой, 3 против.';
+                        break;
+                    case 4: // Восьмерки
+                        eyeTarget.style.left = '80%';
+                        eyeTarget.style.top = '50%';
+                        instruction = 'Смотрите, рисуя глазами восьмерки.';
+                        break;
+                    case 5: // Фокусировка далеко-близко
+                        eyeTarget.style.left = '50%';
+                        eyeTarget.style.top = '70%';
+                        instruction = 'Фокусируйтесь на точке, затем вдаль. Повторите 5 раз.';
+                        break;
+                }
+                
+                document.getElementById('eyeInstruction').textContent = instruction;
+                area.appendChild(eyeTarget);
+                
+                // Анимация движения для некоторых упражнений
+                if (exerciseType === 0) { // Вверх-вниз
+                    animateUpDown();
+                } else if (exerciseType === 1) { // Влево-вправо
+                    animateLeftRight();
+                } else if (exerciseType === 2) { // Диагональ
+                    animateDiagonal();
+                } else if (exerciseType === 3) { // Круги
+                    animateCircles();
+                } else if (exerciseType === 4) { // Восьмерки
+                    animateFigureEight();
+                } else { // Статичная позиция
+                    eyeTarget.classList.add('active');
+                }
+                
+                // Таймер для завершения упражнения
+                setTimeout(() => {
+                    if (!gameActive) return;
+                    
+                    // Завершаем упражнение
+                    completeExercise();
+                    
+                    // Короткий отдых между упражнениями
+                    isResting = true;
+                    document.getElementById('eyeInstruction').textContent = 'Отдыхайте. Моргайте часто.';
+                    
+                    setTimeout(() => {
+                        if (!gameActive) return;
+                        
+                        isResting = false;
+                        currentExercise++;
+                        startNextExercise();
+                    }, 3000); // 3 секунды отдыха
+                    
+                }, 8000); // 8 секунд на упражнение
+            }
+            
+            function completeExercise() {
+                if (!gameActive) return;
+                
+                score++;
+                document.getElementById('gymnasticsScore').textContent = score;
+                
+                // Эффект завершения
+                if (eyeTarget) {
+                    eyeTarget.style.transform = 'scale(1.5)';
+                    eyeTarget.style.opacity = '0.5';
+                    eyeTarget.style.boxShadow = '0 0 80px rgba(0, 229, 255, 1)';
+                    
+                    setTimeout(() => {
+                        if (eyeTarget && eyeTarget.parentNode) {
+                            eyeTarget.remove();
+                        }
+                    }, 500);
+                }
+            }
+            
+            // Анимации для упражнений
+            function animateUpDown() {
+                if (!gameActive || !eyeTarget) return;
+                
+                const startY = 30; // 30% сверху
+                const endY = 70;   // 70% сверху
+                let direction = 1;
+                let currentY = startY;
+                let step = 0;
+                
+                function move() {
+                    if (!gameActive || !eyeTarget) return;
+                    
+                    currentY += direction * 2; // Скорость движения
+                    
+                    if (currentY >= endY) {
+                        direction = -1;
+                        step++;
+                        eyeTarget.classList.add('active');
+                        setTimeout(() => eyeTarget.classList.remove('active'), 300);
+                    } else if (currentY <= startY) {
+                        direction = 1;
+                        step++;
+                        eyeTarget.classList.add('active');
+                        setTimeout(() => eyeTarget.classList.remove('active'), 300);
+                    }
+                    
+                    eyeTarget.style.top = `${currentY}%`;
+                    
+                    if (step < 6) { // 3 раза вверх-вниз
+                        requestAnimationFrame(move);
+                    }
+                }
+                
+                move();
+            }
+            
+            function animateLeftRight() {
+                if (!gameActive || !eyeTarget) return;
+                
+                const startX = 20; // 20% слева
+                const endX = 80;   // 80% слева
+                let direction = 1;
+                let currentX = startX;
+                let step = 0;
+                
+                function move() {
+                    if (!gameActive || !eyeTarget) return;
+                    
+                    currentX += direction * 2;
+                    
+                    if (currentX >= endX) {
+                        direction = -1;
+                        step++;
+                        eyeTarget.classList.add('active');
+                        setTimeout(() => eyeTarget.classList.remove('active'), 300);
+                    } else if (currentX <= startX) {
+                        direction = 1;
+                        step++;
+                        eyeTarget.classList.add('active');
+                        setTimeout(() => eyeTarget.classList.remove('active'), 300);
+                    }
+                    
+                    eyeTarget.style.left = `${currentX}%`;
+                    
+                    if (step < 6) { // 3 раза влево-вправо
+                        requestAnimationFrame(move);
+                    }
+                }
+                
+                move();
+            }
+            
+            function animateDiagonal() {
+                if (!gameActive || !eyeTarget) return;
+                
+                const positions = [
+                    {x: 20, y: 30}, // Левый верх
+                    {x: 80, y: 70}, // Правый низ
+                    {x: 80, y: 30}, // Правый верх
+                    {x: 20, y: 70}  // Левый низ
+                ];
+                let currentPos = 0;
+                let step = 0;
+                
+                function move() {
+                    if (!gameActive || !eyeTarget) return;
+                    
+                    const target = positions[currentPos];
+                    const currentX = parseFloat(eyeTarget.style.left) || 20;
+                    const currentY = parseFloat(eyeTarget.style.top) || 30;
+                    
+                    const dx = target.x - currentX;
+                    const dy = target.y - currentY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance > 1) {
+                        eyeTarget.style.left = `${currentX + dx * 0.1}%`;
+                        eyeTarget.style.top = `${currentY + dy * 0.1}%`;
+                        requestAnimationFrame(move);
+                    } else {
+                        eyeTarget.classList.add('active');
+                        setTimeout(() => eyeTarget.classList.remove('active'), 300);
+                        
+                        currentPos = (currentPos + 1) % positions.length;
+                        step++;
+                        
+                        if (step < 12) { // 3 полных цикла
+                            setTimeout(move, 300);
+                        }
+                    }
+                }
+                
+                move();
+            }
+            
+            function animateCircles() {
+                if (!gameActive || !eyeTarget) return;
+                
+                const centerX = 50;
+                const centerY = 50;
+                const radius = 30;
+                let angle = 0;
+                let circlesCompleted = 0;
+                let direction = 1; // 1 по часовой, -1 против
+                
+                function move() {
+                    if (!gameActive || !eyeTarget) return;
+                    
+                    angle += direction * 0.05; // Скорость вращения
+                    
+                    const x = centerX + Math.cos(angle) * radius;
+                    const y = centerY + Math.sin(angle) * radius;
+                    
+                    eyeTarget.style.left = `${x}%`;
+                    eyeTarget.style.top = `${y}%`;
+                    
+                    if (angle >= Math.PI * 2) {
+                        angle = 0;
+                        circlesCompleted++;
+                        eyeTarget.classList.add('active');
+                        setTimeout(() => eyeTarget.classList.remove('active'), 300);
+                        
+                        if (circlesCompleted === 3 && direction === 1) {
+                            // Меняем направление
+                            direction = -1;
+                            circlesCompleted = 0;
+                        } else if (circlesCompleted === 3 && direction === -1) {
+                            return; // Завершаем
+                        }
+                    }
+                    
+                    requestAnimationFrame(move);
+                }
+                
+                move();
+            }
+            
+            function animateFigureEight() {
+                if (!gameActive || !eyeTarget) return;
+                
+                const centerX = 50;
+                const centerY = 50;
+                const a = 25; // Полуось по X
+                const b = 15; // Полуось по Y
+                let t = 0;
+                let eightsCompleted = 0;
+                
+                function move() {
+                    if (!gameActive || !eyeTarget) return;
+                    
+                    t += 0.03; // Скорость движения
+                    
+                    // Параметрические уравнения для восьмерки (лемниската)
+                    const scale = 1.2;
+                    const x = centerX + (a * Math.sin(t)) * scale;
+                    const y = centerY + (b * Math.sin(2 * t) / 2) * scale;
+                    
+                    eyeTarget.style.left = `${x}%`;
+                    eyeTarget.style.top = `${y}%`;
+                    
+                    if (t >= Math.PI * 2) {
+                        t = 0;
+                        eightsCompleted++;
+                        eyeTarget.classList.add('active');
+                        setTimeout(() => eyeTarget.classList.remove('active'), 300);
+                        
+                        if (eightsCompleted >= 3) {
+                            return; // Завершаем
+                        }
+                    }
+                    
+                    requestAnimationFrame(move);
+                }
+                
+                move();
+            }
+            
+            // Прячем инструкцию через 5 секунд
+            setTimeout(() => {
+                document.getElementById('eyeInstruction').style.opacity = '0.5';
+            }, 5000);
+        }
+
+        // ОБРАБОТКА РЕСАЙЗА
+        window.addEventListener('resize', function() {
+            if (currentGame === 'tracking' && gameActive) {
+                const circle = document.getElementById('trackCircle');
+                if (circle) {
+                    let circleX = parseFloat(circle.style.left);
+                    let circleY = parseFloat(circle.style.top);
+                    
+                    if (circleX > window.innerWidth - 50) circleX = window.innerWidth - 50;
+                    if (circleY > window.innerHeight - 100) circleY = window.innerHeight - 100;
+                    
+                    circle.style.left = `${circleX}px`;
+                    circle.style.top = `${circleY}px`;
+                }
+            }
+            
+            if (currentGame === 'trajectory' && gameActive) {
+                const canvas = document.getElementById('trajectoryCanvas');
+                if (canvas) {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+            }
+        });
+
+        // ЗАПРЕТ КОНТЕКСТНОГО МЕНЮ
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        
+        // ИНИЦИАЛИЗАЦИЯ РЕКОРДОВ ПРИ ЗАГРУЗКЕ
+        window.addEventListener('DOMContentLoaded', function() {
+            updateHighScoreDisplay('aim', 'aimHighScore');
+            updateHighScoreDisplay('tracking', 'trackingHighScore');
+            updateHighScoreDisplay('reaction', 'reactionHighScore');
+            updateHighScoreDisplay('trajectory', 'trajectoryHighScore');
+            updateHighScoreDisplay('gymnastics', 'gymnasticsHighScore');
+        });
     </script>
 </body>
 </html>
-```
-
-Все исправления сделаны строго по требованиям:
-
-1. ✅ Убраны все упоминания Standoff 2
-2. ✅ Убрана надпись сверху в играх (остался только CLASHPOINT в меню)
-3. ✅ Убран режим "Тап" - осталось 3 игры
-4. ✅ В трекинге синяя точка сильно дрожит и быстро движется:
-   · Добавлено отдельное дрожание (shake)
-   · Увеличена скорость движения
-   · Частое обновление позиции
-5. ✅ В прицеле точки не появляются друг в друге:
-   · Добавлена проверка расстояния между точками
-   · Минимальное расстояние 80px
-   · 50 попыток найти свободную позицию
-6. ✅ Добавлена кнопка "Конфиденциальность":
-   · В настройках теперь 4 пункта
-   · Добавлен раздел конфиденциальности
-   · Четко указано, что проект Clashpoint не имеет связи с другими играми
-7. ✅ Упрощенный интерфейс:
-   · 3 игры: Прицел, Трекинг, Реакция
-   · Все игры 45-90 секунд
-   · Чисто черный дизайн
-   · Только необходимые элементы
-
-Игры:
-
-· Прицел: 60 сек, точки не пересекаются
-· Трекинг: 90 сек, быстрая дрожащая точка
-· Реакция: 45 сек, 3 точки, быстрое нажатие
